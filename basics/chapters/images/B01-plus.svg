@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 242" width="660" height="242" role="img" aria-labelledby="t d">
+  <title id="t">+ は、左右の値の種類で動きが変わる</title>
+  <desc id="d">数値の 100 と数値の 20 に + を使うと、足して 120 になる。文字列の "100" と文字列の "20" は、つないで "10020" になる。文字列の "100" と数値の 20 は、20 が文字列の "20" に変わってから、つないで "10020" になる。</desc>
+  <style>
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 12px; }
+    .head { font-weight: 700; }
+    .acc { fill: #2563eb; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+    .dim { fill: #6b7280; }
+    .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .obj2 { fill: none; stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 5 3; }
+    .pane { fill: none; stroke: #94a3b8; stroke-width: 1; }
+    .line { fill: none; stroke: #2563eb; stroke-width: 1.6; }
+    .line2 { fill: none; stroke: #64748b; stroke-width: 1.6; }
+    .tip { fill: #2563eb; }
+    .tip2 { fill: #64748b; }
+    .dot { fill: #94a3b8; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code { fill: #e5e7eb; }
+      .sub { fill: #9ca3af; }
+      .acc { fill: #60a5fa; }
+      .dim { fill: #9ca3af; }
+      .var { fill: #1e293b; stroke: #64748b; }
+      .obj { fill: #172554; stroke: #60a5fa; }
+      .obj2 { stroke: #64748b; }
+      .pane { stroke: #64748b; }
+      .line { stroke: #60a5fa; }
+      .line2 { stroke: #94a3b8; }
+      .tip { fill: #60a5fa; }
+      .tip2 { fill: #94a3b8; }
+      .dot { fill: #64748b; }
+    }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip2" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+  <text class="txt sub" x="30" y="24"><tspan class="code">"…"</tspan> で囲んだ値は文字列、囲んでいない値は数値</text>
+  <rect class="var" x="30" y="46" width="96" height="34" rx="6"/>
+  <text class="code" x="78" y="68" text-anchor="middle">100</text>
+  <text class="code" x="142" y="68" text-anchor="middle">+</text>
+  <rect class="var" x="158" y="46" width="96" height="34" rx="6"/>
+  <text class="code" x="206" y="68" text-anchor="middle">20</text>
+  <path class="line2" d="M258,63 L496,63" marker-end="url(#a2)"/>
+  <text class="txt head" x="377" y="56" text-anchor="middle">足す</text>
+  <rect class="obj" x="500" y="46" width="120" height="34" rx="6"/>
+  <text class="code" x="560" y="68" text-anchor="middle">120</text>
+  <rect class="var" x="30" y="100" width="96" height="34" rx="6"/>
+  <text class="code" x="78" y="122" text-anchor="middle">"100"</text>
+  <text class="code" x="142" y="122" text-anchor="middle">+</text>
+  <rect class="var" x="158" y="100" width="96" height="34" rx="6"/>
+  <text class="code" x="206" y="122" text-anchor="middle">"20"</text>
+  <path class="line2" d="M258,117 L496,117" marker-end="url(#a2)"/>
+  <text class="txt head" x="377" y="110" text-anchor="middle">つなぐ</text>
+  <rect class="obj" x="500" y="100" width="120" height="34" rx="6"/>
+  <text class="code" x="560" y="122" text-anchor="middle">"10020"</text>
+  <rect class="var" x="30" y="154" width="96" height="34" rx="6"/>
+  <text class="code" x="78" y="176" text-anchor="middle">"100"</text>
+  <text class="code" x="142" y="176" text-anchor="middle">+</text>
+  <rect class="var" x="158" y="154" width="96" height="34" rx="6"/>
+  <text class="code" x="206" y="176" text-anchor="middle">20</text>
+  <path class="line2" d="M258,171 L326,171" marker-end="url(#a2)"/>
+  <text class="txt sub" x="292" y="206" text-anchor="middle">文字列に変わる</text>
+  <rect class="var" x="330" y="154" width="80" height="34" rx="6"/>
+  <text class="code" x="370" y="176" text-anchor="middle">"20"</text>
+  <path class="line2" d="M414,171 L496,171" marker-end="url(#a2)"/>
+  <text class="txt head" x="455" y="164" text-anchor="middle">つなぐ</text>
+  <rect class="obj" x="500" y="154" width="120" height="34" rx="6"/>
+  <text class="code" x="560" y="176" text-anchor="middle">"10020"</text>
+  <text class="txt sub" x="30" y="232">片方でも文字列なら、+ は足さずにつなぐ。</text>
+</svg>

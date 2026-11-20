@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 240" width="660" height="240" role="img" aria-labelledby="t d">
+  <title id="t">HTML の id と、JavaScript と、画面のつながり</title>
+  <desc id="d">HTML の p 要素には id=&quot;message&quot; が付いている。JavaScript の document.querySelector("#message") は、同じ名前でその要素を探す。取った要素の textContent に「こんにちは」を代入すると、画面の文字が「こんにちは」に変わる。</desc>
+  <style>
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 12px; }
+    .head { font-weight: 700; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+    .small { font-size: 11.5px; }
+    .hl { fill: #2563eb; }
+    .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .obj2 { fill: none; stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 5 3; }
+    .win { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.5; }
+    .bar { fill: #eef1f5; stroke: #94a3b8; stroke-width: 1.5; }
+    .rule { fill: none; stroke: #cbd5e1; stroke-width: 1; }
+    .dot { fill: #cbd5e1; }
+    .line { fill: none; stroke: #2563eb; stroke-width: 1.8; }
+    .line2 { fill: none; stroke: #64748b; stroke-width: 1.8; }
+    .dash { stroke-dasharray: 5 3; }
+    .tip { fill: #2563eb; }
+    .tip2 { fill: #64748b; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code { fill: #e5e7eb; }
+      .sub { fill: #9ca3af; }
+      .hl { fill: #60a5fa; }
+      .var { fill: #1e293b; stroke: #64748b; }
+      .obj { fill: #172554; stroke: #60a5fa; }
+      .obj2 { stroke: #64748b; }
+      .win { fill: #0f1419; stroke: #64748b; }
+      .bar { fill: #1e293b; stroke: #64748b; }
+      .rule { stroke: #334155; }
+      .dot { fill: #475569; }
+      .line { stroke: #60a5fa; }
+      .line2 { stroke: #94a3b8; }
+      .tip { fill: #60a5fa; }
+      .tip2 { fill: #94a3b8; }
+    }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip2" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+  <text class="txt sub" x="20" y="24">HTML（try.html）</text>
+  <rect class="var" x="20" y="34" width="400" height="40" rx="6"/>
+  <text class="code" x="32" y="59">&lt;p <tspan class="hl">id=&quot;message&quot;</tspan>&gt;ここに表示します&lt;/p&gt;</text>
+
+  <text class="txt sub" x="20" y="124">JavaScript（try.js）</text>
+  <rect class="var" x="20" y="134" width="420" height="62" rx="6"/>
+  <text class="code" x="32" y="158">const message = document.querySelector(<tspan class="hl">"#message"</tspan>);</text>
+  <text class="code" x="32" y="182">message.textContent = "こんにちは";</text>
+
+  <path class="line" d="M362,144 L362,102 L100,102 L100,70" marker-end="url(#a1)"/>
+  <text class="txt sub" x="231" y="96" text-anchor="middle">同じ名前で、要素を探す</text>
+
+  <text class="txt sub" x="490" y="24">画面</text>
+  <rect class="win" x="490" y="34" width="150" height="162" rx="8"/>
+  <path class="bar" d="M490,56 L490,42 Q490,34 498,34 L632,34 Q640,34 640,42 L640,56 z"/>
+  <circle class="dot" cx="504" cy="45" r="4"/><circle class="dot" cx="517" cy="45" r="4"/><circle class="dot" cx="530" cy="45" r="4"/>
+  <rect class="obj" x="502" y="100" width="126" height="34" rx="5"/>
+  <text class="txt" x="565" y="122" text-anchor="middle">こんにちは</text>
+  <path class="line" d="M440,177 L466,177 L466,117 L498,117" marker-end="url(#a1)"/>
+
+  <text class="txt sub" x="20" y="226">id は、HTML の要素と JavaScript をつなぐ名前。textContent に代入すると、画面の文字が変わる。</text>
+</svg>

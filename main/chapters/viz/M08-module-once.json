@@ -1,0 +1,175 @@
+{
+  "label": "1行ずつ見る",
+  "code": "// counter.ts\nconsole.log(\"counter.ts の本体\");\n\nlet count = 0;\n\nexport function increment(): number {\n  count = count + 1;\n  return count;\n}\n\n// start.ts\nimport { increment } from \"./counter.ts\";\n\nconsole.log(\"start.ts の本体\");\n\nexport const first = increment();\n\n// problem-01.ts\nimport { increment } from \"./counter.ts\";\nimport { first } from \"./start.ts\";\n\nconsole.log(\"problem-01.ts の本体\");\nconsole.log(increment()); // ①\nconsole.log(first);       // ②",
+  "panels": [
+    {
+      "id": "modules",
+      "label": "実行し終えたファイル"
+    },
+    {
+      "id": "count",
+      "label": "count の値"
+    },
+    {
+      "id": "console",
+      "label": "コンソールの表示"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        19
+      ],
+      "phase": "読み込みの準備",
+      "note": "problem-01.ts の最初の import は counter.ts です。本体より先に、counter.ts を実行します。",
+      "modules": [],
+      "count": [],
+      "console": []
+    },
+    {
+      "lines": [
+        2
+      ],
+      "phase": "counter.ts を実行",
+      "note": "counter.ts の本体を実行し、表示します。",
+      "modules": [],
+      "count": [],
+      "console": [
+        "counter.ts の本体"
+      ]
+    },
+    {
+      "lines": [
+        4,
+        9
+      ],
+      "phase": "counter.ts を実行",
+      "note": "count を 0 で作り、increment 関数を作ります。これで counter.ts は実行し終わりです。",
+      "modules": [
+        "counter.ts"
+      ],
+      "count": [
+        "0"
+      ],
+      "console": [
+        "counter.ts の本体"
+      ]
+    },
+    {
+      "lines": [
+        20,
+        12
+      ],
+      "phase": "読み込みの準備",
+      "note": "次の import は start.ts です。start.ts が読み込む counter.ts は実行し終えているので、もう一度は実行しません。",
+      "modules": [
+        "counter.ts"
+      ],
+      "count": [
+        "0"
+      ],
+      "console": [
+        "counter.ts の本体"
+      ]
+    },
+    {
+      "lines": [
+        14
+      ],
+      "phase": "start.ts を実行",
+      "note": "import が終わったので、start.ts の本体を実行します。",
+      "modules": [
+        "counter.ts"
+      ],
+      "count": [
+        "0"
+      ],
+      "console": [
+        "counter.ts の本体",
+        "start.ts の本体"
+      ]
+    },
+    {
+      "lines": [
+        16
+      ],
+      "phase": "start.ts を実行",
+      "note": "increment() で count が 1 になり、first に 1 が入ります。これで start.ts も実行し終わりです。",
+      "modules": [
+        "counter.ts",
+        "start.ts"
+      ],
+      "count": [
+        "1"
+      ],
+      "console": [
+        "counter.ts の本体",
+        "start.ts の本体"
+      ]
+    },
+    {
+      "lines": [
+        22
+      ],
+      "phase": "problem-01.ts の本体",
+      "note": "import が全部終わったので、本体を実行します。",
+      "modules": [
+        "counter.ts",
+        "start.ts",
+        "problem-01.ts"
+      ],
+      "count": [
+        "1"
+      ],
+      "console": [
+        "counter.ts の本体",
+        "start.ts の本体",
+        "problem-01.ts の本体"
+      ]
+    },
+    {
+      "lines": [
+        23
+      ],
+      "phase": "①",
+      "note": "increment() で、同じ count が 2 になり、2 を表示します。",
+      "modules": [
+        "counter.ts",
+        "start.ts",
+        "problem-01.ts"
+      ],
+      "count": [
+        "2"
+      ],
+      "console": [
+        "counter.ts の本体",
+        "start.ts の本体",
+        "problem-01.ts の本体",
+        "2"
+      ]
+    },
+    {
+      "lines": [
+        24
+      ],
+      "phase": "②",
+      "note": "first に入っている 1 を表示します。",
+      "modules": [
+        "counter.ts",
+        "start.ts",
+        "problem-01.ts"
+      ],
+      "count": [
+        "2"
+      ],
+      "console": [
+        "counter.ts の本体",
+        "start.ts の本体",
+        "problem-01.ts の本体",
+        "2",
+        "1"
+      ]
+    }
+  ],
+  "file": "main/exercises/M08-modules/problem-01.ts"
+}

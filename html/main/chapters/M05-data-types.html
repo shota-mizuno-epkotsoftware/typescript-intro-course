@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第5章 データの型を書く | TypeScript 入門</title>
+  <script>
+    // 保存した表示モード（ライト・ダーク）を、画面を描く前に反映する
+    try {
+      var theme = localStorage.getItem("tsl:theme");
+      if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+    } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="../../assets/style.css?v=mwobwd6f">
+  <script src="../../assets/app.js?v=mwobwd6f" defer></script>
+  <script src="../../assets/viz.js?v=mwobwd6f" defer></script>
+  <script src="../../assets/app-map.js?v=mwobwd6f" defer></script>
+</head>
+<body data-page-key="main/chapters/M05-data-types">
+  <header class="topbar">
+    <button class="menu-button" type="button" aria-controls="sidebar" aria-expanded="false">目次</button>
+    <a class="site-title" href="../../index.html">TypeScript 入門</a>
+    <div class="theme-switch" role="group" aria-label="表示モード">
+      <button type="button" data-theme-choice="light" aria-label="ライト表示" title="ライト表示">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+        </svg>
+      </button>
+      <button type="button" data-theme-choice="dark" aria-label="ダーク表示" title="ダーク表示">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <nav aria-label="章の一覧"><ul><li><a href="../../index.html">はじめに</a></li><li class="nav-group" role="separator"></li><li><a href="../../overview.html">学ぶ技術の関係</a></li><li class="nav-group">基礎編</li><li><a href="../../basics/chapters/B00-setup.html">第0章 準備</a></li><li><a href="../../basics/chapters/B01-values.html">第1章 値と計算</a></li><li><a href="../../basics/chapters/B02-variables.html">第2章 変数</a></li><li><a href="../../basics/chapters/B03-errors.html">第3章 エラーを読む</a></li><li><a href="../../basics/chapters/B04-conditions.html">第4章 条件分岐</a></li><li><a href="../../basics/chapters/B05-arrays-loops.html">第5章 配列と繰り返し</a></li><li><a href="../../basics/chapters/B06-functions.html">第6章 関数</a></li><li><a href="../../basics/chapters/B07-combining.html">第7章 関数を組み合わせる</a></li><li><a href="../../basics/chapters/B08-objects.html">第8章 オブジェクト</a></li><li><a href="../../basics/chapters/B09-array-methods.html">第9章 配列のメソッド</a></li><li><a href="../../basics/chapters/B10-dom.html">第10章 画面を動かす</a></li><li><a href="../../basics/chapters/B11-final.html">第11章 修了課題</a></li><li class="nav-group">本編</li><li><a href="M00-setup.html">第0章 環境構築</a></li><li><a href="M01-syntax-table.html">第1章 基本文法の対応表</a></li><li><a href="M02-types.html">第2章 型の基本</a></li><li><a href="M03-functions.html">第3章 関数とコールバック</a></li><li><a href="M04-objects.html">第4章 オブジェクトと配列</a></li><li><a href="M05-data-types.html" aria-current="page">第5章 データの型を書く</a></li><li><a href="M06-narrowing.html">第6章 null と型の絞り込み</a></li><li><a href="M07-array-methods.html">第7章 配列メソッド</a></li><li><a href="M08-modules.html">第8章 モジュールと型を読む</a></li><li><a href="M09-async.html">第9章 非同期</a></li><li><a href="M10-dom.html">第10章 ブラウザとDOM、イベント</a></li><li><a href="M11-next-steps.html">第11章 実践編への準備</a></li><li class="nav-group">実践編</li><li><a href="../../practice/chapters/P01-overview.html">第1章 全体像と、画面が表示されるまで</a></li><li><a href="../../practice/chapters/P02-types.html">第2章 データの型</a></li><li><a href="../../practice/chapters/P03-form.html">第3章 フォームの入力と検証</a></li><li><a href="../../practice/chapters/P04-events.html">第4章 イベントから再描画まで</a></li><li><a href="../../practice/chapters/P05-summary.html">第5章 集計とテスト</a></li><li><a href="../../practice/chapters/P06-external.html">第6章 外から来るデータ</a></li><li><a href="../../practice/chapters/P07-changes.html">第7章 変更を読む・総合</a></li><li class="nav-group" role="separator"></li><li><a href="../../troubleshooting.html">つまずき集</a></li><li><a href="../../tools.html">ツール一覧</a></li><li><a href="../../references.html">参考資料との対応</a></li></ul></nav>
+    </aside>
+    <main class="content">
+      <article>
+        <h1>第5章 データの型を書く</h1>
+<section class="chapter-summary" aria-label="この章で学ぶこと"><p class="summary-title">この章で学ぶこと</p><ul>
+<li><code>type</code> でデータの形に名前を付ける。<code>?</code> と <code>readonly</code> の書き方</li>
+<li>ユニオン型で取りうる値を限定する。<code>let</code> と <code>const</code> で推論される型の違い</li>
+<li><code>Record</code> の使い方と、<code>type</code> と <code>interface</code> の違い</li>
+</ul></section>
+<details class="toc" open><summary>このページの内容</summary><nav aria-label="このページの内容"><ul><li><a href="#51-type-でデータの形に名前を付ける">5.1 type でデータの形に名前を付ける</a></li><li><a href="#52-文字列のユニオン型で取りうる値を限定する">5.2 文字列のユニオン型で、取りうる値を限定する</a></li><li><a href="#53-let-と-const-で推論される型が違う">5.3 let と const で、推論される型が違う</a></li><li><a href="#問題-1変数に入れたサイズを渡す">問題 1：変数に入れたサイズを渡す</a></li><li><a href="#54-readonly-は実行時には効かない">5.4 readonly は実行時には効かない</a></li><li><a href="#問題-2座席の予約">問題 2：座席の予約</a></li><li><a href="#55-キーと値の型を決めるときは-record">5.5 キーと値の型を決めるときは Record</a></li><li><a href="#56-ほかの型を広げる書き方を読む">5.6 ほかの型を広げる書き方を読む</a></li><li><a href="#57-type-と-interface-の違い">5.7 type と interface の違い</a></li><li><a href="#問題-3型エラーを読む">問題 3：型エラーを読む</a></li><li><a href="#演習家計簿のデータの型">演習：家計簿のデータの型</a></li><li><a href="#チェックリスト">チェックリスト</a></li><li><a href="#詳しく学ぶ">詳しく学ぶ</a></li></ul></nav></details>
+<h2 id="51-type-でデータの形に名前を付ける">5.1 <code>type</code> でデータの形に名前を付ける</h2>
+<p><code>type 名前 = 型;</code> と書くと、型に名前を付けられます（<strong>型エイリアス</strong>）。同じ形のデータを何度も使うときに、毎回書かずに済みます。型の名前は、大文字で始めるのが習慣です。</p>
+<p>プロパティ名の後ろに <code>?</code> を付けると、省略できます。省略したプロパティを読むと <code>undefined</code> です。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Item</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  name</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  price</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  memo</span><span style="color:#D73A49;--shiki-dark:#F97583">?:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">; </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ? を付けると、省略できる</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> note</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Item</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ノート"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">120</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> pen</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Item</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ペン"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">80</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, memo: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"黒"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(note.name, pen.memo); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → ノート 黒</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(note.memo);           </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → undefined</span></span></code></pre>
+<p>型を書いた変数に <code>{ ... }</code> を直接書くとき、型に書いていないプロパティがあると型エラーになります。打ち間違いを見つけるのに役立ちます。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Item</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { </span><span style="color:#E36209;--shiki-dark:#FFAB70">name</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">; </span><span style="color:#E36209;--shiki-dark:#FFAB70">price</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> number</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> eraser</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Item</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"消しゴム"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">50</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, color: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"白"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// エラー: Object literal may only specify known properties, and 'color' does not exist in type 'Item'.</span></span></code></pre>
+<blockquote class="note">
+<p><strong>PHPでは</strong>
+<code>type</code> で書く型は、PHP の連想配列に「このキーには、この型の値が入る」というルールを付けたものにあたります。</p>
+</blockquote>
+<h2 id="52-文字列のユニオン型で取りうる値を限定する">5.2 文字列のユニオン型で、取りうる値を限定する</h2>
+<p><code>&quot;food&quot;</code> のように、特定の値だけが入る型を<strong>リテラル型</strong>と呼びます。<code>|</code> は「または」の意味で、型をつなぐと「この中のどれか」という型になります（<strong>ユニオン型</strong>）。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Category</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "food"</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "transport"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">category</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Category</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (category </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "food"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    return</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "食費"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "交通費"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"food"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">));      </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → 食費</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"transport"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → 交通費</span></span></code></pre>
+<p>書いた値以外を入れると、型エラーになります。打ち間違いや想定していない値を、実行前に見つけられます。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Category</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "food"</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "transport"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> category</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Category</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "travel"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// エラー: Type '"travel"' is not assignable to type 'Category'.</span></span></code></pre>
+<p>5.1 の <code>memo?: string</code> の型も、ユニオン型の <code>string | undefined</code>（文字列か <code>undefined</code>）として扱われます。<code>undefined</code> かどうかを調べてから使う書き方は、第6章で扱います。</p>
+<h2 id="53-let-と-const-で推論される型が違う">5.3 <code>let</code> と <code>const</code> で、推論される型が違う</h2>
+<p><strong>文字列を直接書くと、<code>let</code> の変数は <code>string</code>、<code>const</code> の変数はリテラル型と推論されます。</strong> <code>let</code> の変数は、後で別の文字列を入れられるので <code>string</code> です。<code>const</code> の変数は、再代入できないので書いた文字列の型です。</p>
+<p>そのため、型注釈のない <code>let</code> の変数の値は、<code>Category</code> 型の変数に入れられません。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Category</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "food"</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "transport"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">let</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> a </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "transport"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;   </span><span style="color:#6A737D;--shiki-dark:#6A737D">// a の型は string</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> b</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "transport"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">; </span><span style="color:#6A737D;--shiki-dark:#6A737D">// b の型は "transport"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> first</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Category</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> a;</span></span>
+<span class="line"><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// エラー: Type 'string' is not assignable to type 'Category'.</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> second</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Category</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> b;</span></span></code></pre>
+<p>型チェックが見るのは、今の値ではなく型です。<code>a</code> の今の値は <code>&quot;transport&quot;</code> でも、型の <code>string</code> にはほかの文字列も入るので、エラーになります。</p>
+<p>次の図は、各型に入る値の範囲を示します。内側の型の値は、外側の型にも入ります。</p>
+<figure><svg class="fig1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 250" width="640" height="250" role="img" aria-labelledby="fig1-t fig1-d">
+  <title id="fig1-t">string は Category より広い</title>
+  <desc id="fig1-d">型を、入る値の範囲として描いた図。いちばん外側の string（let a の型）には、"travel" や "abc" など、どんな文字列も入る。その内側の Category には "food" と "transport" だけが入る。さらに内側の "transport" 型（const b の型）には "transport" だけが入る。外側の string の値は、Category に入らない（型エラー）。内側の "transport" 型の値は、外側の Category にも入る。</desc>
+  <style>
+.fig1 .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+.fig1 .sub { fill: #4b5563; font-size: 12px; }
+.fig1 .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+.fig1 .head { font-weight: 700; }
+.fig1 .outer { fill: #f8fafc; stroke: #64748b; stroke-width: 1.5; }
+.fig1 .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+.fig1 .inner { fill: #dbeafe; stroke: #2563eb; stroke-width: 1.5; }
+.fig1 .line { fill: none; stroke: #2563eb; stroke-width: 1.8; }
+.fig1 .tip { fill: #2563eb; }
+.fig1 .chk { fill: none; stroke: #c2410c; stroke-width: 1.8; }
+.fig1 .chk-x { fill: none; stroke: #c2410c; stroke-width: 2.4; stroke-linecap: round; }
+.fig1 .chk-txt { fill: #c2410c; font-weight: 700; }
+.fig1 .tip-chk { fill: #c2410c; }
+
+    @media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) .fig1 .txt, :root:not([data-theme="light"]) .fig1 .code { fill: #e5e7eb; }
+:root:not([data-theme="light"]) .fig1 .sub { fill: #9ca3af; }
+:root:not([data-theme="light"]) .fig1 .outer { fill: #1e293b; stroke: #94a3b8; }
+:root:not([data-theme="light"]) .fig1 .obj { fill: #172554; stroke: #60a5fa; }
+:root:not([data-theme="light"]) .fig1 .inner { fill: #1e3a8a; stroke: #60a5fa; }
+:root:not([data-theme="light"]) .fig1 .line { stroke: #60a5fa; }
+:root:not([data-theme="light"]) .fig1 .tip { fill: #60a5fa; }
+:root:not([data-theme="light"]) .fig1 .chk, :root:not([data-theme="light"]) .fig1 .chk-x { stroke: #fb923c; }
+:root:not([data-theme="light"]) .fig1 .chk-txt { fill: #fdba74; }
+:root:not([data-theme="light"]) .fig1 .tip-chk { fill: #fb923c; }
+
+    }
+:root[data-theme="dark"] .fig1 .txt, :root[data-theme="dark"] .fig1 .code { fill: #e5e7eb; }
+:root[data-theme="dark"] .fig1 .sub { fill: #9ca3af; }
+:root[data-theme="dark"] .fig1 .outer { fill: #1e293b; stroke: #94a3b8; }
+:root[data-theme="dark"] .fig1 .obj { fill: #172554; stroke: #60a5fa; }
+:root[data-theme="dark"] .fig1 .inner { fill: #1e3a8a; stroke: #60a5fa; }
+:root[data-theme="dark"] .fig1 .line { stroke: #60a5fa; }
+:root[data-theme="dark"] .fig1 .tip { fill: #60a5fa; }
+:root[data-theme="dark"] .fig1 .chk, :root[data-theme="dark"] .fig1 .chk-x { stroke: #fb923c; }
+:root[data-theme="dark"] .fig1 .chk-txt { fill: #fdba74; }
+:root[data-theme="dark"] .fig1 .tip-chk { fill: #fb923c; }
+
+    </style>
+  <defs>
+    <marker id="fig1-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip-chk" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <!-- string（let a の型） -->
+  <rect class="outer" x="20" y="20" width="600" height="210" rx="10"/>
+  <text class="code head" x="36" y="44">string</text>
+  <text class="txt sub" x="96" y="44">let a の型</text>
+  <text class="code" x="480" y="118">"travel"</text>
+  <text class="code" x="480" y="148">"abc"</text>
+  <text class="txt sub" x="480" y="178">ほかの文字列</text>
+
+  <!-- Category -->
+  <rect class="obj" x="40" y="60" width="330" height="156" rx="10"/>
+  <text class="code head" x="56" y="84">Category</text>
+  <text class="code" x="56" y="196">"food"</text>
+
+  <!-- "transport" 型（const b の型） -->
+  <rect class="inner" x="196" y="128" width="156" height="68" rx="8"/>
+  <text class="txt sub" x="208" y="148">const b の型</text>
+  <text class="code" x="274" y="180" text-anchor="middle">"transport"</text>
+
+
+  <!-- 入らない（型エラー） -->
+  <path class="chk" d="M470,114 L382,114" marker-end="url(#fig1-ac)"/>
+  <path class="chk-x" d="M364,106 L378,122 M378,106 L364,122"/>
+  <text class="txt chk-txt" x="382" y="96">入らない（型エラー）</text>
+</svg><figcaption>図5-1 string は Category より広い</figcaption></figure>
+<p><code>let</code> のまま使いたいときは、<code>let a: Category = &quot;transport&quot;;</code> のように型注釈を書きます。</p>
+<p><code>const</code> の変数に別の変数を入れると、入れた変数の型をそのまま受け継ぎます。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> word</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "Osaka"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> place</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> word; </span><span style="color:#6A737D;--shiki-dark:#6A737D">// place の型は "Osaka"（word の型）</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(place); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → Osaka</span></span></code></pre>
+<section class="question"><h2 id="問題-1変数に入れたサイズを渡す"><span class="question-kind">問題</span> <span class="question-number">1</span><span class="question-title">変数に入れたサイズを渡す</span></h2>
+<p><code>main/exercises/M05-data-types/problem-01.ts</code></p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 5"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Size</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "S"</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "M"</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "L"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> printSize</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">size</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Size</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> void</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">`サイズ ${</span><span style="color:#24292E;--shiki-dark:#E1E4E8">size</span><span style="color:#032F62;--shiki-dark:#9ECBFF">}`</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> printText</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">text</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> void</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">`文字 ${</span><span style="color:#24292E;--shiki-dark:#E1E4E8">text</span><span style="color:#032F62;--shiki-dark:#9ECBFF">}`</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">let</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> input </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "S"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> copy</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> input;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> large</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Size</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "L"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">printSize</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(copy);  </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ①</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">printText</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(large); </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ②</span></span></code></pre>
+<p>次の 2 つを予測してから、エディタの赤い波線と実行結果を見てください。</p>
+<ol>
+<li>① と ② のそれぞれに、型エラーが出るか</li>
+<li><code>node main/exercises/M05-data-types/problem-01.ts</code> を実行すると、何が表示されるか</li>
+</ol>
+<p>答えを読んだ後、型エラーがあれば、答えの最後の手順で直します。</p>
+<details>
+<summary>答えと解説</summary>
+<p>型エラーが出るのは ① だけです。</p>
+<ul>
+<li>①：<code>input</code> の型は <code>string</code> です。<code>copy</code> は <code>const</code> ですが、<code>string</code> 型の変数を入れたので、型は <code>string</code> です（5.3）。<code>Argument of type 'string' is not assignable to parameter of type 'Size'.</code> と表示されます。</li>
+<li>②：<code>Size</code> は <code>string</code> の内側の型です（図5-1）。内側の型の値は、外側の型に入ります。</li>
+</ul>
+<p>実行結果です。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>サイズ S</span></span>
+<span class="line"><span>文字 L</span></span></code></pre>
+<p>① に型エラーがあっても、<code>node</code> は型を消して実行するので、結果が表示されます。</p>
+<p>次の順に、型エラーを直します。</p>
+<ol>
+<li>
+<p><code>let input = &quot;S&quot;;</code> を <code>const input = &quot;S&quot;;</code> に変える</p>
+</li>
+<li>
+<p>次のコマンドを実行する</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> typecheck</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> M05</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> problem-01</span></span></code></pre>
+<ul>
+<li><strong>こうなれば OK</strong>：「型チェック: OK」と表示される</li>
+</ul>
+</li>
+</ol>
+</details></section>
+
+<h2 id="54-readonly-は実行時には効かない">5.4 <code>readonly</code> は実行時には効かない</h2>
+<p>プロパティの前に <code>readonly</code> を付けると、書き換えが型エラーになります。<strong>止めるのは型チェックだけで、実行時には何もしません。</strong> 型は実行時に消えるからです（第2章 2.5）。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Ticket</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  readonly</span><span style="color:#E36209;--shiki-dark:#FFAB70"> id</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  title</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> ticket</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Ticket</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { id: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">1</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, title: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"受付"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">ticket.title </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "会計"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">; </span><span style="color:#6A737D;--shiki-dark:#6A737D">// title は書き換えられる</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">ticket.id </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 2</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// エラー: Cannot assign to 'id' because it is a read-only property.</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(ticket.id);</span></span></code></pre>
+<p>このコードを <code>node</code> で実行すると、<code>id</code> は書き換わり、次のように表示されます。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>2</span></span></code></pre>
+<section class="question"><h2 id="問題-2座席の予約"><span class="question-kind">問題</span> <span class="question-number">2</span><span class="question-title">座席の予約</span></h2>
+<p><code>main/exercises/M05-data-types/problem-02.ts</code></p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 4"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Seat</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  readonly</span><span style="color:#E36209;--shiki-dark:#FFAB70"> code</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  guest</span><span style="color:#D73A49;--shiki-dark:#F97583">?:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> reserve</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">seat</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Seat</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">guest</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> void</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  seat.guest </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> guest;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> seat</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Seat</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { code: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"A1"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> moved</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Seat</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { </span><span style="color:#D73A49;--shiki-dark:#F97583">...</span><span style="color:#24292E;--shiki-dark:#E1E4E8">seat, code: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"B2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">reserve</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(seat, </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"田中"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(seat.code);   </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ①</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(seat.guest);  </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ②</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(moved.guest); </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ③</span></span></code></pre>
+<p><code>{ ...seat, code: &quot;B2&quot; }</code> は、第4章 4.3 のスプレッド構文です。次の 2 つを予測してから、エディタの赤い波線と実行結果を見てください。</p>
+<ol>
+<li>型エラーが出る行はあるか</li>
+<li><code>node main/exercises/M05-data-types/problem-02.ts</code> を実行すると、①〜③ で何が表示されるか</li>
+</ol>
+<details>
+<summary>答えと解説</summary>
+<p>型エラーは出ません。</p>
+<p><code>readonly</code> が止めるのは、<code>code</code> への代入です。<code>{ ...seat, code: &quot;B2&quot; }</code> は新しいオブジェクトを作るので、<code>seat.code</code> を書き換えていません。<code>guest</code> は <code>readonly</code> ではないので、後から入れられます。</p>
+<p>実行結果です。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>A1</span></span>
+<span class="line"><span>田中</span></span>
+<span class="line"><span>undefined</span></span></code></pre>
+<ul>
+<li>①：<code>moved</code> は別のオブジェクトなので、<code>seat.code</code> は <code>A1</code> のままです。</li>
+<li>②：関数に渡したオブジェクトは、呼び出し元と同じものです（第4章 4.4）。<code>reserve</code> の中で入れた値が見えます。</li>
+<li>③：<code>moved</code> を作った時点の <code>seat</code> には <code>guest</code> がありません。後から <code>seat</code> に入れても、<code>moved</code> には入らないので、<code>undefined</code> です。</li>
+</ul>
+</details></section>
+
+<h2 id="55-キーと値の型を決めるときは-record">5.5 キーと値の型を決めるときは <code>Record</code></h2>
+<p>キーを自由に足していく辞書のようなオブジェクトには、<code>Record&lt;キーの型, 値の型&gt;</code> を使います。<code>[]</code> の中に変数を書くと、その値をキーにして読み書きできます。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> stock</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Record</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#005CC5;--shiki-dark:#79B8FF">string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">> </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {};</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">stock[</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ノート"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 10</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">stock[</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ペン"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 25</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> key</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "ペン"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(stock[key]);        </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → 25</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(stock);             </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → { 'ノート': 10, 'ペン': 25 }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(stock[</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"消しゴム"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → undefined</span></span></code></pre>
+<p>まだ入れていないキーを読むと <code>undefined</code> が返りますが、型は <code>number</code> のままです。調べ方は第6章 6.1 で扱います。</p>
+<p>キーの型にユニオン型を書くと、「このキーが全部そろったオブジェクト」という型になります。キーが 1 つでも足りないと、型エラーになります。ユニオン型にないキーを書いたときも、5.1 の余分なプロパティと同じく型エラーになります。</p>
+<p>次の関数は、分類ごとの件数を数えます。最初に全部のキーを <code>0</code> で用意し、1 件ずつ足していきます。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Category</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "food"</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "transport"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Purchase</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { </span><span style="color:#E36209;--shiki-dark:#FFAB70">category</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Category</span><span style="color:#24292E;--shiki-dark:#E1E4E8">; </span><span style="color:#E36209;--shiki-dark:#FFAB70">name</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> countByCategory</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">purchases</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Purchase</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[])</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Record</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">Category</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> counts</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Record</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">Category</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">> </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { food: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, transport: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">0</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  for</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> purchase</span><span style="color:#D73A49;--shiki-dark:#F97583"> of</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> purchases) {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    counts[purchase.category] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> counts[purchase.category] </span><span style="color:#D73A49;--shiki-dark:#F97583">+</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 1</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> counts;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> purchases</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Purchase</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { category: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"food"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"パン"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { category: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"transport"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"バス"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { category: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"food"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"牛乳"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">countByCategory</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(purchases)); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → { food: 2, transport: 1 }</span></span></code></pre>
+<p><code>&lt;&gt;</code> の書き方は、第8章で詳しく扱います。</p>
+<blockquote class="note">
+<p><strong>PHPでは</strong>
+<code>Record&lt;string, number&gt;</code> は、キーが文字列、値が数値の連想配列にあたります。</p>
+</blockquote>
+<h2 id="56-ほかの型を広げる書き方を読む">5.6 ほかの型を広げる書き方を読む</h2>
+<p>既存の型にプロパティを足して、新しい型を作れます。<code>interface</code> では <code>extends</code>、<code>type</code> では <code>&amp;</code> を使います。<code>interface</code> は、<code>type</code> と同じようにオブジェクトの形を表す書き方です。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">interface</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Item</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  name</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  price</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">interface</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Book</span><span style="color:#D73A49;--shiki-dark:#F97583"> extends</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Item</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  author</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Food</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Item</span><span style="color:#D73A49;--shiki-dark:#F97583"> &#x26;</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { </span><span style="color:#E36209;--shiki-dark:#FFAB70">expires</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> book</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Book</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"入門書"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">2000</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, author: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"山田"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> milk</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Food</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"牛乳"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">200</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, expires: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"2026-11-20"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(book.name, book.author);  </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → 入門書 山田</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(milk.name, milk.expires); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → 牛乳 2026-11-20</span></span></code></pre>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>書き方</th>
+<th>読み方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>interface Book extends Item { author: string; }</code></td>
+<td><code>Item</code> のプロパティすべてに、<code>author</code> を足した型</td>
+</tr>
+<tr>
+<td><code>type Food = Item &amp; { expires: string };</code></td>
+<td><code>Item</code> のプロパティと、<code>{ expires: string }</code> のプロパティの、両方を持つ型</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>Book</code> の値には、<code>Item</code> のプロパティも含めて、<code>?</code> のないプロパティをすべて書きます。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">interface</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Item</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  name</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  price</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">interface</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Book</span><span style="color:#D73A49;--shiki-dark:#F97583"> extends</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Item</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  author</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> broken</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Book</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"入門書"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">2000</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// エラー: Property 'author' is missing in type '{ name: string; price: number; }' but required in type 'Book'.</span></span></code></pre>
+<p><code>&amp;</code> は、ユニオン型の <code>|</code> と記号が似ています。<code>A | B</code> は「<code>A</code> か <code>B</code> のどちらか」、<code>A &amp; B</code> は「<code>A</code> と <code>B</code> の両方」です。</p>
+<h2 id="57-type-と-interface-の違い">5.7 <code>type</code> と <code>interface</code> の違い</h2>
+<p><strong>この教材では <code>type</code> を使います。</strong> <code>interface</code> はライブラリや標準の型によく出るので、読めるようにしておきます。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>違い</th>
+<th><code>type</code></th>
+<th><code>interface</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>同じ名前を 2 回宣言する</td>
+<td>型エラー</td>
+<td>1 つに統合される</td>
+</tr>
+<tr>
+<td>ユニオン型</td>
+<td>書ける</td>
+<td>書けない</td>
+</tr>
+</tbody>
+</table></div>
+<p>どちらを使うかは、プロジェクトごとに決めます（サバイバルTypeScript も、そう勧めています）。</p>
+<hr>
+<section class="question"><h2 id="問題-3型エラーを読む"><span class="question-kind">問題</span> <span class="question-number">3</span><span class="question-title">型エラーを読む</span></h2>
+<p><code>main/exercises/M05-data-types/problem-03.ts</code> には、次のコードが書かれています。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 9"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Size</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "S"</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "M"</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "L"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Product</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { </span><span style="color:#E36209;--shiki-dark:#FFAB70">name</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">; </span><span style="color:#E36209;--shiki-dark:#FFAB70">price</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">; </span><span style="color:#E36209;--shiki-dark:#FFAB70">memo</span><span style="color:#D73A49;--shiki-dark:#F97583">?:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Book</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Product</span><span style="color:#D73A49;--shiki-dark:#F97583"> &#x26;</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { </span><span style="color:#E36209;--shiki-dark:#FFAB70">author</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> stock</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Record</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">Size</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">> </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { S: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">3</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, M: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">5</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, L: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">2</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, XL: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">1</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> pen</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Product</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ペン"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">80</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> memo</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> pen.memo;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> books</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Book</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"小説"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">900</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, author: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"山田"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"辞書"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, author: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"佐藤"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(stock, memo, books);</span></span></code></pre>
+<p>どの行でどんな型エラーが出るか予測してから、次の順に進めます。</p>
+<ol>
+<li>
+<p>型エラーを表示する</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> typecheck</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> M05</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> problem-03</span></span></code></pre>
+</li>
+<li>
+<p>それぞれのエラーが何を言っているかを、自分の言葉でファイル内のコメント欄に書く</p>
+</li>
+<li>
+<p>エラーが消えるようにコードを直す</p>
+<ul>
+<li>直し方に迷ったら、下の「言い換えの例と修正例」を開きます</li>
+</ul>
+</li>
+<li>
+<p>もう一度同じコマンドを実行する</p>
+<ul>
+<li><strong>こうなれば OK</strong>：「型チェック: OK」と表示される</li>
+</ul>
+</li>
+</ol>
+<details>
+<summary>表示されるエラー</summary>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>main/exercises/M05-data-types/problem-03.ts(14,57): error TS2353: Object literal may only specify known properties, and 'XL' does not exist in type 'Record&#x3C;Size, number>'.</span></span>
+<span class="line"><span>main/exercises/M05-data-types/problem-03.ts(17,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.</span></span>
+<span class="line"><span>  Type 'undefined' is not assignable to type 'string'.</span></span>
+<span class="line"><span>main/exercises/M05-data-types/problem-03.ts(21,3): error TS2322: Type '{ name: string; author: string; }' is not assignable to type 'Book'.</span></span>
+<span class="line"><span>  Property 'price' is missing in type '{ name: string; author: string; }' but required in type 'Product'.</span></span></code></pre>
+</details></section>
+
+<details>
+<summary>言い換えの例と修正例</summary>
+<ul>
+<li><strong>エラー 1（TS2353）</strong>：「<code>Record&lt;Size, number&gt;</code> のキーは <code>S</code>・<code>M</code>・<code>L</code> だけなのに、<code>XL</code> を書いている」</li>
+<li><strong>エラー 2（TS2322）</strong>：「<code>pen.memo</code> は <code>undefined</code> かもしれないので、<code>string</code> 型の変数に入れられない」。<code>pen</code> に <code>memo</code> を足しても、<code>Product</code> の <code>memo</code> は省略できる型のままなので、エラーは消えません。</li>
+<li><strong>エラー 3（TS2322）</strong>：「<code>Book</code> には <code>Product</code> の <code>price</code> も必要なのに、辞書のデータに書かれていない」。字下げされた 2 行目に理由が出ています。</li>
+</ul>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> stock</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Record</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">Size</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">> </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { S: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">3</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, M: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">5</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, L: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">2</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> pen</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Product</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ペン"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">80</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> memo</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> undefined</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> pen.memo;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> books</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Book</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"小説"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">900</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, author: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"山田"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"辞書"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">2500</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, author: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"佐藤"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span></code></pre>
+<p><code>XL</code> が必要なら、消すのではなく <code>Size</code> に <code>&quot;XL&quot;</code> を足します。</p>
+</details>
+<section class="exercise"><h2 id="演習家計簿のデータの型">演習：家計簿のデータの型</h2>
+<p>支出データの型を書き、分類ごとの合計を出す関数を書きます。</p>
+<p><strong>進め方</strong></p>
+<ol class="phase-strip" aria-label="進め方の段階"><li>型を書く<span class="range">手順 1</span></li><li>関数を書く<span class="range">手順 2〜3</span></li><li>仕上げる<span class="range">手順 4</span></li></ol>
+<h4 class="phase-head">型を書く<span class="range">手順 1</span></h4>
+<ol class="steps">
+<li class="step" data-no="1">
+<p class="step-do"><code>main/exercises/M05-data-types/practice-01.ts</code> の、<code>Category</code> と <code>Expense</code> の型を書き直す</p>
+<ul class="step-notes">
+<li class="step-note"><code>Category</code>：<code>&quot;food&quot;</code>、<code>&quot;transport&quot;</code>、<code>&quot;other&quot;</code> のどれかが入る型にします（5.2）</li>
+<li class="step-note"><code>Expense</code>：<code>category</code>（分類。<code>Category</code> 型）と <code>memo</code>（メモ。文字列。省略できる）を足します（5.1）</li>
+<li class="step-note">2 つとも書くまでは、<code>practice-01.test.ts</code> に型エラーが残ります。テストのファイルも調べるので、コマンドにファイル名は付けません</li>
+<li class="step-note"><code>Unused '@ts-expect-error' directive.</code> は、「<code>Category</code> に <code>&quot;travel&quot;</code> も入ってしまう」という意味です。<code>Category</code> を書けば消えます</li>
+<li class="step-note"><code>problem-01.ts</code> の型エラーが出たら問題 1 に、<code>problem-03.ts</code> の型エラーが出たら問題 3 に戻って直します</li>
+</ul>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> typecheck</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> M05</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>「型チェック: OK」と表示される</span></li>
+</ul>
+</li>
+</ol>
+<h4 class="phase-head">関数を書く<span class="range">手順 2〜3</span></h4>
+<ol start="2" class="steps">
+<li class="step" data-no="2">
+<p class="step-do"><code>emptyTotals</code> の <code>throw</code> の行を書き換える</p>
+<ul class="step-notes">
+<li class="step-note">3 つの分類を <code>0</code> にしたオブジェクトを <code>return</code> します</li>
+</ul>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> test</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> M05</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>テストの表示で、<code>emptyTotals</code> で始まる行が <code>✔</code> になる</span></li>
+</ul>
+</li>
+<li class="step" data-no="3">
+<p class="step-do"><code>totalByCategory</code> の <code>throw</code> の行を書き換える</p>
+<ul class="step-notes">
+<li class="step-note">5.5 の <code>countByCategory</code> と同じ形です。<code>+ 1</code> の代わりに、<code>expense.amount</code> を足します</li>
+<li class="step-note">合計の入れ物は <code>const totals = emptyTotals();</code> で作ります</li>
+</ul>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> test</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> M05</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>テストの表示で、<code>totalByCategory</code> で始まる行がすべて <code>✔</code> になる</span></li>
+</ul>
+</li>
+</ol>
+<h4 class="phase-head">仕上げる<span class="range">手順 4</span></h4>
+<ol start="4" class="steps">
+<li class="step" data-no="4">
+<p class="step-do">章全体の型チェックとテストを実行する</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> check</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> M05</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>「型チェック: OK」「テスト: OK」</span></li>
+</ul>
+</li>
+</ol>
+<p><strong>テストで確かめるもの</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>呼び出し</th>
+<th>返す値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>emptyTotals()</code></td>
+<td><code>{ food: 0, transport: 0, other: 0 }</code></td>
+</tr>
+<tr>
+<td><code>totalByCategory(expenses)</code>（食費 800 円と 500 円、交通費 200 円の 3 件）</td>
+<td><code>{ food: 1300, transport: 200, other: 0 }</code></td>
+</tr>
+<tr>
+<td><code>totalByCategory([])</code></td>
+<td><code>{ food: 0, transport: 0, other: 0 }</code></td>
+</tr>
+</tbody>
+</table></div>
+<details>
+<summary>ヒント 1：どこを見ればよいか</summary>
+<ul>
+<li><code>Category</code>：5.2 の <code>Category</code></li>
+<li><code>Expense</code>：5.1 の <code>Item</code>（<code>?</code> の付け方）</li>
+<li><code>emptyTotals</code>・<code>totalByCategory</code>：5.5 の <code>countByCategory</code></li>
+</ul>
+</details>
+<details>
+<summary>ヒント 2：書き出し</summary>
+<ul>
+<li><code>emptyTotals</code>：<code>return { food: 0, ... };</code> と書き、3 つのキーを並べます。</li>
+<li><code>totalByCategory</code>：<code>for (const expense of expenses) { ... }</code> の中で、<code>totals[expense.category]</code> に <code>expense.amount</code> を足します。最後に <code>return totals;</code> と書きます。</li>
+</ul>
+</details>
+<details>
+<summary>テストが失敗したら</summary>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>表示</th>
+<th>よくある原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Unused '@ts-expect-error' directive.</code>（TS2578）</td>
+<td>テストの最後で「<code>Category</code> に <code>&quot;travel&quot;</code> は入らない」ことを調べています。<code>Category</code> が <code>string</code> のままだと出ます</td>
+</tr>
+<tr>
+<td>テストのファイルで <code>Property 'memo' is missing ...</code></td>
+<td><code>memo</code> に <code>?</code> を付け忘れています</td>
+</tr>
+<tr>
+<td>テストのファイルで <code>'category' does not exist in type 'Expense'</code></td>
+<td><code>Expense</code> に <code>category</code> を足していません</td>
+</tr>
+<tr>
+<td><code>Type '{}' is missing the following properties ...: food, other, transport</code></td>
+<td><code>emptyTotals</code> が空の <code>{}</code> を返しています。3 つのキーを <code>0</code> で用意します</td>
+</tr>
+<tr>
+<td>型チェックで <code>Type '&quot;other&quot;' is not assignable to type 'Category'.</code></td>
+<td><code>Category</code> に <code>&quot;other&quot;</code> を書き忘れています。3 つの分類を、全部 <code>|</code> でつなぎます</td>
+</tr>
+<tr>
+<td><code>+ food: 500</code></td>
+<td>足さずに代入しているので、最後の金額だけが残っています。<code>totals[expense.category] + expense.amount</code> を入れます</td>
+</tr>
+</tbody>
+</table></div>
+<p>表示の読み方は、<a href="../../troubleshooting.html">つまずき集</a> の「テスト」と「型チェック」にあります。</p>
+</details>
+<details class="solution"><summary>解答例を見る</summary><p class="solution-file"><code>main/solutions/M05-data-types/practice-01.ts</code></p><pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Category</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "food"</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "transport"</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "other"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Expense</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  category</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Category</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  amount</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  memo</span><span style="color:#D73A49;--shiki-dark:#F97583">?:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> emptyTotals</span><span style="color:#24292E;--shiki-dark:#E1E4E8">()</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Record</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">Category</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { food: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, transport: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, other: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">0</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> };</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> totalByCategory</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">expenses</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Expense</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[])</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Record</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">Category</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> totals</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> emptyTotals</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  for</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> expense</span><span style="color:#D73A49;--shiki-dark:#F97583"> of</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> expenses) {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    totals[expense.category] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> totals[expense.category] </span><span style="color:#D73A49;--shiki-dark:#F97583">+</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> expense.amount;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> totals;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre></details>
+</section>
+<hr>
+<h2 id="チェックリスト">チェックリスト</h2>
+<ul>
+<li class="task"><input type="checkbox"> <code>const</code> で宣言した <code>copy</code> の型が <code>string</code> になる理由を説明できる</li>
+<li class="task"><input type="checkbox"> <code>readonly</code> のプロパティがあっても、スプレッド構文なら違う値のオブジェクトを作れる理由を説明できる</li>
+<li class="task"><input type="checkbox"> <code>Record&lt;Category, number&gt;</code> の値に、すべての分類のキーが必要な理由を説明できる</li>
+</ul>
+<h2 id="詳しく学ぶ">詳しく学ぶ</h2>
+<ul>
+<li>JavaScript Primer：<a href="https://jsprimer.net/basic/object/" target="_blank" rel="noopener">オブジェクト</a></li>
+<li>サバイバルTypeScript：<a href="https://typescriptbook.jp/reference/values-types-variables/type-alias" target="_blank" rel="noopener">型エイリアス</a>、<a href="https://typescriptbook.jp/reference/values-types-variables/object/optional-property" target="_blank" rel="noopener">オプションプロパティ</a>、<a href="https://typescriptbook.jp/reference/values-types-variables/object/readonly-property" target="_blank" rel="noopener">readonlyプロパティ</a>、<a href="https://typescriptbook.jp/reference/values-types-variables/literal-types" target="_blank" rel="noopener">リテラル型</a>、<a href="https://typescriptbook.jp/reference/values-types-variables/union" target="_blank" rel="noopener">ユニオン型</a>、<a href="https://typescriptbook.jp/reference/type-reuse/utility-types/record" target="_blank" rel="noopener">Record</a>、<a href="https://typescriptbook.jp/reference/object-oriented/interface" target="_blank" rel="noopener">インターフェース</a>、<a href="https://typescriptbook.jp/reference/object-oriented/interface/interface-inheritance" target="_blank" rel="noopener">インターフェースの継承</a>、<a href="https://typescriptbook.jp/reference/object-oriented/interface/interface-vs-type-alias" target="_blank" rel="noopener">interfaceとtypeの違い</a>、<a href="https://typescriptbook.jp/reference/values-types-variables/intersection" target="_blank" rel="noopener">インターセクション型</a></li>
+</ul>
+
+      </article>
+      <nav class="prev-next"><a class="prev" href="M04-objects.html"><small>前へ</small>第4章 オブジェクトと配列</a><a class="next" href="M06-narrowing.html"><small>次へ</small>第6章 null と型の絞り込み</a></nav>
+    </main>
+  </div>
+</body>
+</html>

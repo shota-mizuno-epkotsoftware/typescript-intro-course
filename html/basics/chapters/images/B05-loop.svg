@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 270" width="660" height="270" role="img" aria-labelledby="t d">
+  <title id="t">繰り返しは、要素を 1 つずつ取り出して同じ処理をする</title>
+  <desc id="d">配列 prices の要素は 500、300、200。1 回目は price が 500 で、total = 0 + 500 が計算されて total は 500 になる。2 回目は price が 300 で、total = 500 + 300 が計算されて 800 になる。3 回目は price が 200 で、total = 800 + 200 が計算されて 1000 になる。</desc>
+  <style>
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 12px; }
+    .head { font-weight: 700; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+    .dim { fill: #6b7280; }
+    .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .obj2 { fill: #f8fafc; stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 5 3; }
+    .line { fill: none; stroke: #2563eb; stroke-width: 1.8; }
+    .line2 { fill: none; stroke: #64748b; stroke-width: 1.8; }
+    .tip { fill: #2563eb; }
+    .tip2 { fill: #64748b; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code { fill: #e5e7eb; }
+      .sub, .dim { fill: #9ca3af; }
+      .var { fill: #1e293b; stroke: #64748b; }
+      .obj { fill: #172554; stroke: #60a5fa; }
+      .obj2 { fill: #1e293b; stroke: #94a3b8; }
+      .line { stroke: #60a5fa; }
+      .line2 { stroke: #94a3b8; }
+      .tip { fill: #60a5fa; }
+      .tip2 { fill: #94a3b8; }
+    }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip2" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+  <text class="txt sub" x="20" y="26">名前</text>
+  <text class="code head" x="54" y="26">prices</text>
+  <rect class="obj" x="20" y="36" width="90" height="36"/>
+  <rect class="obj" x="110" y="36" width="90" height="36"/>
+  <rect class="obj" x="200" y="36" width="90" height="36"/>
+  <text class="code" x="65" y="59" text-anchor="middle">500</text>
+  <text class="code" x="155" y="59" text-anchor="middle">300</text>
+  <text class="code" x="245" y="59" text-anchor="middle">200</text>
+  <text class="txt sub" x="65" y="90" text-anchor="middle">1 回目</text>
+  <text class="txt sub" x="155" y="90" text-anchor="middle">2 回目</text>
+  <text class="txt sub" x="245" y="90" text-anchor="middle">3 回目</text>
+  <text class="txt sub" x="308" y="59">先頭から 1 つずつ取り出す</text>
+  <text class="txt sub" x="20" y="139">1 回目</text>
+  <rect class="obj" x="86" y="118" width="130" height="32" rx="6"/>
+  <text class="code" x="151" y="139" text-anchor="middle">price: 500</text>
+  <path class="line2" d="M216,134 L246,134" marker-end="url(#a2)"/>
+  <text class="code" x="254" y="139">total = 0 + 500</text>
+  <path class="line2" d="M424,134 L454,134" marker-end="url(#a2)"/>
+  <rect class="var" x="458" y="118" width="150" height="32" rx="6"/>
+  <text class="code" x="533" y="139" text-anchor="middle">total: 500</text>
+  <text class="txt sub" x="20" y="181">2 回目</text>
+  <rect class="obj" x="86" y="160" width="130" height="32" rx="6"/>
+  <text class="code" x="151" y="181" text-anchor="middle">price: 300</text>
+  <path class="line2" d="M216,176 L246,176" marker-end="url(#a2)"/>
+  <text class="code" x="254" y="181">total = 500 + 300</text>
+  <path class="line2" d="M424,176 L454,176" marker-end="url(#a2)"/>
+  <rect class="var" x="458" y="160" width="150" height="32" rx="6"/>
+  <text class="code" x="533" y="181" text-anchor="middle">total: 800</text>
+  <text class="txt sub" x="20" y="223">3 回目</text>
+  <rect class="obj" x="86" y="202" width="130" height="32" rx="6"/>
+  <text class="code" x="151" y="223" text-anchor="middle">price: 200</text>
+  <path class="line2" d="M216,218 L246,218" marker-end="url(#a2)"/>
+  <text class="code" x="254" y="223">total = 800 + 200</text>
+  <path class="line2" d="M424,218 L454,218" marker-end="url(#a2)"/>
+  <rect class="var" x="458" y="202" width="150" height="32" rx="6"/>
+  <text class="code" x="533" y="223" text-anchor="middle">total: 1000</text>
+  <text class="txt sub" x="20" y="258">{ } の中が、要素の数だけ繰り返される。total は、前の回の値を保つ。</text>
+</svg>

@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 570" width="740" height="570" role="img" aria-labelledby="t d">
+  <title id="t">開発者ツールのコンソール</title>
+  <desc id="d">ブラウザの窓の左に「演習: 家計簿」のページがあり、見出しの「家計簿」、名前の入力欄、金額の入力欄、「追加」のボタンが並んでいる。右に開発者ツールが開いていて、Console のタブを選んでいる。コンソールには、赤い背景の行に「Uncaught Error: TODO: ここを実装してください」と出ていて、その下に at sumAmounts から始まる呼び出しの順が続く。行の右端には、practice-01.ts:21 とファイル名と行番号が出ている。</desc>
+  <!-- 寸法：900×560 の窓を 0.8 倍。タブの列 40、ツールバー 45、開発者ツールは右に開き、ページと 55:45（Chrome の既定）。開発者ツールのタブ 26、Console のツールバー 26。メッセージの文字は 10px（狭い幅でも 1 行に収まる大きさ）。呼び出しの順の字下げは 4 文字分 -->
+  <style>
+    .ui { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 10.5px; fill: #1f1f1f; }
+    .dt { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 9.6px; fill: #1f1f1f; }
+    .gray { fill: #5f6368; }
+    .page { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 12.8px; fill: #1f2328; }
+    .h1 { font-size: 25.6px; font-weight: 700; }
+    .mono { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 8px; fill: #1f1f1f; }
+    .link { fill: #474747; text-decoration: underline; }
+    .err-text { fill: #b3261e; }
+    .err-link { text-decoration: underline; }
+    .err-row { fill: #fcefee; }
+    .err-edge { fill: none; stroke: #f5d0cd; stroke-width: 1; }
+    .err-icon { fill: #dc362e; }
+    .err-x { fill: none; stroke: #ffffff; stroke-width: 1.2; }
+    .frame { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+    .strip { fill: #dfe3e8; }
+    .white { fill: #ffffff; }
+    .omni { fill: #eef1f4; }
+    .dev { fill: #f8f9fa; }
+    .edge { fill: none; stroke: #dadce0; stroke-width: 1; }
+    .split { fill: none; stroke: #c4c7c5; stroke-width: 1; }
+    .icon { fill: none; stroke: #5f6368; stroke-width: 1.3; }
+    .btn { fill: #efefef; stroke: #767676; stroke-width: 0.8; }
+    .input { fill: #ffffff; stroke: #767676; stroke-width: 0.8; }
+    .filter { fill: #ffffff; stroke: #dadce0; stroke-width: 1; }
+    .blue { fill: #1a73e8; }
+    .red { fill: #ff5f57; }
+    .yellow { fill: #febc2e; }
+    .green { fill: #28c840; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 2; }
+    .badge { fill: #ea580c; }
+    .badge-num { font-family: -apple-system, "Segoe UI", sans-serif; font-size: 11px; font-weight: 700; fill: #ffffff; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; fill: #1f2937; }
+    .note-head { font-weight: 700; }
+    .note-sub { fill: #4b5563; }
+    .note-acc { fill: #c2410c; font-weight: 700; }
+    .brace { fill: none; stroke: #94a3b8; stroke-width: 1.5; }
+    @media (prefers-color-scheme: dark) {
+      .mark { stroke: #fb923c; }
+      .badge { fill: #f97316; }
+      .note { fill: #e5e7eb; }
+      .note-sub { fill: #9ca3af; }
+      .note-acc { fill: #fb923c; }
+      .brace { stroke: #64748b; }
+    }
+  </style>
+
+  <!-- 窓とタブの列（高さ 32） -->
+  <rect class="frame" x="10" y="10" width="720" height="448" rx="9"/>
+  <path class="strip" d="M19,10 H721 A9,9 0 0 1 730,19 V42 H10 V19 A9,9 0 0 1 19,10 Z"/>
+  <circle class="red" cx="24" cy="26" r="4.8"/><circle class="yellow" cx="40" cy="26" r="4.8"/><circle class="green" cx="56" cy="26" r="4.8"/>
+  <path class="white" d="M76,42 V22 A5,5 0 0 1 81,17 H231 A5,5 0 0 1 236,22 V42 Z"/>
+  <text class="ui" x="88" y="33">第10章 演習: 家計簿</text>
+  <text class="ui gray" x="223" y="33" text-anchor="middle">×</text>
+  <text class="ui gray" x="250" y="33">+</text>
+
+  <!-- ツールバー（高さ 36） -->
+  <rect class="white" x="10.5" y="42" width="719" height="36"/>
+  <path class="icon" d="M32,60 H22 M26.5,55.5 L22,60 L26.5,64.5"/>
+  <path class="icon" d="M42,60 H52 M47.5,55.5 L52,60 L47.5,64.5"/>
+  <path class="icon" d="M74,56 A5,5 0 1 0 75,62 M74,52 V56 H70"/>
+  <rect class="omni" x="92" y="46.5" width="620" height="27" rx="13.5"/>
+  <circle class="icon" cx="106" cy="60" r="5"/><path class="icon" d="M106,58 V58.3 M106,60 V62.8"/>
+  <text class="ui" x="118" y="64">localhost:5173/practice-01.html</text>
+  <path class="edge" d="M10.5,78 H729.5"/>
+
+  <!-- ページ（幅 396）。render の途中でエラーが出たので、一覧と合計はまだ表示されていない -->
+  <text class="page h1" x="23" y="136">家計簿</text>
+  <text class="page" x="23" y="180">名前</text>
+  <rect class="input" x="53" y="163" width="160" height="25" rx="2"/>
+  <text class="page" x="23" y="211">金額</text>
+  <rect class="input" x="53" y="194" width="160" height="25" rx="2"/>
+  <rect class="btn" x="226" y="194" width="44" height="25" rx="3"/>
+  <text class="page" x="248" y="211" text-anchor="middle">追加</text>
+
+  <!-- 開発者ツール（右に開く。幅 324） -->
+  <path class="split" d="M406,78 V457.5"/>
+  <rect class="dev" x="406.5" y="78.5" width="323" height="21"/>
+  <path class="edge" d="M406.5,99.5 H729.5"/>
+  <text class="dt gray" x="416" y="92.5">Elements</text>
+  <text class="dt" x="471" y="92.5">Console</text>
+  <rect class="blue" x="468" y="97.5" width="42" height="2"/>
+  <text class="dt gray" x="521" y="92.5">Sources</text>
+  <text class="dt gray" x="568" y="92.5">Network</text>
+  <text class="dt gray" x="617" y="92.5">≫</text>
+  <circle class="err-icon" cx="680" cy="89" r="4.5"/><path class="err-x" d="M678.2,87.2 L681.8,90.8 M681.8,87.2 L678.2,90.8"/>
+  <text class="dt err-text" x="688" y="92.5">1</text>
+  <text class="dt gray" x="716" y="92.5">⋮</text>
+  <circle class="icon" cx="417" cy="110" r="4.5"/><path class="icon" d="M414,113 L420,107"/>
+  <text class="dt" x="430" y="113.5">top ▾</text>
+  <rect class="filter" x="470" y="103.5" width="120" height="14" rx="2"/>
+  <text class="dt gray" x="476" y="113.5">Filter</text>
+  <path class="edge" d="M406.5,120.5 H729.5"/>
+
+  <!-- エラーの行（赤い背景）と、その下の呼び出しの順 -->
+  <rect class="err-row" x="406.5" y="121" width="323" height="54"/>
+  <path class="err-edge" d="M406.5,175 H729.5"/>
+  <circle class="err-icon" cx="414" cy="130.5" r="4"/><path class="err-x" d="M412.4,128.9 L415.6,132.1 M415.6,128.9 L412.4,132.1"/>
+  <text class="mono err-text" x="422" y="133.5">Uncaught Error: TODO: ここを実装してください</text>
+  <text class="mono link" x="722" y="133.5" text-anchor="end">practice-01.ts:21</text>
+  <text class="mono err-text" x="441.2" y="145.5">at sumAmounts (<tspan class="err-link">practice-01.ts:21:9</tspan>)</text>
+  <text class="mono err-text" x="441.2" y="157.5">at render (<tspan class="err-link">practice-01-view.ts:35:47</tspan>)</text>
+  <text class="mono err-text" x="441.2" y="169.5">at <tspan class="err-link">practice-01-view.ts:53:1</tspan></text>
+  <text class="dt blue" x="414" y="189">›</text>
+
+  <!-- 印 -->
+  <rect class="mark" x="465" y="81" width="48" height="17" rx="3"/>
+  <circle class="badge" cx="489" cy="66" r="8"/><text class="badge-num" x="489" y="70" text-anchor="middle">1</text>
+  <rect class="mark" x="418" y="123" width="215" height="14" rx="3"/>
+  <circle class="badge" cx="429" cy="151" r="8"/><text class="badge-num" x="429" y="155" text-anchor="middle">2</text>
+  <rect class="mark" x="636" y="123" width="90" height="14" rx="3"/>
+  <circle class="badge" cx="700" cy="149" r="8"/><text class="badge-num" x="700" y="153" text-anchor="middle">3</text>
+
+  <!-- 下の説明（範囲を括弧で示す） -->
+  <path class="brace" d="M12,466 V472 H404 V466"/>
+  <text class="note note-head" x="208" y="490" text-anchor="middle">ページ（演習: 家計簿）</text>
+  <path class="brace" d="M408,466 V472 H728 V466"/>
+  <text class="note note-head" x="568" y="490" text-anchor="middle">開発者ツール（F12 で開く）</text>
+
+  <text class="note note-sub" x="10" y="520"><tspan class="note-acc">①</tspan> Console のタブを選ぶと、コンソールが表示される。</text>
+  <text class="note note-sub" x="10" y="541"><tspan class="note-acc">②</tspan> 赤い行はエラー。関数を書く前は、TODO の throw の文が出る。</text>
+  <text class="note note-sub" x="10" y="562"><tspan class="note-acc">③</tspan> ファイル名と行番号。押すと、エラーの起きた行が開く。</text>
+</svg>

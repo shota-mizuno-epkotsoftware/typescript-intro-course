@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 240" width="660" height="240" role="img" aria-labelledby="t d">
+  <title id="t">else if は、上から順に調べる</title>
+  <desc id="d">total が 12000 のとき。1 つ目の条件 total >= 3000 が true なので、その { } の中の console.log("送料: 300円") が実行される。2 つ目の条件 total >= 10000 は調べられず、else の { } も実行されない。</desc>
+  <style>
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 12px; }
+    .head { font-weight: 700; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+    .dim { fill: #6b7280; }
+    .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .obj2 { fill: #f8fafc; stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 5 3; }
+    .line { fill: none; stroke: #2563eb; stroke-width: 1.8; }
+    .line2 { fill: none; stroke: #64748b; stroke-width: 1.8; }
+    .tip { fill: #2563eb; }
+    .tip2 { fill: #64748b; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code { fill: #e5e7eb; }
+      .sub, .dim { fill: #9ca3af; }
+      .var { fill: #1e293b; stroke: #64748b; }
+      .obj { fill: #172554; stroke: #60a5fa; }
+      .obj2 { fill: #1e293b; stroke: #94a3b8; }
+      .line { stroke: #60a5fa; }
+      .line2 { stroke: #94a3b8; }
+      .tip { fill: #60a5fa; }
+      .tip2 { fill: #94a3b8; }
+    }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip2" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+  <text class="txt sub" x="20" y="24">total が 12000 のとき</text>
+  <text class="code dim" x="34" text-anchor="end" y="69">3</text>
+  <rect class="var" x="46" y="44" width="216" height="40" rx="6"/>
+  <text class="code" x="60" y="69">if (total &gt;= 3000)</text>
+  <path class="line" d="M262,64 L354,64" marker-end="url(#a1)"/>
+  <text class="code" x="308" y="56" text-anchor="middle">true</text>
+  <rect class="obj" x="358" y="44" width="282" height="40" rx="8"/>
+  <text class="code" x="372" y="69">console.log("送料: 300円");</text>
+  <text class="code dim" x="34" text-anchor="end" y="129">5</text>
+  <rect class="obj2" x="46" y="104" width="216" height="40" rx="6"/>
+  <text class="code dim" x="60" y="129">else if (total &gt;= 10000)</text>
+  <text class="txt sub" x="280" y="129">調べられない</text>
+  <text class="code dim" x="34" text-anchor="end" y="189">7</text>
+  <rect class="obj2" x="46" y="164" width="216" height="40" rx="6"/>
+  <text class="code dim" x="60" y="189">else</text>
+  <text class="txt sub" x="280" y="189">実行されない</text>
+  <text class="txt sub" x="20" y="228">最初に true になった所の { } だけが実行される。その下の条件は調べられない。</text>
+</svg>

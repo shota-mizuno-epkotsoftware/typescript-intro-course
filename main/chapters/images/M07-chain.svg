@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 220" width="660" height="220" role="img" aria-labelledby="t d">
+  <title id="t">filter の結果に map を呼ぶ</title>
+  <desc id="d">items の 3 件のうち、filter で 1000 円未満のノートとペンの 2 件が残る。万年筆は残らない。filter が 3 件すべてを調べ終えてから、map が残った 2 件を名前に変え、cheapNames は 'ノート' と 'ペン' の配列になる。</desc>
+  <style>
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 12px; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+    .hl { fill: #2563eb; }
+    .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .line { fill: none; stroke: #64748b; stroke-width: 1.8; }
+    .tip { fill: #64748b; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code { fill: #e5e7eb; }
+      .sub { fill: #9ca3af; }
+      .hl { fill: #60a5fa; }
+      .var { fill: #1e293b; stroke: #64748b; }
+      .obj { fill: #172554; stroke: #60a5fa; }
+      .line { stroke: #94a3b8; }
+      .tip { fill: #94a3b8; }
+    }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+  <text class="code" x="20" y="26">items</text>
+  <text class="txt sub" x="275" y="26">filter の結果</text>
+  <text class="txt sub" x="530" y="26">map の結果</text>
+
+  <rect class="var" x="20" y="40" width="150" height="32" rx="6"/>
+  <text class="code" x="32" y="61">ノート</text><text class="code" x="158" y="61" text-anchor="end">120</text>
+  <rect class="var" x="20" y="80" width="150" height="32" rx="6"/>
+  <text class="code" x="32" y="101">万年筆</text><text class="code" x="158" y="101" text-anchor="end">3000</text>
+  <rect class="var" x="20" y="120" width="150" height="32" rx="6"/>
+  <text class="code" x="32" y="141">ペン</text><text class="code" x="158" y="141" text-anchor="end">80</text>
+
+  <text class="code" x="222" y="84" text-anchor="middle">.filter(…)</text>
+  <path class="line" d="M178,96 L268,96" marker-end="url(#a1)"/>
+  <text class="txt sub" x="222" y="116" text-anchor="middle">1000 円未満</text>
+  <text class="txt sub" x="222" y="132" text-anchor="middle">だけ残す</text>
+
+  <rect class="var" x="275" y="60" width="150" height="32" rx="6"/>
+  <text class="code" x="287" y="81">ノート</text><text class="code" x="413" y="81" text-anchor="end">120</text>
+  <rect class="var" x="275" y="100" width="150" height="32" rx="6"/>
+  <text class="code" x="287" y="121">ペン</text><text class="code" x="413" y="121" text-anchor="end">80</text>
+
+  <text class="code" x="477" y="84" text-anchor="middle">.map(…)</text>
+  <path class="line" d="M433,96 L523,96" marker-end="url(#a1)"/>
+  <text class="txt sub" x="477" y="116" text-anchor="middle">名前だけにする</text>
+
+  <rect class="obj" x="530" y="60" width="110" height="32" rx="6"/>
+  <text class="code" x="585" y="81" text-anchor="middle">'ノート'</text>
+  <rect class="obj" x="530" y="100" width="110" height="32" rx="6"/>
+  <text class="code" x="585" y="121" text-anchor="middle">'ペン'</text>
+  <text class="code hl" x="585" y="152" text-anchor="middle">cheapNames</text>
+
+  <text class="txt sub" x="20" y="186">filter が 3 件すべてを調べ終えてから、map が残った 2 件を変換する。</text>
+  <text class="txt sub" x="20" y="206">どちらも新しい配列を返すので、items は変わらない。</text>
+</svg>

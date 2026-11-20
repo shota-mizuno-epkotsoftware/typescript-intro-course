@@ -1,0 +1,10 @@
+body {
+  max-width: 36rem;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif;
+  line-height: 1.7;
+  color: #1f2328;
+}
+h1 { font-size: 1.25rem; font-weight: 600; }
+input, button { font: inherit; padding: 0.3rem 0.6rem; }

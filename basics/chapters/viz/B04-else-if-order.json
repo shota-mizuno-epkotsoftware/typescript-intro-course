@@ -1,0 +1,64 @@
+{
+  "file": "basics/exercises/B04-conditions/problem-02.js",
+  "label": "1行ずつ見る",
+  "code": "const total = 12000;\n\nif (total >= 3000) {\n  console.log(\"送料: 300円\");\n} else if (total >= 10000) {\n  console.log(\"送料: 無料\");\n} else {\n  console.log(\"送料: 600円\");\n}",
+  "panels": [
+    {
+      "id": "cond",
+      "label": "調べた条件"
+    },
+    {
+      "id": "console",
+      "label": "ターミナルの表示"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        1
+      ],
+      "phase": "変数を宣言する",
+      "note": "total に 12000 が入ります。",
+      "cond": [],
+      "console": []
+    },
+    {
+      "lines": [
+        3
+      ],
+      "phase": "1 つ目の条件",
+      "note": "total >= 3000 を調べます。12000 は 3000 以上なので、true です。",
+      "cond": [
+        "total >= 3000 → true"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        4
+      ],
+      "phase": "{ } の中を実行",
+      "note": "最初に true になった所の { } の中が実行されます。",
+      "cond": [
+        "total >= 3000 → true"
+      ],
+      "console": [
+        "送料: 300円"
+      ]
+    },
+    {
+      "lines": [
+        9
+      ],
+      "phase": "if の全体が終わる",
+      "note": "2 つ目の条件 total >= 10000 は調べられません。else の { } も実行されません。",
+      "cond": [
+        "total >= 3000 → true",
+        "total >= 10000 → 調べられない"
+      ],
+      "console": [
+        "送料: 300円"
+      ]
+    }
+  ]
+}

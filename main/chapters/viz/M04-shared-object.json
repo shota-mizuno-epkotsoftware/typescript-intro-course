@@ -1,0 +1,138 @@
+{
+  "file": "main/exercises/M04-objects/problem-02.ts",
+  "label": "1行ずつ見る",
+  "code": "const original = { name: \"ノート\", price: 120 };\nconst alias = original;\nalias.price = 150;\n\nconst copy = { ...original };\ncopy.price = 200;\n\nconsole.log(original.price); // ①\nconsole.log(copy.price);     // ②",
+  "panels": [
+    {
+      "id": "vars",
+      "label": "変数（どれを指しているか）"
+    },
+    {
+      "id": "values",
+      "label": "オブジェクト（実際の値）"
+    },
+    {
+      "id": "console",
+      "label": "コンソールの表示"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        1
+      ],
+      "phase": "オブジェクトを作る",
+      "note": "オブジェクトを 1 つ作り（ここではオブジェクトA と呼びます）、original がそれを指します。",
+      "vars": [
+        "original → オブジェクトA"
+      ],
+      "values": [
+        "オブジェクトA：{ name: \"ノート\", price: 120 }"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        2
+      ],
+      "phase": "代入",
+      "note": "alias に original を代入します。コピーは作られず、alias も同じオブジェクトA を指します。",
+      "vars": [
+        "original → オブジェクトA",
+        "alias → オブジェクトA"
+      ],
+      "values": [
+        "オブジェクトA：{ name: \"ノート\", price: 120 }"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        3
+      ],
+      "phase": "中身を変える",
+      "note": "alias から price を変えます。オブジェクトA は 1 つしかないので、original から見ても 150 です。",
+      "vars": [
+        "original → オブジェクトA",
+        "alias → オブジェクトA"
+      ],
+      "values": [
+        "オブジェクトA：{ name: \"ノート\", price: 150 }"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        5
+      ],
+      "phase": "スプレッド構文",
+      "note": "{ ...original } は、新しいオブジェクトB を作ります。この時点の中身がコピーされるので、price は 150 です。",
+      "vars": [
+        "original → オブジェクトA",
+        "alias → オブジェクトA",
+        "copy → オブジェクトB"
+      ],
+      "values": [
+        "オブジェクトA：{ name: \"ノート\", price: 150 }",
+        "オブジェクトB：{ name: \"ノート\", price: 150 }"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        6
+      ],
+      "phase": "中身を変える",
+      "note": "copy から price を変えます。変わるのはオブジェクトB だけです。",
+      "vars": [
+        "original → オブジェクトA",
+        "alias → オブジェクトA",
+        "copy → オブジェクトB"
+      ],
+      "values": [
+        "オブジェクトA：{ name: \"ノート\", price: 150 }",
+        "オブジェクトB：{ name: \"ノート\", price: 200 }"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        8
+      ],
+      "phase": "①",
+      "note": "original が指すオブジェクトA の price は 150 です。",
+      "vars": [
+        "original → オブジェクトA",
+        "alias → オブジェクトA",
+        "copy → オブジェクトB"
+      ],
+      "values": [
+        "オブジェクトA：{ name: \"ノート\", price: 150 }",
+        "オブジェクトB：{ name: \"ノート\", price: 200 }"
+      ],
+      "console": [
+        "150"
+      ]
+    },
+    {
+      "lines": [
+        9
+      ],
+      "phase": "②",
+      "note": "copy が指すオブジェクトB の price は 200 です。",
+      "vars": [
+        "original → オブジェクトA",
+        "alias → オブジェクトA",
+        "copy → オブジェクトB"
+      ],
+      "values": [
+        "オブジェクトA：{ name: \"ノート\", price: 150 }",
+        "オブジェクトB：{ name: \"ノート\", price: 200 }"
+      ],
+      "console": [
+        "150",
+        "200"
+      ]
+    }
+  ]
+}

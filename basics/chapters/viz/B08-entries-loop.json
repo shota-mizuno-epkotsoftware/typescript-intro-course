@@ -1,0 +1,155 @@
+{
+  "file": "basics/exercises/B08-objects/problem-02.js",
+  "label": "1行ずつ見る",
+  "code": "const entries = [\n  { date: \"2026-04-01\", category: \"食費\", amount: 1200 },\n  { date: \"2026-04-02\", category: \"交通費\", amount: 500 },\n  { date: \"2026-04-03\", category: \"食費\", amount: 800 },\n];\n\nlet total = 0;\nfor (const entry of entries) {\n  if (entry.category === \"食費\") {\n    total = total + entry.amount;\n  }\n}\nconsole.log(total);",
+  "panels": [
+    {
+      "id": "vars",
+      "label": "変数"
+    },
+    {
+      "id": "console",
+      "label": "ターミナルの表示"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        1,
+        5
+      ],
+      "phase": "配列を作る",
+      "note": "記録のオブジェクトを 3 件入れた配列を作ります。",
+      "vars": [],
+      "console": []
+    },
+    {
+      "lines": [
+        7
+      ],
+      "phase": "total を用意する",
+      "note": "合計を入れる total を、0 で用意します。",
+      "vars": [
+        "total：0"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        8
+      ],
+      "phase": "1 回目",
+      "note": "entry に、1 件目の記録が入ります。",
+      "vars": [
+        "total：0",
+        "entry.category：\"食費\"",
+        "entry.amount：1200"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        9
+      ],
+      "phase": "1 回目：条件",
+      "note": "entry.category は \"食費\" なので、条件は true です。",
+      "vars": [
+        "total：0",
+        "entry.category：\"食費\"",
+        "entry.amount：1200"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        10
+      ],
+      "phase": "1 回目：足す",
+      "note": "total に entry.amount の 1200 を足します。",
+      "vars": [
+        "total：1200",
+        "entry.category：\"食費\"",
+        "entry.amount：1200"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        8
+      ],
+      "phase": "2 回目",
+      "note": "entry に、2 件目の記録が入ります。",
+      "vars": [
+        "total：1200",
+        "entry.category：\"交通費\"",
+        "entry.amount：500"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        9
+      ],
+      "phase": "2 回目：条件",
+      "note": "entry.category は \"交通費\" なので、条件は false です。if の中は実行されず、total は 1200 のままです。",
+      "vars": [
+        "total：1200",
+        "entry.category：\"交通費\"",
+        "entry.amount：500"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        8
+      ],
+      "phase": "3 回目",
+      "note": "entry に、3 件目の記録が入ります。",
+      "vars": [
+        "total：1200",
+        "entry.category：\"食費\"",
+        "entry.amount：800"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        9
+      ],
+      "phase": "3 回目：条件",
+      "note": "entry.category は \"食費\" なので、条件は true です。",
+      "vars": [
+        "total：1200",
+        "entry.category：\"食費\"",
+        "entry.amount：800"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        10
+      ],
+      "phase": "3 回目：足す",
+      "note": "total に entry.amount の 800 を足します。",
+      "vars": [
+        "total：2000",
+        "entry.category：\"食費\"",
+        "entry.amount：800"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        13
+      ],
+      "phase": "表示する",
+      "note": "繰り返しが終わりました。total の 2000 が表示されます。",
+      "vars": [
+        "total：2000"
+      ],
+      "console": [
+        "2000"
+      ]
+    }
+  ]
+}

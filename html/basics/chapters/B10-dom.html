@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>基礎編 第10章 画面を動かす | TypeScript 入門</title>
+  <script>
+    // 保存した表示モード（ライト・ダーク）を、画面を描く前に反映する
+    try {
+      var theme = localStorage.getItem("tsl:theme");
+      if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+    } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="../../assets/style.css?v=mwobwd6f">
+  <script src="../../assets/app.js?v=mwobwd6f" defer></script>
+  <script src="../../assets/viz.js?v=mwobwd6f" defer></script>
+  <script src="../../assets/app-map.js?v=mwobwd6f" defer></script>
+</head>
+<body data-page-key="basics/chapters/B10-dom">
+  <header class="topbar">
+    <button class="menu-button" type="button" aria-controls="sidebar" aria-expanded="false">目次</button>
+    <a class="site-title" href="../../index.html">TypeScript 入門</a>
+    <div class="theme-switch" role="group" aria-label="表示モード">
+      <button type="button" data-theme-choice="light" aria-label="ライト表示" title="ライト表示">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+        </svg>
+      </button>
+      <button type="button" data-theme-choice="dark" aria-label="ダーク表示" title="ダーク表示">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <nav aria-label="章の一覧"><ul><li><a href="../../index.html">はじめに</a></li><li class="nav-group" role="separator"></li><li><a href="../../overview.html">学ぶ技術の関係</a></li><li class="nav-group">基礎編</li><li><a href="B00-setup.html">第0章 準備</a></li><li><a href="B01-values.html">第1章 値と計算</a></li><li><a href="B02-variables.html">第2章 変数</a></li><li><a href="B03-errors.html">第3章 エラーを読む</a></li><li><a href="B04-conditions.html">第4章 条件分岐</a></li><li><a href="B05-arrays-loops.html">第5章 配列と繰り返し</a></li><li><a href="B06-functions.html">第6章 関数</a></li><li><a href="B07-combining.html">第7章 関数を組み合わせる</a></li><li><a href="B08-objects.html">第8章 オブジェクト</a></li><li><a href="B09-array-methods.html">第9章 配列のメソッド</a></li><li><a href="B10-dom.html" aria-current="page">第10章 画面を動かす</a></li><li><a href="B11-final.html">第11章 修了課題</a></li><li class="nav-group">本編</li><li><a href="../../main/chapters/M00-setup.html">第0章 環境構築</a></li><li><a href="../../main/chapters/M01-syntax-table.html">第1章 基本文法の対応表</a></li><li><a href="../../main/chapters/M02-types.html">第2章 型の基本</a></li><li><a href="../../main/chapters/M03-functions.html">第3章 関数とコールバック</a></li><li><a href="../../main/chapters/M04-objects.html">第4章 オブジェクトと配列</a></li><li><a href="../../main/chapters/M05-data-types.html">第5章 データの型を書く</a></li><li><a href="../../main/chapters/M06-narrowing.html">第6章 null と型の絞り込み</a></li><li><a href="../../main/chapters/M07-array-methods.html">第7章 配列メソッド</a></li><li><a href="../../main/chapters/M08-modules.html">第8章 モジュールと型を読む</a></li><li><a href="../../main/chapters/M09-async.html">第9章 非同期</a></li><li><a href="../../main/chapters/M10-dom.html">第10章 ブラウザとDOM、イベント</a></li><li><a href="../../main/chapters/M11-next-steps.html">第11章 実践編への準備</a></li><li class="nav-group">実践編</li><li><a href="../../practice/chapters/P01-overview.html">第1章 全体像と、画面が表示されるまで</a></li><li><a href="../../practice/chapters/P02-types.html">第2章 データの型</a></li><li><a href="../../practice/chapters/P03-form.html">第3章 フォームの入力と検証</a></li><li><a href="../../practice/chapters/P04-events.html">第4章 イベントから再描画まで</a></li><li><a href="../../practice/chapters/P05-summary.html">第5章 集計とテスト</a></li><li><a href="../../practice/chapters/P06-external.html">第6章 外から来るデータ</a></li><li><a href="../../practice/chapters/P07-changes.html">第7章 変更を読む・総合</a></li><li class="nav-group" role="separator"></li><li><a href="../../troubleshooting.html">つまずき集</a></li><li><a href="../../tools.html">ツール一覧</a></li><li><a href="../../references.html">参考資料との対応</a></li></ul></nav>
+    </aside>
+    <main class="content">
+      <article>
+        <h1>基礎編 第10章 画面を動かす</h1>
+<section class="chapter-summary" aria-label="この章で学ぶこと"><p class="summary-title">この章で学ぶこと</p><ul>
+<li>ブラウザの画面の文字を JavaScript で書き換える</li>
+<li>ボタンが押されたときに処理を実行する</li>
+<li>入力欄に打たれた値を使うときに、何が起きるか</li>
+</ul></section>
+<details class="toc" open><summary>このページの内容</summary><nav aria-label="このページの内容"><ul><li><a href="#101-html-と-javascript">10.1 HTML と JavaScript</a></li><li><a href="#102-要素を取る">10.2 要素を取る</a></li><li><a href="#103-文字を変える">10.3 文字を変える</a></li><li><a href="#104-クリックに反応する">10.4 クリックに反応する</a></li><li><a href="#問題-1いつ実行されるか">問題 1：いつ実行されるか</a></li><li><a href="#105-入力欄の値を取り出す">10.5 入力欄の値を取り出す</a></li><li><a href="#問題-2入力欄の値を足す">問題 2：入力欄の値を足す</a></li><li><a href="#106-文字列を数値に変える">10.6 文字列を数値に変える</a></li><li><a href="#107-要素が見つからないとき">10.7 要素が見つからないとき</a></li><li><a href="#演習-1間違いを直す">演習 1：間違いを直す</a></li><li><a href="#演習-2カウンターを作る">演習 2：カウンターを作る</a></li><li><a href="#演習-3金額を足していく">演習 3：金額を足していく</a></li><li><a href="#チェックリスト">チェックリスト</a></li><li><a href="#詳しく学ぶ">詳しく学ぶ</a></li></ul></nav></details>
+<h2 id="101-html-と-javascript">10.1 HTML と JavaScript</h2>
+<p>ブラウザの画面は、<strong>HTML</strong> というファイルで作られています。JavaScript は HTML から読み込まれて、その画面を動かします。</p>
+<p>この章のフォルダの <code>basics/exercises/B10-dom/try.html</code> には、次の行があります。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 9"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">p</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"message"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>ここに表示します&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">p</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>押す&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">p</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"amount"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> />&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">p</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">script</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"module"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> src</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"./try.js"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">script</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre>
+<p>HTML では、<code>&lt;p&gt;</code> のような<strong>タグ</strong>で画面の部品を書きます。タグで作られた部品を<strong>要素</strong>と呼びます。配列の要素とは別のものです。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>書き方</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;p&gt;...&lt;/p&gt;</code></td>
+<td>文章の要素。間に書いた文字が表示される</td>
+</tr>
+<tr>
+<td><code>&lt;button&gt;...&lt;/button&gt;</code></td>
+<td>ボタンの要素</td>
+</tr>
+<tr>
+<td><code>&lt;input /&gt;</code></td>
+<td>入力欄の要素。<code>value=&quot;100&quot;</code> は、最初に入っている文字</td>
+</tr>
+<tr>
+<td><code>id=&quot;message&quot;</code></td>
+<td>要素に付けた名前。JavaScript から要素を探すときに使う</td>
+</tr>
+<tr>
+<td><code>&lt;script ... src=&quot;./try.js&quot;&gt;</code></td>
+<td><code>try.js</code> を読み込んで実行する</td>
+</tr>
+</tbody>
+</table></div>
+<p>この章では HTML は書き換えず、JavaScript だけを書きます。</p>
+<h3 id="画面を開く">画面を開く</h3>
+<p>ターミナルで、次のコマンドを実行します。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> dev</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> B10</span></span></code></pre>
+<p>ブラウザが開き、この章のページの一覧が表示されます。「試すためのページ」を押すと、<code>try.html</code> の画面が開きます。</p>
+<ul>
+<li>ブラウザは Chrome か Edge を使います。ほかのブラウザで開いたときは、表示されたアドレスを Chrome か Edge に貼り付けます。</li>
+<li>JavaScript のファイルを書き換えて保存すると、画面は自動で読み込み直されます。</li>
+<li>終わるときは、ターミナルで <code>Ctrl</code>+<code>C</code> を押します。動かしている間は、そのターミナルにほかのコマンドを打てません。</li>
+<li>動かしたまま別のコマンドを打つときは、VS Code の「ターミナル」→「新しいターミナル」で、2 つ目のターミナルを開きます（第0章の 0.2）。</li>
+</ul>
+<h3 id="コンソールを開く">コンソールを開く</h3>
+<p>ブラウザで実行した <code>console.log</code> の表示は、ターミナルではなく、ブラウザの<strong>コンソール</strong>に出ます。</p>
+<p>コンソールは、ブラウザで <code>F12</code> キー（macOS は <code>Cmd</code>+<code>Option</code>+<code>I</code>）を押し、開いた画面の「Console」（コンソール）を選ぶと表示されます。<code>try.js を読み込みました</code> と表示されていれば、<code>try.js</code> が実行されています。</p>
+<figure><svg class="fig1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 530" width="740" height="530" role="img" aria-labelledby="fig1-t fig1-d">
+  <title id="fig1-t">ブラウザの画面とコンソール</title>
+  <desc id="fig1-d">ブラウザの窓の左にページがあり、「ここに表示します」の文章、「押す」のボタン、100 と入った入力欄が、上から順に並んでいる。右に開発者ツールが開いていて、Console のタブに、console.log の表示の「try.js を読み込みました」が出ている。その行の右端に、try.js:3 とファイル名と行番号が出ている。</desc>
+  <!-- 寸法：900×560 の窓を 0.8 倍。タブの列 40、ツールバー 45、開発者ツールは右に開き、ページと 55:45（Chrome の既定）。開発者ツールのタブ 26、Console のツールバー 26、メッセージの行 21 -->
+  <style>
+.fig1 .ui { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 10.5px; fill: #1f1f1f; }
+.fig1 .dt { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 9.6px; fill: #1f1f1f; }
+.fig1 .gray { fill: #5f6368; }
+.fig1 .page { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 12.8px; fill: #1f2328; }
+.fig1 .h1 { font-size: 16px; font-weight: 700; }
+.fig1 .mono { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 9.6px; fill: #1f1f1f; }
+.fig1 .link { fill: #474747; text-decoration: underline; }
+.fig1 .frame { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+.fig1 .strip { fill: #dfe3e8; }
+.fig1 .white { fill: #ffffff; }
+.fig1 .omni { fill: #eef1f4; }
+.fig1 .dev { fill: #f8f9fa; }
+.fig1 .edge { fill: none; stroke: #dadce0; stroke-width: 1; }
+.fig1 .split { fill: none; stroke: #c4c7c5; stroke-width: 1; }
+.fig1 .icon { fill: none; stroke: #5f6368; stroke-width: 1.3; }
+.fig1 .btn { fill: #efefef; stroke: #767676; stroke-width: 0.8; }
+.fig1 .input { fill: #ffffff; stroke: #767676; stroke-width: 0.8; }
+.fig1 .filter { fill: #ffffff; stroke: #dadce0; stroke-width: 1; }
+.fig1 .blue { fill: #1a73e8; }
+.fig1 .red { fill: #ff5f57; }
+.fig1 .yellow { fill: #febc2e; }
+.fig1 .green { fill: #28c840; }
+.fig1 .mark { fill: none; stroke: #ea580c; stroke-width: 2; }
+.fig1 .badge { fill: #ea580c; }
+.fig1 .badge-num { font-family: -apple-system, "Segoe UI", sans-serif; font-size: 11px; font-weight: 700; fill: #ffffff; }
+.fig1 .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; fill: #1f2937; }
+.fig1 .note-head { font-weight: 700; }
+.fig1 .note-sub { fill: #4b5563; }
+.fig1 .note-acc { fill: #c2410c; font-weight: 700; }
+.fig1 .brace { fill: none; stroke: #94a3b8; stroke-width: 1.5; }
+
+    @media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) .fig1 .mark { stroke: #fb923c; }
+:root:not([data-theme="light"]) .fig1 .badge { fill: #f97316; }
+:root:not([data-theme="light"]) .fig1 .note { fill: #e5e7eb; }
+:root:not([data-theme="light"]) .fig1 .note-sub { fill: #9ca3af; }
+:root:not([data-theme="light"]) .fig1 .note-acc { fill: #fb923c; }
+:root:not([data-theme="light"]) .fig1 .brace { stroke: #64748b; }
+
+    }
+:root[data-theme="dark"] .fig1 .mark { stroke: #fb923c; }
+:root[data-theme="dark"] .fig1 .badge { fill: #f97316; }
+:root[data-theme="dark"] .fig1 .note { fill: #e5e7eb; }
+:root[data-theme="dark"] .fig1 .note-sub { fill: #9ca3af; }
+:root[data-theme="dark"] .fig1 .note-acc { fill: #fb923c; }
+:root[data-theme="dark"] .fig1 .brace { stroke: #64748b; }
+
+    </style>
+
+  <!-- 窓とタブの列（高さ 32） -->
+  <rect class="frame" x="10" y="10" width="720" height="448" rx="9"/>
+  <path class="strip" d="M19,10 H721 A9,9 0 0 1 730,19 V42 H10 V19 A9,9 0 0 1 19,10 Z"/>
+  <circle class="red" cx="24" cy="26" r="4.8"/><circle class="yellow" cx="40" cy="26" r="4.8"/><circle class="green" cx="56" cy="26" r="4.8"/>
+  <path class="white" d="M76,42 V22 A5,5 0 0 1 81,17 H231 A5,5 0 0 1 236,22 V42 Z"/>
+  <text class="ui" x="88" y="33">試すためのページ</text>
+  <text class="ui gray" x="223" y="33" text-anchor="middle">×</text>
+  <text class="ui gray" x="250" y="33">+</text>
+
+  <!-- ツールバー（高さ 36） -->
+  <rect class="white" x="10.5" y="42" width="719" height="36"/>
+  <path class="icon" d="M32,60 H22 M26.5,55.5 L22,60 L26.5,64.5"/>
+  <path class="icon" d="M42,60 H52 M47.5,55.5 L52,60 L47.5,64.5"/>
+  <path class="icon" d="M74,56 A5,5 0 1 0 75,62 M74,52 V56 H70"/>
+  <rect class="omni" x="92" y="46.5" width="620" height="27" rx="13.5"/>
+  <circle class="icon" cx="106" cy="60" r="5"/><path class="icon" d="M106,58 V58.3 M106,60 V62.8"/>
+  <text class="ui" x="118" y="64">localhost:5173/try.html</text>
+  <path class="edge" d="M10.5,78 H729.5"/>
+
+  <!-- ページ（幅 396） -->
+  <text class="page h1" x="23" y="122">試すためのページ</text>
+  <text class="page" x="23" y="152">ここに表示します</text>
+  <rect class="btn" x="23" y="166" width="46" height="25" rx="3"/>
+  <text class="page" x="46" y="183" text-anchor="middle">押す</text>
+  <rect class="input" x="23" y="205" width="150" height="25" rx="2"/>
+  <text class="page" x="31" y="222">100</text>
+
+  <!-- 開発者ツール（右に開く。幅 324） -->
+  <path class="split" d="M406,78 V457.5"/>
+  <rect class="dev" x="406.5" y="78.5" width="323" height="21"/>
+  <path class="edge" d="M406.5,99.5 H729.5"/>
+  <text class="dt gray" x="416" y="92.5">Elements</text>
+  <text class="dt" x="471" y="92.5">Console</text>
+  <rect class="blue" x="468" y="97.5" width="42" height="2"/>
+  <text class="dt gray" x="521" y="92.5">Sources</text>
+  <text class="dt gray" x="568" y="92.5">Network</text>
+  <text class="dt gray" x="617" y="92.5">≫</text>
+  <circle class="icon" cx="417" cy="110" r="4.5"/><path class="icon" d="M414,113 L420,107"/>
+  <text class="dt" x="430" y="113.5">top ▾</text>
+  <rect class="filter" x="470" y="103.5" width="120" height="14" rx="2"/>
+  <text class="dt gray" x="476" y="113.5">Filter</text>
+  <path class="edge" d="M406.5,120.5 H729.5"/>
+  <text class="mono" x="416" y="134.5">try.js を読み込みました</text>
+  <text class="mono link" x="720" y="134.5" text-anchor="end">try.js:3</text>
+  <path class="edge" d="M406.5,141.5 H729.5"/>
+  <text class="dt blue" x="414" y="155">›</text>
+
+  <!-- 印 -->
+  <rect class="mark" x="672" y="123.5" width="54" height="16" rx="3"/>
+  <circle class="badge" cx="662" cy="131.5" r="8"/><text class="badge-num" x="662" y="135.5" text-anchor="middle">1</text>
+
+  <!-- 下の説明（範囲を括弧で示す） -->
+  <path class="brace" d="M12,466 V472 H404 V466"/>
+  <text class="note note-head" x="208" y="490" text-anchor="middle">ページ</text>
+  <path class="brace" d="M408,466 V472 H728 V466"/>
+  <text class="note note-head" x="568" y="490" text-anchor="middle">開発者ツール（F12 で開く）</text>
+
+  <text class="note note-sub" x="10" y="520">console.log の表示は、開発者ツールの Console に出る。<tspan class="note-acc">①</tspan> は、ファイル名と行番号。</text>
+</svg><figcaption>図10-1 ブラウザの画面とコンソール</figcaption></figure>
+<p>この章のコード例は、<code>basics/exercises/B10-dom/try.js</code> に打ち、「試すためのページ」で動きを見ます（前のコード例は消してから打ちます）。</p>
+<ul>
+<li>最初から書いてある 3 行（コメントの 2 行と <code>console.log</code> の行）も、消してから打ちます。</li>
+</ul>
+<h2 id="102-要素を取る">10.2 要素を取る</h2>
+<p><code>document.querySelector(&quot;#名前&quot;)</code> は、その <code>id</code> の要素を探して返します。<code>#</code> は、「<code>id</code> で探す」という印です。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> message</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#message"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(message);</span></span></code></pre>
+<p>コンソールに、<code>&lt;p id=&quot;message&quot;&gt;</code> の要素が表示されます。<code>document</code> は、開いているページの全体を表すオブジェクトです。ブラウザが最初から用意しています。</p>
+<h2 id="103-文字を変える">10.3 文字を変える</h2>
+<p>要素もオブジェクトです。<code>textContent</code> というプロパティに文字列を代入すると、画面の文字が変わります。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> message</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#message"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">message.textContent </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "こんにちは"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span></code></pre>
+<p>画面の「ここに表示します」が、「こんにちは」に変わります。</p>
+<figure><svg class="fig2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 240" width="660" height="240" role="img" aria-labelledby="fig2-t fig2-d">
+  <title id="fig2-t">HTML の id と、JavaScript と、画面のつながり</title>
+  <desc id="fig2-d">HTML の p 要素には id=&quot;message&quot; が付いている。JavaScript の document.querySelector("#message") は、同じ名前でその要素を探す。取った要素の textContent に「こんにちは」を代入すると、画面の文字が「こんにちは」に変わる。</desc>
+  <style>
+.fig2 .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+.fig2 .sub { fill: #4b5563; font-size: 12px; }
+.fig2 .head { font-weight: 700; }
+.fig2 .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+.fig2 .small { font-size: 11.5px; }
+.fig2 .hl { fill: #2563eb; }
+.fig2 .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+.fig2 .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+.fig2 .obj2 { fill: none; stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 5 3; }
+.fig2 .win { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.5; }
+.fig2 .bar { fill: #eef1f5; stroke: #94a3b8; stroke-width: 1.5; }
+.fig2 .rule { fill: none; stroke: #cbd5e1; stroke-width: 1; }
+.fig2 .dot { fill: #cbd5e1; }
+.fig2 .line { fill: none; stroke: #2563eb; stroke-width: 1.8; }
+.fig2 .line2 { fill: none; stroke: #64748b; stroke-width: 1.8; }
+.fig2 .dash { stroke-dasharray: 5 3; }
+.fig2 .tip { fill: #2563eb; }
+.fig2 .tip2 { fill: #64748b; }
+
+    @media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) .fig2 .txt, :root:not([data-theme="light"]) .fig2 .code { fill: #e5e7eb; }
+:root:not([data-theme="light"]) .fig2 .sub { fill: #9ca3af; }
+:root:not([data-theme="light"]) .fig2 .hl { fill: #60a5fa; }
+:root:not([data-theme="light"]) .fig2 .var { fill: #1e293b; stroke: #64748b; }
+:root:not([data-theme="light"]) .fig2 .obj { fill: #172554; stroke: #60a5fa; }
+:root:not([data-theme="light"]) .fig2 .obj2 { stroke: #64748b; }
+:root:not([data-theme="light"]) .fig2 .win { fill: #0f1419; stroke: #64748b; }
+:root:not([data-theme="light"]) .fig2 .bar { fill: #1e293b; stroke: #64748b; }
+:root:not([data-theme="light"]) .fig2 .rule { stroke: #334155; }
+:root:not([data-theme="light"]) .fig2 .dot { fill: #475569; }
+:root:not([data-theme="light"]) .fig2 .line { stroke: #60a5fa; }
+:root:not([data-theme="light"]) .fig2 .line2 { stroke: #94a3b8; }
+:root:not([data-theme="light"]) .fig2 .tip { fill: #60a5fa; }
+:root:not([data-theme="light"]) .fig2 .tip2 { fill: #94a3b8; }
+
+    }
+:root[data-theme="dark"] .fig2 .txt, :root[data-theme="dark"] .fig2 .code { fill: #e5e7eb; }
+:root[data-theme="dark"] .fig2 .sub { fill: #9ca3af; }
+:root[data-theme="dark"] .fig2 .hl { fill: #60a5fa; }
+:root[data-theme="dark"] .fig2 .var { fill: #1e293b; stroke: #64748b; }
+:root[data-theme="dark"] .fig2 .obj { fill: #172554; stroke: #60a5fa; }
+:root[data-theme="dark"] .fig2 .obj2 { stroke: #64748b; }
+:root[data-theme="dark"] .fig2 .win { fill: #0f1419; stroke: #64748b; }
+:root[data-theme="dark"] .fig2 .bar { fill: #1e293b; stroke: #64748b; }
+:root[data-theme="dark"] .fig2 .rule { stroke: #334155; }
+:root[data-theme="dark"] .fig2 .dot { fill: #475569; }
+:root[data-theme="dark"] .fig2 .line { stroke: #60a5fa; }
+:root[data-theme="dark"] .fig2 .line2 { stroke: #94a3b8; }
+:root[data-theme="dark"] .fig2 .tip { fill: #60a5fa; }
+:root[data-theme="dark"] .fig2 .tip2 { fill: #94a3b8; }
+
+    </style>
+  <defs>
+    <marker id="fig2-a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="fig2-a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip2" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+  <text class="txt sub" x="20" y="24">HTML（try.html）</text>
+  <rect class="var" x="20" y="34" width="400" height="40" rx="6"/>
+  <text class="code" x="32" y="59">&lt;p <tspan class="hl">id=&quot;message&quot;</tspan>&gt;ここに表示します&lt;/p&gt;</text>
+
+  <text class="txt sub" x="20" y="124">JavaScript（try.js）</text>
+  <rect class="var" x="20" y="134" width="420" height="62" rx="6"/>
+  <text class="code" x="32" y="158">const message = document.querySelector(<tspan class="hl">"#message"</tspan>);</text>
+  <text class="code" x="32" y="182">message.textContent = "こんにちは";</text>
+
+  <path class="line" d="M362,144 L362,102 L100,102 L100,70" marker-end="url(#fig2-a1)"/>
+  <text class="txt sub" x="231" y="96" text-anchor="middle">同じ名前で、要素を探す</text>
+
+  <text class="txt sub" x="490" y="24">画面</text>
+  <rect class="win" x="490" y="34" width="150" height="162" rx="8"/>
+  <path class="bar" d="M490,56 L490,42 Q490,34 498,34 L632,34 Q640,34 640,42 L640,56 z"/>
+  <circle class="dot" cx="504" cy="45" r="4"/><circle class="dot" cx="517" cy="45" r="4"/><circle class="dot" cx="530" cy="45" r="4"/>
+  <rect class="obj" x="502" y="100" width="126" height="34" rx="5"/>
+  <text class="txt" x="565" y="122" text-anchor="middle">こんにちは</text>
+  <path class="line" d="M440,177 L466,177 L466,117 L498,117" marker-end="url(#fig2-a1)"/>
+
+  <text class="txt sub" x="20" y="226">id は、HTML の要素と JavaScript をつなぐ名前。textContent に代入すると、画面の文字が変わる。</text>
+</svg><figcaption>図10-2 HTML の id と、JavaScript と、画面のつながり</figcaption></figure>
+<h3 id="試す">試す</h3>
+<p>2 行目の右側を、<code>`合計: ${120 + 80}円`</code> に変えて保存してください。</p>
+<p>画面の表示は <code>合計: 200円</code> です。計算の結果を画面に出すときも、<code>console.log</code> のときと同じ書き方が使えます。</p>
+<h2 id="104-クリックに反応する">10.4 クリックに反応する</h2>
+<p><code>要素.addEventListener(&quot;click&quot;, 関数)</code> と書くと、その要素がクリックされたときに、渡した関数が実行されます。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> message</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#message"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> button</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#button"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">button.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">addEventListener</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"click"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, () </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  message.textContent </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "押されました"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">});</span></span></code></pre>
+<ul>
+<li><code>addEventListener</code> は、関数を登録するだけです。渡した関数の中は、その場では実行されません。登録が済むと、次の行に進みます。</li>
+<li>渡した関数は、クリックされるたびに 1 回ずつ実行されます。呼ぶのはブラウザです。関数を引数で渡す形は、第9章の <code>map</code> や <code>filter</code> と同じです。</li>
+<li>引数のないアロー関数は、<code>=&gt;</code> の左に <code>( )</code> だけを書きます。</li>
+<li>関数を先に <code>const show = () =&gt; { ... };</code> と変数に入れたときは、<code>addEventListener(&quot;click&quot;, show)</code> と名前だけを渡します。<code>show()</code> と書くと、その場で呼んだ結果を渡します（第9章の 9.1）。</li>
+</ul>
+<section class="question"><h2 id="問題-1いつ実行されるか"><span class="question-kind">問題</span> <span class="question-number">1</span><span class="question-title">いつ実行されるか</span></h2>
+<p><code>basics/exercises/B10-dom/problem-01.js</code></p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> message</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#message"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> button</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#button"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">let</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> count </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"A"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">button.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">addEventListener</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"click"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, () </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  count </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> count </span><span style="color:#D73A49;--shiki-dark:#F97583">+</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 1</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"B"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  message.textContent </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> `${</span><span style="color:#24292E;--shiki-dark:#E1E4E8">count</span><span style="color:#032F62;--shiki-dark:#9ECBFF">} 回押されました`</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">});</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"C"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span></code></pre>
+<p>ページを開く前に、上のコードを見て、次の 2 つを予測してください。</p>
+<ul>
+<li>① ページを開いた直後に、コンソールに表示されるもの</li>
+<li>② ボタンを 2 回押した後の、コンソールの表示と画面の文字</li>
+</ul>
+<p>予測したら、ページの一覧から「問題 1」を開いて ① を見ます。次に、ボタンを 2 回押して ② を見ます。</p>
+<details>
+<summary>答えと解説</summary>
+<p><strong>① ページを開いた直後は、<code>A</code> と <code>C</code> が表示されます。</strong></p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>A</span></span>
+<span class="line"><span>C</span></span></code></pre>
+<p><code>B</code> は表示されません。<code>addEventListener</code> は関数を登録するだけで、関数の中は、その場では実行されません（10.4）。</p>
+<p><strong>② 押すたびに、関数の中が 1 回実行されます。</strong></p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>A</span></span>
+<span class="line"><span>C</span></span>
+<span class="line"><span>B</span></span>
+<span class="line"><span>B</span></span></code></pre>
+<p>コンソールに <code>B</code> が 1 行だけ出て、横に <code>2</code> と出ることもあります。同じ表示が続くと、コンソールは 1 行にまとめて回数を出します。</p>
+<p>画面の文字は、<code>2 回押されました</code> です。</p>
+<p><code>count</code> は、関数の外で宣言した変数です。関数が終わっても値が残るので、押すたびに 1 ずつ増えます。</p>
+<figure><svg class="fig3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 240" width="660" height="240" role="img" aria-labelledby="fig3-t fig3-d">
+  <title id="fig3-t">読み込んだときに実行される行と、クリックで実行される行</title>
+  <desc id="fig3-d">ページを開いたときは、1〜5 行目、6 行目、11 行目の順に 1 回だけ実行され、コンソールに A と C が出る。6 行目は関数を登録するだけで、関数の中は実行しない。その後、ボタンを押すたびに、6 行目で登録した関数の中の 7〜9 行目が実行され、コンソールに B が出て、画面の文字が変わる。</desc>
+  <style>
+.fig3 .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+.fig3 .sub { fill: #4b5563; font-size: 12px; }
+.fig3 .head { font-weight: 700; }
+.fig3 .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+.fig3 .small { font-size: 11.5px; }
+.fig3 .hl { fill: #2563eb; }
+.fig3 .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+.fig3 .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+.fig3 .obj2 { fill: none; stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 5 3; }
+.fig3 .win { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.5; }
+.fig3 .bar { fill: #eef1f5; stroke: #94a3b8; stroke-width: 1.5; }
+.fig3 .rule { fill: none; stroke: #cbd5e1; stroke-width: 1; }
+.fig3 .dot { fill: #cbd5e1; }
+.fig3 .line { fill: none; stroke: #2563eb; stroke-width: 1.8; }
+.fig3 .line2 { fill: none; stroke: #64748b; stroke-width: 1.8; }
+.fig3 .reg { fill: none; stroke: #94a3b8; stroke-width: 1; }
+.fig3 .tip3 { fill: #94a3b8; }
+.fig3 .tip { fill: #2563eb; }
+.fig3 .tip2 { fill: #64748b; }
+
+    @media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) .fig3 .txt, :root:not([data-theme="light"]) .fig3 .code { fill: #e5e7eb; }
+:root:not([data-theme="light"]) .fig3 .sub { fill: #9ca3af; }
+:root:not([data-theme="light"]) .fig3 .hl { fill: #60a5fa; }
+:root:not([data-theme="light"]) .fig3 .var { fill: #1e293b; stroke: #64748b; }
+:root:not([data-theme="light"]) .fig3 .obj { fill: #172554; stroke: #60a5fa; }
+:root:not([data-theme="light"]) .fig3 .obj2 { stroke: #64748b; }
+:root:not([data-theme="light"]) .fig3 .win { fill: #0f1419; stroke: #64748b; }
+:root:not([data-theme="light"]) .fig3 .bar { fill: #1e293b; stroke: #64748b; }
+:root:not([data-theme="light"]) .fig3 .rule { stroke: #334155; }
+:root:not([data-theme="light"]) .fig3 .dot { fill: #475569; }
+:root:not([data-theme="light"]) .fig3 .line { stroke: #60a5fa; }
+:root:not([data-theme="light"]) .fig3 .line2 { stroke: #94a3b8; }
+:root:not([data-theme="light"]) .fig3 .tip { fill: #60a5fa; }
+:root:not([data-theme="light"]) .fig3 .tip2 { fill: #94a3b8; }
+:root:not([data-theme="light"]) .fig3 .reg { stroke: #64748b; }
+:root:not([data-theme="light"]) .fig3 .tip3 { fill: #64748b; }
+
+    }
+:root[data-theme="dark"] .fig3 .txt, :root[data-theme="dark"] .fig3 .code { fill: #e5e7eb; }
+:root[data-theme="dark"] .fig3 .sub { fill: #9ca3af; }
+:root[data-theme="dark"] .fig3 .hl { fill: #60a5fa; }
+:root[data-theme="dark"] .fig3 .var { fill: #1e293b; stroke: #64748b; }
+:root[data-theme="dark"] .fig3 .obj { fill: #172554; stroke: #60a5fa; }
+:root[data-theme="dark"] .fig3 .obj2 { stroke: #64748b; }
+:root[data-theme="dark"] .fig3 .win { fill: #0f1419; stroke: #64748b; }
+:root[data-theme="dark"] .fig3 .bar { fill: #1e293b; stroke: #64748b; }
+:root[data-theme="dark"] .fig3 .rule { stroke: #334155; }
+:root[data-theme="dark"] .fig3 .dot { fill: #475569; }
+:root[data-theme="dark"] .fig3 .line { stroke: #60a5fa; }
+:root[data-theme="dark"] .fig3 .line2 { stroke: #94a3b8; }
+:root[data-theme="dark"] .fig3 .tip { fill: #60a5fa; }
+:root[data-theme="dark"] .fig3 .tip2 { fill: #94a3b8; }
+:root[data-theme="dark"] .fig3 .reg { stroke: #64748b; }
+:root[data-theme="dark"] .fig3 .tip3 { fill: #64748b; }
+
+    </style>
+  <defs>
+    <marker id="fig3-a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="fig3-a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip2" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="fig3-a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path class="tip3" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+  <text class="txt sub" x="20" y="24">ページを開いたとき（上から順に、1 回だけ）</text>
+  <rect class="var" x="20" y="36" width="180" height="52" rx="6"/>
+  <text class="txt" x="110" y="58" text-anchor="middle">1〜5 行目</text>
+  <text class="txt sub" x="110" y="78" text-anchor="middle">コンソールに A</text>
+  <path class="line2" d="M200,62 L226,62" marker-end="url(#fig3-a2)"/>
+  <rect class="var" x="230" y="36" width="200" height="52" rx="6"/>
+  <text class="txt" x="330" y="58" text-anchor="middle">6 行目：関数を登録する</text>
+  <text class="txt sub" x="330" y="78" text-anchor="middle">関数の中は、実行しない</text>
+  <path class="line2" d="M430,62 L456,62" marker-end="url(#fig3-a2)"/>
+  <rect class="var" x="460" y="36" width="180" height="52" rx="6"/>
+  <text class="txt" x="550" y="58" text-anchor="middle">11 行目</text>
+  <text class="txt sub" x="550" y="78" text-anchor="middle">コンソールに C</text>
+
+  <path class="line2" d="M600,88 L600,146" marker-end="url(#fig3-a2)"/>
+  <text class="txt sub" x="590" y="114" text-anchor="end">その後、ボタンを</text>
+  <text class="txt sub" x="590" y="132" text-anchor="end">押すたびに</text>
+
+  <path class="reg" d="M330,88 L330,176 L376,176" marker-end="url(#fig3-a3)"/>
+  <text class="txt sub" x="340" y="166">登録</text>
+
+  <rect class="obj" x="380" y="150" width="260" height="52" rx="6"/>
+  <text class="txt" x="510" y="172" text-anchor="middle">7〜9 行目：登録した関数の中</text>
+  <text class="txt sub" x="510" y="192" text-anchor="middle">コンソールに B、画面の文字が変わる</text>
+
+  <text class="txt sub" x="20" y="230">登録した関数の中は、ボタンが押されるまで実行されない。</text>
+</svg><figcaption>図10-3 読み込んだときに実行される行と、クリックで実行される行</figcaption><script type="application/json" class="viz-data">{"file":"basics/exercises/B10-dom/problem-01.js","label":"1行ずつ見る","code":"const message = document.querySelector(\"#message\");\nconst button = document.querySelector(\"#button\");\nlet count = 0;\n\nconsole.log(\"A\");\nbutton.addEventListener(\"click\", () => {\n  count = count + 1;\n  console.log(\"B\");\n  message.textContent = `${count} 回押されました`;\n});\nconsole.log(\"C\");","panels":[{"id":"console","label":"コンソールの表示"},{"id":"screen","label":"画面の文字と count"}],"steps":[{"lines":[1,3],"phase":"ページを開く","note":"ページを開くと、上の行から順に実行されます。要素を 2 つ取り、count を 0 にします。","console":[],"screen":["まだ押されていません","count：0"]},{"lines":[5],"phase":"ページを開く","note":"コンソールに A を表示します。","console":["A"],"screen":["まだ押されていません","count：0"]},{"lines":[6],"phase":"ページを開く（登録）","note":"addEventListener は、「クリックされたら、この関数を実行する」と登録します。関数の中は、ここでは実行されません。","console":["A"],"screen":["まだ押されていません","count：0"]},{"lines":[11],"phase":"ページを開く","note":"登録が済むと、次の行に進みます。コンソールに C を表示します。ここまでが、ページを開いた直後です。","console":["A","C"],"screen":["まだ押されていません","count：0"]},{"lines":[7,9],"phase":"1 回目のクリック","note":"ボタンを押すと、登録した関数の中が実行されます。count が 1 になり、コンソールに B が出て、画面の文字が変わります。","console":["A","C","B"],"screen":["1 回押されました","count：1"]},{"lines":[7,9],"phase":"2 回目のクリック","note":"もう一度押すと、関数の中がもう 1 回実行されます。count は関数の外の変数なので、前の値が残っています。","console":["A","C","B","B"],"screen":["2 回押されました","count：2"]}],"codeHtml":"\u003cpre class=\"shiki numbered shiki-themes github-light github-dark\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\">\u003ccode style=\"counter-reset: line 0\">\u003cspan class=\"line\">\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">const\u003c/span>\u003cspan style=\"color:#005CC5;--shiki-dark:#79B8FF\"> message\u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\"> =\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> document.\u003c/span>\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\">querySelector\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">(\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">\"#message\"\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">);\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">const\u003c/span>\u003cspan style=\"color:#005CC5;--shiki-dark:#79B8FF\"> button\u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\"> =\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> document.\u003c/span>\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\">querySelector\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">(\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">\"#button\"\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">);\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">let\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> count \u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">=\u003c/span>\u003cspan style=\"color:#005CC5;--shiki-dark:#79B8FF\"> 0\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">;\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">console.\u003c/span>\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\">log\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">(\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">\"A\"\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">);\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">button.\u003c/span>\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\">addEventListener\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">(\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">\"click\"\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">, () \u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">=>\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">  count \u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">=\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> count \u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">+\u003c/span>\u003cspan style=\"color:#005CC5;--shiki-dark:#79B8FF\"> 1\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">;\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">  console.\u003c/span>\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\">log\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">(\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">\"B\"\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">);\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">  message.textContent \u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">=\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\"> `${\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">count\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">} 回押されました`\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">;\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">});\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">console.\u003c/span>\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\">log\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">(\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">\"C\"\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">);\u003c/span>\u003c/span>\u003c/code>\u003c/pre>"}</script></figure>
+</details></section>
+
+<h2 id="105-入力欄の値を取り出す">10.5 入力欄の値を取り出す</h2>
+<p>入力欄の要素の <code>value</code> プロパティで、今打たれている内容を取り出せます。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> amount</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#amount"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(amount.value);</span></span></code></pre>
+<p>「試すためのページ」の入力欄には、最初から <code>100</code> が入っています。コンソールには <code>100</code> と表示されます。</p>
+<p><strong>入力欄の <code>value</code> は、数字を打っても文字列です。</strong> 表示は <code>100</code> でも、中身は数値の <code>100</code> ではなく、文字列の <code>&quot;100&quot;</code> です。<code>===</code> で比べると分かります。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> amount</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#amount"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(amount.value </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(amount.value </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 100</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span></code></pre>
+<p>コンソールには、<code>true</code> と <code>false</code> が表示されます。文字列の <code>&quot;100&quot;</code> とは同じで、数値の <code>100</code> とは違います。</p>
+<section class="question"><h2 id="問題-2入力欄の値を足す"><span class="question-kind">問題</span> <span class="question-number">2</span><span class="question-title">入力欄の値を足す</span></h2>
+<p><code>basics/exercises/B10-dom/problem-02.js</code></p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> amount</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#amount"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> button</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#add"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> result</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#result"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">button.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">addEventListener</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"click"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, () </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  result.textContent </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> amount.value </span><span style="color:#D73A49;--shiki-dark:#F97583">+</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 20</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">});</span></span></code></pre>
+<p>ページの一覧から「問題 2」を開きます。入力欄には <code>100</code> が入っています。「20 を足す」を押すと、画面に何が表示されるか予測してください。</p>
+<details>
+<summary>答えと解説</summary>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>10020</span></span></code></pre>
+<p><strong><code>amount.value</code> は文字列の <code>&quot;100&quot;</code> なので、<code>+ 20</code> は足し算ではなく、つなぐ動きをします。</strong></p>
+<p>入力欄の値は、数字を打っても文字列です（10.5）。文字列と数値の <code>+</code> は、数値を文字列に変えてからつなぎます（第1章の問題 1 の ⑤）。</p>
+<p>計算に使うときは、<code>Number(...)</code> で数値に変えます（次の 10.6）。<code>problem-02.js</code> の 6 行目を <code>result.textContent = Number(amount.value) + 20;</code> に直して保存し、もう一度ボタンを押してください。<code>120</code> と表示されます。</p>
+</details></section>
+
+<h2 id="106-文字列を数値に変える">10.6 文字列を数値に変える</h2>
+<p><strong><code>Number(文字列)</code> で、文字列を数値に変えられます。</strong> 入力欄の値を計算に使うときは、先に数値に変えます。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">Number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">+</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 20</span><span style="color:#24292E;--shiki-dark:#E1E4E8">); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → 120</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">Number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"abc"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">));      </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → NaN</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">Number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">));         </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → 0</span></span></code></pre>
+<ul>
+<li>数値に変えられない文字列は、<code>NaN</code> になります（第6章の 6.2）。</li>
+<li>何も打たれていない入力欄の値は、空の文字列 <code>&quot;&quot;</code> です。<code>Number(&quot;&quot;)</code> は <code>0</code> です。空かどうかは、数値に変える前に <code>値 === &quot;&quot;</code> で調べます。</li>
+</ul>
+<p><code>NaN</code> かどうかは、<code>Number.isNaN(値)</code> で調べます。<code>値 === NaN</code> では調べられません。<code>NaN</code> は、<code>NaN</code> 自身と比べても <code>false</code> になる決まりです。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> value</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"abc"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(Number.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">isNaN</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(value)); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → true</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(value </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> NaN</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);       </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → false</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (Number.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">isNaN</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(value)) {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"数値ではありません"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → 数値ではありません</span></span></code></pre>
+<h2 id="107-要素が見つからないとき">10.7 要素が見つからないとき</h2>
+<p><code>querySelector</code> は、その <code>id</code> の要素がないと <code>null</code> を返します。<code>null</code> は、<code>undefined</code> と似た、「ない」ことを表す値です。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> message</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#mesage"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(message);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">message.textContent </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "こんにちは"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span></code></pre>
+<p>1 行目は、<code>id</code> のつづりが違います。コンソールには <code>null</code> と表示され、3 行目は次のエラーになります。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>Uncaught TypeError: Cannot set properties of null (setting 'textContent')</span></span></code></pre>
+<p><code>message.addEventListener(...)</code> のように取り出す行では、<code>Cannot read properties of null (reading 'addEventListener')</code> と出ます。どちらも、<code>.</code> の左が <code>null</code> だという意味です。</p>
+<p><code>of null</code> と書かれたエラーが出たら、その要素を <code>querySelector</code> で取っている行の <code>&quot;</code> の中と、HTML の <code>id</code> を見比べます。<code>#</code> を書き忘れると、タグの名前で探します。その名前のタグがなければ、同じエラーになります。</p>
+<p>ブラウザのエラーもコンソールに出ます。ファイル名と行番号は、図10-1 の <code>try.js:3</code> と同じく、その行の右端に出ます。</p>
+<ul>
+<li>先頭の <code>Uncaught</code> は、読み飛ばして構いません。</li>
+<li>保存して読み込み直した後は、<code>try.js?t=1794757813954:3</code> のように、間に <code>?t=数字</code> が入ります。</li>
+</ul>
+<hr>
+<p>演習 1 と演習 2 には、<code>npm test</code> での答え合わせがありません。画面を操作して、それぞれの「画面で確かめること」がすべて当てはまれば完了です。</p>
+<p>解答例の画面は、<code>npm run dev B10 answer</code> で開けます。自分の画面と見比べるときに使います。</p>
+<section class="exercise"><h2 id="演習-1間違いを直す">演習 1：間違いを直す</h2>
+<p><code>basics/exercises/B10-dom/practice-01.js</code> は、ボタンを押すと「こんにちは」と表示するプログラムです。間違いが 2 つあります。直して、下の「画面で確かめること」のとおりに動かします。</p>
+<p><strong>画面で確かめること</strong></p>
+<ul>
+<li class="task"><input type="checkbox"> ページを開いたときに、コンソールにエラーが出ない</li>
+<li class="task"><input type="checkbox"> 「あいさつする」を押すと、「ボタンを押してください」が「こんにちは」に変わる</li>
+</ul>
+<p><strong>進め方</strong></p>
+<ol class="steps">
+<li class="step" data-no="1">
+<p class="step-do">ページの一覧から「演習 1」を開き、コンソールを見る</p>
+<ul class="step-notes">
+<li class="step-note">画面を止めていたときは、次のコマンドで起動し直します</li>
+</ul>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> dev</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> B10</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>コンソールに、<code>Uncaught TypeError</code> で始まるエラーが出ている</span></li>
+</ul>
+</li>
+<li class="step" data-no="2">
+<p class="step-do">1 つ目の間違いを直して、保存する</p>
+<ul class="step-notes">
+<li class="step-note">エラーが示す行は、<code>button</code> を使っている行です。その <code>button</code> を取っている <code>querySelector</code> の行を直します</li>
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>画面が読み込み直され、コンソールにエラーが出なくなる</span></li>
+</ul>
+</li>
+<li class="step" data-no="3">
+<p class="step-do">「あいさつする」を押して、画面を見る</p>
+<ul class="step-notes">
+<li class="step-note">2 つ目の間違いは、エラーが出ません</li>
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>エラーは出ず、「ボタンを押してください」のまま変わらない</span></li>
+</ul>
+</li>
+<li class="step" data-no="4">
+<p class="step-do">2 つ目の間違いを探して直し、保存する</p>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>上の「画面で確かめること」がすべて当てはまる</span></li>
+</ul>
+</li>
+</ol>
+<details>
+<summary>ヒント 1：1 つ目の間違い</summary>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>Uncaught TypeError: Cannot read properties of null (reading 'addEventListener')</span></span></code></pre>
+<p><code>of null</code> のエラーです（10.7）。<code>button</code> を取っている行の <code>&quot;</code> の中を、<code>practice-01.html</code> の <code>id</code> と見比べます。</p>
+</details>
+<details>
+<summary>ヒント 2：2 つ目の間違い</summary>
+<p>2 つ目は、エラーが出ません。ボタンを押しても、画面が変わりません。</p>
+<p>プロパティの名前は、大文字と小文字が区別されます。ない名前のプロパティに代入すると、エラーにならず、その名前のプロパティが新しく足されます（第8章の 8.2）。関数の中の行を、10.3 のコード例と 1 文字ずつ見比べます。</p>
+</details>
+<details>
+<summary>うまくいかないとき</summary>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>画面やコンソールの様子</th>
+<th>よくある原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>直したのに、同じエラーが出る</td>
+<td>ファイルを保存していません</td>
+</tr>
+<tr>
+<td>エラーは出ないが、押しても変わらない</td>
+<td>2 つ目の間違いが残っています（ヒント 2）</td>
+</tr>
+<tr>
+<td>ページが開かない</td>
+<td><code>npm run dev B10</code> を止めています。もう一度実行します</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="solution"><summary>解答例を見る</summary><p class="solution-file"><code>basics/solutions/B10-dom/practice-01.js</code></p><pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// 基礎編 第10章 演習 1: 間違いを直す</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// 解答例：#helo を #hello に直し、textcontent を textContent に直しました。</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// practice-01.html は、書き換えません。</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> greeting</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#greeting"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> button</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#hello"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">button.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">addEventListener</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"click"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, () </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  greeting.textContent </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "こんにちは"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">});</span></span></code></pre></details>
+</section>
+<section class="exercise"><h2 id="演習-2カウンターを作る">演習 2：カウンターを作る</h2>
+<p>ボタンで数を増やしたり、0 に戻したりする画面を作ります。<code>basics/exercises/B10-dom/practice-02.js</code> には、要素を取る行と、数を入れる変数 <code>count</code> の宣言が書いてあります。その下を書きます。</p>
+<p><strong>画面で確かめること</strong></p>
+<ul>
+<li class="task"><input type="checkbox"> 「1 増やす」を押すたびに、数が <code>1</code>、<code>2</code>、<code>3</code> と増える</li>
+<li class="task"><input type="checkbox"> 「0 に戻す」を押すと、数が <code>0</code> になる</li>
+<li class="task"><input type="checkbox"> 「0 に戻す」の後に「1 増やす」を押すと、<code>1</code> になる</li>
+</ul>
+<p><strong>進め方</strong></p>
+<ol class="steps">
+<li class="step" data-no="1">
+<p class="step-do"><code>basics/exercises/B10-dom/practice-02.js</code> に、「1 増やす」が押されたときの処理を書く</p>
+<ul class="step-notes">
+<li class="step-note">ファイルの上の、3 つの要素と <code>count</code> の宣言を読んでから書きます</li>
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>「演習 2」のページで「1 増やす」を押すたびに、数が 1 ずつ増える</span></li>
+</ul>
+</li>
+<li class="step" data-no="2">
+<p class="step-do">「0 に戻す」が押されたときの処理を書く</p>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>上の「画面で確かめること」がすべて当てはまる</span></li>
+</ul>
+</li>
+</ol>
+<details>
+<summary>ヒント 1：どこを見ればよいか</summary>
+<p>問題 1 のコードが、ほぼ同じ形です。押されたときにすることは、「<code>count</code> を入れ直す」と「<code>count</code> を画面に表示する」の 2 つです。</p>
+</details>
+<details>
+<summary>ヒント 2：書き出し</summary>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">plusButton.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">addEventListener</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"click"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, () </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">  // count を 1 増やす</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">  // countText の文字を、count にする</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">});</span></span></code></pre>
+<p>「0 に戻す」のボタンにも、同じ形でもう 1 つ書きます。</p>
+</details>
+<details>
+<summary>うまくいかないとき</summary>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>画面やコンソールの様子</th>
+<th>よくある原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>何回押しても <code>1</code> のまま</td>
+<td><code>count</code> を入れ直していません。<code>countText.textContent = count + 1;</code> では、<code>count</code> の値は変わりません</td>
+</tr>
+<tr>
+<td>ページを開いた時点で <code>1</code> になり、押しても変わらない</td>
+<td><code>addEventListener(&quot;click&quot;, plus())</code> のように、関数に <code>( )</code> を付けて渡しています（10.4）</td>
+</tr>
+<tr>
+<td>押すたびに <code>01</code>、<code>011</code> と伸びる</td>
+<td><code>countText.textContent + 1</code> と書いています。画面の文字は文字列なので、つながります。足す相手は <code>count</code> です</td>
+</tr>
+<tr>
+<td>押しても何も変わらない</td>
+<td><code>count</code> は入れ直していますが、画面に表示する行がありません</td>
+</tr>
+<tr>
+<td>「0 に戻す」の後に押すと、<code>4</code> などの続きの数になる</td>
+<td>「0 に戻す」で、画面の文字だけを <code>0</code> にしています。<code>count</code> も <code>0</code> に入れ直します</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="solution"><summary>解答例を見る</summary><p class="solution-file"><code>basics/solutions/B10-dom/practice-02.js</code></p><pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// 基礎編 第10章 演習 2: カウンターを作る</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// 「1 増やす」を押すと数が 1 増え、「0 に戻す」を押すと 0 に戻るようにしてください。</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// practice-02.html は、書き換えません。</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> countText</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#count"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> plusButton</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#plus"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> resetButton</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#reset"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">let</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> count </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// ここから下に書く</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">plusButton.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">addEventListener</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"click"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, () </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  count </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> count </span><span style="color:#D73A49;--shiki-dark:#F97583">+</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 1</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  countText.textContent </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> count;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">resetButton.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">addEventListener</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"click"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, () </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  count </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  countText.textContent </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> count;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">});</span></span></code></pre></details>
+</section>
+<section class="exercise"><h2 id="演習-3金額を足していく">演習 3：金額を足していく</h2>
+<p>入力欄に金額を打って「足す」を押すと、合計が増えていく画面を作ります。</p>
+<p>ファイルは 2 つに分かれています。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ファイル</th>
+<th>書くもの</th>
+<th>確かめ方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>basics/exercises/B10-dom/practice-03.js</code></td>
+<td>計算をする関数 <code>addAmount</code></td>
+<td><code>npm test B10</code></td>
+</tr>
+<tr>
+<td><code>basics/exercises/B10-dom/practice-03-page.js</code></td>
+<td>画面のコード</td>
+<td>画面で確かめること</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>addAmount(total, text)</code> は、今の合計 <code>total</code> に、入力欄の文字列 <code>text</code> を足した結果を返します。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>呼び出し</th>
+<th>返す値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>addAmount(1000, &quot;500&quot;)</code></td>
+<td><code>1500</code></td>
+</tr>
+<tr>
+<td><code>addAmount(0, &quot;1200&quot;)</code></td>
+<td><code>1200</code></td>
+</tr>
+<tr>
+<td><code>addAmount(1000, &quot;abc&quot;)</code></td>
+<td><code>1000</code>（数値に変えられないときは、足さない）</td>
+</tr>
+<tr>
+<td><code>addAmount(1000, &quot;&quot;)</code></td>
+<td><code>1000</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>画面で確かめること</strong></p>
+<ul>
+<li class="task"><input type="checkbox"> <code>1200</code> と打って「足す」を押すと、<code>合計: 1200円</code> と表示される</li>
+<li class="task"><input type="checkbox"> 続けて入力欄を <code>500</code> に打ち直して「足す」を押すと、<code>合計: 1700円</code> と表示される</li>
+<li class="task"><input type="checkbox"> 入力欄を <code>abc</code> に打ち直して「足す」を押しても、合計は変わらない</li>
+</ul>
+<p><strong>進め方</strong></p>
+<ol class="steps">
+<li class="step" data-no="1">
+<p class="step-do"><code>basics/exercises/B10-dom/practice-03.js</code> の <code>addAmount</code> を書く</p>
+<ul class="step-notes">
+<li class="step-note">文字列を数値に変える <code>Number(text)</code> と、<code>NaN</code> かどうかを調べる <code>Number.isNaN(値)</code> を使います（10.6）</li>
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span><code>addAmount</code> の中に、<code>Number(text)</code> と <code>Number.isNaN(</code> がある</span></li>
+</ul>
+</li>
+<li class="step" data-no="2">
+<p class="step-do">答え合わせをする</p>
+<ul class="step-notes">
+<li class="step-note">画面を動かしたまま、2 つ目のターミナルで打ちます（10.1）</li>
+</ul>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> test</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> B10</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span><code>演習 3  合格</code> と表示される</span></li>
+</ul>
+</li>
+<li class="step" data-no="3">
+<p class="step-do"><code>basics/exercises/B10-dom/practice-03-page.js</code> に、「足す」が押されたときの処理を書く</p>
+<ul class="step-notes">
+<li class="step-note"><code>addAmount</code> を呼んで <code>total</code> を入れ直し、画面に表示します</li>
+<li class="step-note">先頭の <code>import</code> で始まる行は、別のファイルに書いた関数を使うための行です。この行があるので、<code>addAmount</code> を呼べます</li>
+<li class="step-note">入力欄の値（<code>value</code>）は、押されたときに関数の中で取り出します</li>
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>「演習 3」のページで、上の「画面で確かめること」がすべて当てはまる</span></li>
+</ul>
+</li>
+</ol>
+<details>
+<summary>ヒント 1：<code>addAmount</code></summary>
+<p>先に <code>Number(text)</code> の結果を変数に入れます。その変数が <code>NaN</code> なら <code>total</code> を返し、そうでなければ足した結果を返します。<code>return</code> で関数が終わること（第6章の 6.4）を使います。</p>
+</details>
+<details>
+<summary>ヒント 2：画面のコード</summary>
+<p>押されたときにすることは 2 つです。</p>
+<ul>
+<li><code>total</code> を、<code>addAmount(total, 入力欄の値)</code> の結果で入れ直す。</li>
+<li><code>totalText</code> の文字を、テンプレート文字列で <code>合計: ○○円</code> の形にする。</li>
+</ul>
+<p>入力欄の値は、押されたときに取り出します。<code>amount.value</code> は、関数の中に書きます。</p>
+</details>
+<details>
+<summary>うまくいかないとき</summary>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>画面やコンソールの様子</th>
+<th>よくある原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>npm test</code> の「実際の値」が <code>&quot;1000500&quot;</code></td>
+<td><code>text</code> を数値に変えずに足しています（問題 2、10.6）</td>
+</tr>
+<tr>
+<td><code>npm test</code> の「実際の値」が <code>NaN</code></td>
+<td><code>NaN</code> かどうかを調べていないか、<code>=== NaN</code> で比べています。<code>Number.isNaN</code> に渡すのは、数値に変えた後の値です</td>
+</tr>
+<tr>
+<td>画面が <code>合計: 01200円</code>、次に <code>合計: 01200500円</code></td>
+<td>画面のコードで <code>addAmount</code> を呼ばずに、<code>total + amount.value</code> と書いています</td>
+</tr>
+<tr>
+<td>押しても画面が <code>合計: 0円</code> のまま</td>
+<td>表示する行がないか、<code>addAmount</code> に <code>amount.value</code> ではなく <code>amount</code> を渡しています。<code>amount.value</code> を関数の外で取り出している場合も、同じ表示です</td>
+</tr>
+<tr>
+<td>全角の数字を打つと、合計が変わらない</td>
+<td>正しい動きです。<code>Number(&quot;１２００&quot;)</code> は <code>NaN</code> です</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="solution"><summary>解答例を見る</summary><p class="solution-file"><code>basics/solutions/B10-dom/practice-03.js</code></p><pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// 基礎編 第10章 演習 3: 金額を足していく（計算の関数）</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// 今の合計 total に、入力欄の文字列 text を数値に変えて足した結果を返す。</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// text が数値に変えられないときは、total をそのまま返す。</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// 例: addAmount(1000, "500") は 1500、addAmount(1000, "abc") は 1000</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> addAmount</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">total</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">text</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> amount</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(text);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (Number.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">isNaN</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(amount)) {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> total;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> total </span><span style="color:#D73A49;--shiki-dark:#F97583">+</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> amount;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre><p class="solution-file"><code>basics/solutions/B10-dom/practice-03-page.js</code></p><pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// 基礎編 第10章 演習 3: 金額を足していく（画面のコード）</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// practice-03.html から読み込まれます。</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// 「足す」を押すと、入力欄の金額を合計に足して、表示するようにしてください。</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">import</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { addAmount } </span><span style="color:#D73A49;--shiki-dark:#F97583">from</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "./practice-03.js"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">; </span><span style="color:#6A737D;--shiki-dark:#6A737D">// 別のファイルの関数を使うための行です。書き換えません</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> amount</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#amount"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> button</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#add"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> totalText</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#total"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">let</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> total </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// ここから下に書く</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">button.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">addEventListener</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"click"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, () </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  total </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> addAmount</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(total, amount.value);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  totalText.textContent </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> `合計: ${</span><span style="color:#24292E;--shiki-dark:#E1E4E8">total</span><span style="color:#032F62;--shiki-dark:#9ECBFF">}円`</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">});</span></span></code></pre></details>
+</section>
+<hr>
+<h2 id="チェックリスト">チェックリスト</h2>
+<ul>
+<li class="task"><input type="checkbox"> 問題 1 で、ページを開いた直後に <code>B</code> が表示されない理由を説明できる</li>
+<li class="task"><input type="checkbox"> 入力欄の値を計算に使うときに、<code>Number(...)</code> が要る理由を説明できる</li>
+<li class="task"><input type="checkbox"> <code>of null</code> のエラーが出たときに、どの行を見るかを説明できる</li>
+<li class="task"><input type="checkbox"> 画面で、演習 1〜3 の「画面で確かめること」が、すべて当てはまった</li>
+</ul>
+<h2 id="詳しく学ぶ">詳しく学ぶ</h2>
+<ul>
+<li>MDN：<a href="https://developer.mozilla.org/ja/docs/Web/API/Document/querySelector" target="_blank" rel="noopener">Document: querySelector()</a>、<a href="https://developer.mozilla.org/ja/docs/Web/API/Node/textContent" target="_blank" rel="noopener">Node: textContent</a>、<a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/addEventListener" target="_blank" rel="noopener">EventTarget: addEventListener()</a></li>
+</ul>
+
+      </article>
+      <nav class="prev-next"><a class="prev" href="B09-array-methods.html"><small>前へ</small>基礎編 第9章 配列のメソッド</a><a class="next" href="B11-final.html"><small>次へ</small>基礎編 第11章 修了課題</a></nav>
+    </main>
+  </div>
+</body>
+</html>

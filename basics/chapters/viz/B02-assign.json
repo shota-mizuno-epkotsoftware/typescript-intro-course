@@ -1,0 +1,74 @@
+{
+  "file": "basics/exercises/B02-variables/problem-02.js",
+  "label": "1行ずつ見る",
+  "code": "let total = 0;\ntotal = total + 500;\ntotal = total + 300;\ntotal = total - 200;\nconsole.log(total);",
+  "panels": [
+    {
+      "id": "vars",
+      "label": "変数"
+    },
+    {
+      "id": "console",
+      "label": "ターミナルの表示"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        1
+      ],
+      "phase": "宣言する",
+      "note": "total という変数を宣言して、0 を入れます。",
+      "vars": [
+        "total：0"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        2
+      ],
+      "phase": "入れ直す",
+      "note": "右側の total + 500 を、今の値で計算します（0 + 500）。結果の 500 を total に入れ直します。",
+      "vars": [
+        "total：500"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        3
+      ],
+      "phase": "入れ直す",
+      "note": "右側は 500 + 300 として計算されます。使われるのは、2 行目で入れ直した後の値です。",
+      "vars": [
+        "total：800"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        4
+      ],
+      "phase": "入れ直す",
+      "note": "右側は 800 - 200 として計算されます。結果の 600 を total に入れ直します。",
+      "vars": [
+        "total：600"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        5
+      ],
+      "phase": "表示する",
+      "note": "その時点の total の値が表示されます。",
+      "vars": [
+        "total：600"
+      ],
+      "console": [
+        "600"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// 基礎編 第4章 演習 3: 残高の状態を表示する
+// 残高に合わせて、4 つの言葉のどれか 1 つを表示してください。
+// if の } の後ろに、else if と else を続けて書きます。
+// balance の行は、値を変えて試したら、元に戻します。
+
+const balance = 800; // 残高
+
+if (balance >= 10000) {
+  console.log("余裕があります");
+} else if (balance >= 3000) {
+  console.log("普通です");
+} else if (balance >= 0) {
+  console.log("残りわずかです");
+} else {
+  console.log("赤字です");
+}

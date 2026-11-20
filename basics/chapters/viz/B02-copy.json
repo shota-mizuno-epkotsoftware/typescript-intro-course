@@ -1,0 +1,81 @@
+{
+  "file": "basics/exercises/B02-variables/problem-03.js",
+  "label": "1行ずつ見る",
+  "code": "let a = 10;\nlet b = a;\na = 20;\nconsole.log(a); // ①\nconsole.log(b); // ②",
+  "panels": [
+    {
+      "id": "vars",
+      "label": "変数"
+    },
+    {
+      "id": "console",
+      "label": "ターミナルの表示"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        1
+      ],
+      "phase": "a を宣言する",
+      "note": "a という変数を宣言して、10 を入れます。",
+      "vars": [
+        "a：10"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        2
+      ],
+      "phase": "b を宣言する",
+      "note": "右側の a は、10 に置き換わります。b に入るのは、10 という値です。",
+      "vars": [
+        "a：10",
+        "b：10"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        3
+      ],
+      "phase": "a を入れ直す",
+      "note": "a に 20 を入れ直します。b の値は変わりません。a と b は、つながっていません。",
+      "vars": [
+        "a：20",
+        "b：10"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        4
+      ],
+      "phase": "① 表示する",
+      "note": "a の値の 20 が表示されます。",
+      "vars": [
+        "a：20",
+        "b：10"
+      ],
+      "console": [
+        "20"
+      ]
+    },
+    {
+      "lines": [
+        5
+      ],
+      "phase": "② 表示する",
+      "note": "b の値の 10 が表示されます。",
+      "vars": [
+        "a：20",
+        "b：10"
+      ],
+      "console": [
+        "20",
+        "10"
+      ]
+    }
+  ]
+}

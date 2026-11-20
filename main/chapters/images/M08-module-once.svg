@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 205" width="640" height="205" role="img" aria-labelledby="t d">
+  <title id="t">counter.ts は1回だけ実行され、count は1つ</title>
+  <desc id="d">problem-01.ts と start.ts の両方が counter.ts を import している。counter.ts の console.log は 1 回だけ実行され、count は 1 つだけ。両方のファイルが同じ count を使い、最後は 2 になる。</desc>
+  <style>
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 12px; }
+    .head { font-weight: 700; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+    .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .line { fill: none; stroke: #2563eb; stroke-width: 1.8; }
+    .line2 { fill: none; stroke: #64748b; stroke-width: 1.8; }
+    .tip { fill: #2563eb; }
+    .tip2 { fill: #64748b; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code { fill: #e5e7eb; }
+      .sub { fill: #9ca3af; }
+      .var { fill: #1e293b; stroke: #64748b; }
+      .obj { fill: #172554; stroke: #60a5fa; }
+      .line { stroke: #60a5fa; }
+      .line2 { stroke: #94a3b8; }
+      .tip { fill: #60a5fa; }
+      .tip2 { fill: #94a3b8; }
+    }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip2" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+  <rect class="var" x="20" y="40" width="170" height="44" rx="8"/>
+  <text class="code" x="105" y="67" text-anchor="middle">problem-01.ts</text>
+  <rect class="var" x="20" y="150" width="170" height="44" rx="8"/>
+  <text class="code" x="105" y="177" text-anchor="middle">start.ts</text>
+  <path class="line2" d="M105,84 L105,146" marker-end="url(#a2)"/>
+  <text class="txt sub" x="114" y="120">import</text>
+  <rect class="obj" x="380" y="70" width="230" height="96" rx="8"/>
+  <text class="code head" x="398" y="96">counter.ts</text>
+  <text class="code" x="398" y="122">count: 2（1 つだけ）</text>
+  <text class="code" x="398" y="148">console.log は 1 回だけ</text>
+  <path class="line" d="M190,62 C290,62 300,104 376,108" marker-end="url(#a1)"/>
+  <path class="line" d="M190,172 C290,172 300,132 376,128" marker-end="url(#a1)"/>
+  <text class="txt sub" x="236" y="54">import</text>
+  <text class="txt sub" x="236" y="190">import</text>
+</svg>

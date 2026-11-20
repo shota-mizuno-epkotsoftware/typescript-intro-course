@@ -1,0 +1,103 @@
+{
+  "file": "main/exercises/M03-functions/problem-02.ts",
+  "label": "1行ずつ見る",
+  "code": "function makeCounter() {\n  let count = 0;\n  return () => {\n    count = count + 1;\n    return count;\n  };\n}\n\nconst counterA = makeCounter();\nconst counterB = makeCounter();\ncounterA();\ncounterA();\n\nconsole.log(counterA()); // ①\nconsole.log(counterB()); // ②",
+  "panels": [
+    {
+      "id": "memory",
+      "label": "関数が覚えている count"
+    },
+    {
+      "id": "console",
+      "label": "コンソールの表示"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        1,
+        7
+      ],
+      "phase": "関数を作る",
+      "note": "makeCounter という関数を作ります。まだ呼ばれません。",
+      "memory": [],
+      "console": []
+    },
+    {
+      "lines": [
+        9
+      ],
+      "phase": "counterA を作る",
+      "note": "makeCounter() を呼ぶと、count = 0 が作られます。その count を覚えたアロー関数が返され、counterA に入ります。",
+      "memory": [
+        "counterA の count：0"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        10
+      ],
+      "phase": "counterB を作る",
+      "note": "もう一度 makeCounter() を呼ぶと、別の count = 0 が作られます。counterB は、こちらを覚えています。",
+      "memory": [
+        "counterA の count：0",
+        "counterB の count：0"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        11
+      ],
+      "phase": "counterA を呼ぶ",
+      "note": "counterA を呼ぶと、4 行目で counterA の count が 1 増えます。",
+      "memory": [
+        "counterA の count：1",
+        "counterB の count：0"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        12
+      ],
+      "phase": "counterA を呼ぶ",
+      "note": "もう一度呼ぶと、counterA の count は 2 になります。counterB の count は変わりません。",
+      "memory": [
+        "counterA の count：2",
+        "counterB の count：0"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        14
+      ],
+      "phase": "①",
+      "note": "counterA の count が 3 になり、それが返ります。",
+      "memory": [
+        "counterA の count：3",
+        "counterB の count：0"
+      ],
+      "console": [
+        "3"
+      ]
+    },
+    {
+      "lines": [
+        15
+      ],
+      "phase": "②",
+      "note": "counterB は自分の count を使うので、0 から 1 になります。",
+      "memory": [
+        "counterA の count：3",
+        "counterB の count：1"
+      ],
+      "console": [
+        "3",
+        "1"
+      ]
+    }
+  ]
+}

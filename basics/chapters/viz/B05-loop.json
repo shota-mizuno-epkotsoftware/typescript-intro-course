@@ -1,0 +1,132 @@
+{
+  "file": "basics/exercises/B05-arrays-loops/problem-02.js",
+  "label": "1行ずつ見る",
+  "code": "const prices = [500, 300, 200];\nlet total = 0;\nfor (const price of prices) {\n  total = total + price;\n}\nconsole.log(total);",
+  "panels": [
+    {
+      "id": "vars",
+      "label": "変数"
+    },
+    {
+      "id": "console",
+      "label": "ターミナルの表示"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        1
+      ],
+      "phase": "配列を作る",
+      "note": "prices に、3 つの要素を持つ配列が入ります。",
+      "vars": [
+        "prices：[ 500, 300, 200 ]"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        2
+      ],
+      "phase": "total を宣言する",
+      "note": "繰り返しの前に、total を 0 で宣言します。宣言は、この 1 回です。",
+      "vars": [
+        "prices：[ 500, 300, 200 ]",
+        "total：0"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        3
+      ],
+      "phase": "1 回目",
+      "note": "最初の要素 500 が取り出されて、price に入ります。",
+      "vars": [
+        "prices：[ 500, 300, 200 ]",
+        "total：0",
+        "price：500"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        4
+      ],
+      "phase": "1 回目",
+      "note": "total = 0 + 500 が計算されて、total は 500 になります。",
+      "vars": [
+        "prices：[ 500, 300, 200 ]",
+        "total：500",
+        "price：500"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        3
+      ],
+      "phase": "2 回目",
+      "note": "次の要素 300 が取り出されて、price に入ります。",
+      "vars": [
+        "prices：[ 500, 300, 200 ]",
+        "total：500",
+        "price：300"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        4
+      ],
+      "phase": "2 回目",
+      "note": "total = 500 + 300 が計算されて、total は 800 になります。",
+      "vars": [
+        "prices：[ 500, 300, 200 ]",
+        "total：800",
+        "price：300"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        3
+      ],
+      "phase": "3 回目",
+      "note": "最後の要素 200 が取り出されて、price に入ります。",
+      "vars": [
+        "prices：[ 500, 300, 200 ]",
+        "total：800",
+        "price：200"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        4
+      ],
+      "phase": "3 回目",
+      "note": "total = 800 + 200 が計算されて、total は 1000 になります。",
+      "vars": [
+        "prices：[ 500, 300, 200 ]",
+        "total：1000",
+        "price：200"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        6
+      ],
+      "phase": "繰り返しの後",
+      "note": "最後の要素まで終わったので、} の次の行に進みます。total の値が表示されます。",
+      "vars": [
+        "prices：[ 500, 300, 200 ]",
+        "total：1000"
+      ],
+      "console": [
+        "1000"
+      ]
+    }
+  ]
+}

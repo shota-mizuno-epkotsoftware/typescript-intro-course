@@ -1,0 +1,108 @@
+{
+  "file": "basics/exercises/B10-dom/problem-01.js",
+  "label": "1行ずつ見る",
+  "code": "const message = document.querySelector(\"#message\");\nconst button = document.querySelector(\"#button\");\nlet count = 0;\n\nconsole.log(\"A\");\nbutton.addEventListener(\"click\", () => {\n  count = count + 1;\n  console.log(\"B\");\n  message.textContent = `${count} 回押されました`;\n});\nconsole.log(\"C\");",
+  "panels": [
+    {
+      "id": "console",
+      "label": "コンソールの表示"
+    },
+    {
+      "id": "screen",
+      "label": "画面の文字と count"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        1,
+        3
+      ],
+      "phase": "ページを開く",
+      "note": "ページを開くと、上の行から順に実行されます。要素を 2 つ取り、count を 0 にします。",
+      "console": [],
+      "screen": [
+        "まだ押されていません",
+        "count：0"
+      ]
+    },
+    {
+      "lines": [
+        5
+      ],
+      "phase": "ページを開く",
+      "note": "コンソールに A を表示します。",
+      "console": [
+        "A"
+      ],
+      "screen": [
+        "まだ押されていません",
+        "count：0"
+      ]
+    },
+    {
+      "lines": [
+        6
+      ],
+      "phase": "ページを開く（登録）",
+      "note": "addEventListener は、「クリックされたら、この関数を実行する」と登録します。関数の中は、ここでは実行されません。",
+      "console": [
+        "A"
+      ],
+      "screen": [
+        "まだ押されていません",
+        "count：0"
+      ]
+    },
+    {
+      "lines": [
+        11
+      ],
+      "phase": "ページを開く",
+      "note": "登録が済むと、次の行に進みます。コンソールに C を表示します。ここまでが、ページを開いた直後です。",
+      "console": [
+        "A",
+        "C"
+      ],
+      "screen": [
+        "まだ押されていません",
+        "count：0"
+      ]
+    },
+    {
+      "lines": [
+        7,
+        9
+      ],
+      "phase": "1 回目のクリック",
+      "note": "ボタンを押すと、登録した関数の中が実行されます。count が 1 になり、コンソールに B が出て、画面の文字が変わります。",
+      "console": [
+        "A",
+        "C",
+        "B"
+      ],
+      "screen": [
+        "1 回押されました",
+        "count：1"
+      ]
+    },
+    {
+      "lines": [
+        7,
+        9
+      ],
+      "phase": "2 回目のクリック",
+      "note": "もう一度押すと、関数の中がもう 1 回実行されます。count は関数の外の変数なので、前の値が残っています。",
+      "console": [
+        "A",
+        "C",
+        "B",
+        "B"
+      ],
+      "screen": [
+        "2 回押されました",
+        "count：2"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第7章 配列メソッド | TypeScript 入門</title>
+  <script>
+    // 保存した表示モード（ライト・ダーク）を、画面を描く前に反映する
+    try {
+      var theme = localStorage.getItem("tsl:theme");
+      if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+    } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="../../assets/style.css?v=mwobwd6f">
+  <script src="../../assets/app.js?v=mwobwd6f" defer></script>
+  <script src="../../assets/viz.js?v=mwobwd6f" defer></script>
+  <script src="../../assets/app-map.js?v=mwobwd6f" defer></script>
+</head>
+<body data-page-key="main/chapters/M07-array-methods">
+  <header class="topbar">
+    <button class="menu-button" type="button" aria-controls="sidebar" aria-expanded="false">目次</button>
+    <a class="site-title" href="../../index.html">TypeScript 入門</a>
+    <div class="theme-switch" role="group" aria-label="表示モード">
+      <button type="button" data-theme-choice="light" aria-label="ライト表示" title="ライト表示">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+        </svg>
+      </button>
+      <button type="button" data-theme-choice="dark" aria-label="ダーク表示" title="ダーク表示">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <nav aria-label="章の一覧"><ul><li><a href="../../index.html">はじめに</a></li><li class="nav-group" role="separator"></li><li><a href="../../overview.html">学ぶ技術の関係</a></li><li class="nav-group">基礎編</li><li><a href="../../basics/chapters/B00-setup.html">第0章 準備</a></li><li><a href="../../basics/chapters/B01-values.html">第1章 値と計算</a></li><li><a href="../../basics/chapters/B02-variables.html">第2章 変数</a></li><li><a href="../../basics/chapters/B03-errors.html">第3章 エラーを読む</a></li><li><a href="../../basics/chapters/B04-conditions.html">第4章 条件分岐</a></li><li><a href="../../basics/chapters/B05-arrays-loops.html">第5章 配列と繰り返し</a></li><li><a href="../../basics/chapters/B06-functions.html">第6章 関数</a></li><li><a href="../../basics/chapters/B07-combining.html">第7章 関数を組み合わせる</a></li><li><a href="../../basics/chapters/B08-objects.html">第8章 オブジェクト</a></li><li><a href="../../basics/chapters/B09-array-methods.html">第9章 配列のメソッド</a></li><li><a href="../../basics/chapters/B10-dom.html">第10章 画面を動かす</a></li><li><a href="../../basics/chapters/B11-final.html">第11章 修了課題</a></li><li class="nav-group">本編</li><li><a href="M00-setup.html">第0章 環境構築</a></li><li><a href="M01-syntax-table.html">第1章 基本文法の対応表</a></li><li><a href="M02-types.html">第2章 型の基本</a></li><li><a href="M03-functions.html">第3章 関数とコールバック</a></li><li><a href="M04-objects.html">第4章 オブジェクトと配列</a></li><li><a href="M05-data-types.html">第5章 データの型を書く</a></li><li><a href="M06-narrowing.html">第6章 null と型の絞り込み</a></li><li><a href="M07-array-methods.html" aria-current="page">第7章 配列メソッド</a></li><li><a href="M08-modules.html">第8章 モジュールと型を読む</a></li><li><a href="M09-async.html">第9章 非同期</a></li><li><a href="M10-dom.html">第10章 ブラウザとDOM、イベント</a></li><li><a href="M11-next-steps.html">第11章 実践編への準備</a></li><li class="nav-group">実践編</li><li><a href="../../practice/chapters/P01-overview.html">第1章 全体像と、画面が表示されるまで</a></li><li><a href="../../practice/chapters/P02-types.html">第2章 データの型</a></li><li><a href="../../practice/chapters/P03-form.html">第3章 フォームの入力と検証</a></li><li><a href="../../practice/chapters/P04-events.html">第4章 イベントから再描画まで</a></li><li><a href="../../practice/chapters/P05-summary.html">第5章 集計とテスト</a></li><li><a href="../../practice/chapters/P06-external.html">第6章 外から来るデータ</a></li><li><a href="../../practice/chapters/P07-changes.html">第7章 変更を読む・総合</a></li><li class="nav-group" role="separator"></li><li><a href="../../troubleshooting.html">つまずき集</a></li><li><a href="../../tools.html">ツール一覧</a></li><li><a href="../../references.html">参考資料との対応</a></li></ul></nav>
+    </aside>
+    <main class="content">
+      <article>
+        <h1>第7章 配列メソッド</h1>
+<section class="chapter-summary" aria-label="この章で学ぶこと"><p class="summary-title">この章で学ぶこと</p><ul>
+<li><code>map</code>・<code>filter</code>・<code>find</code>・<code>some</code> の使い分けと、<code>find</code> の結果の扱い方</li>
+<li><code>sort</code> で並べ替えるときの書き方と、元の配列との関係</li>
+<li>メソッドをつなげる書き方、<code>reduce</code> で合計を出す書き方、配列の 1 件を消す・変える書き方</li>
+</ul></section>
+<details class="toc" open><summary>このページの内容</summary><nav aria-label="このページの内容"><ul><li><a href="#71-よく使う配列のメソッド">7.1 よく使う配列のメソッド</a></li><li><a href="#72-find-の結果は確かめてから使う">7.2 find の結果は、確かめてから使う</a></li><li><a href="#問題-1在庫を探す">問題 1：在庫を探す</a></li><li><a href="#73-並べ替えはコピーしてから比べ方を渡す">7.3 並べ替えは、コピーしてから比べ方を渡す</a></li><li><a href="#問題-2関数の中で並べ替える">問題 2：関数の中で並べ替える</a></li><li><a href="#74-メソッドをつなげる合計を出す">7.4 メソッドをつなげる、合計を出す</a></li><li><a href="#問題-3支払い済みの個数">問題 3：支払い済みの個数</a></li><li><a href="#75-配列の中の-1-件を消す変える">7.5 配列の中の 1 件を消す・変える</a></li><li><a href="#問題-4更新した配列を使う">問題 4：更新した配列を使う</a></li><li><a href="#演習配列のメソッドで商品を扱う">演習：配列のメソッドで商品を扱う</a></li><li><a href="#チェックリスト">チェックリスト</a></li><li><a href="#詳しく学ぶ">詳しく学ぶ</a></li></ul></nav></details>
+<h2 id="71-よく使う配列のメソッド">7.1 よく使う配列のメソッド</h2>
+<p>配列のメソッドの多くは、コールバック（第3章）を受け取ります。コールバックは要素ごとに呼ばれます。<code>find</code> と <code>some</code> は、条件に合う要素が見つかった所で止まります。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>メソッド</th>
+<th>すること</th>
+<th>戻り値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>map(変換)</code></td>
+<td>各要素を変換する</td>
+<td>変換した値の新しい配列</td>
+</tr>
+<tr>
+<td><code>filter(条件)</code></td>
+<td>条件が <code>true</code> の要素をすべて残す</td>
+<td>残った要素の新しい配列</td>
+</tr>
+<tr>
+<td><code>find(条件)</code></td>
+<td>条件が <code>true</code> の最初の要素を探す</td>
+<td>見つかった要素 1 つ</td>
+</tr>
+<tr>
+<td><code>some(条件)</code></td>
+<td>条件が <code>true</code> の要素が 1 つでもあるか調べる</td>
+<td><code>true</code> / <code>false</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>この 4 つは、元の配列を変えません。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> prices</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#005CC5;--shiki-dark:#79B8FF">300</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">1200</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">80</span><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(prices.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">map</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">p</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> p </span><span style="color:#D73A49;--shiki-dark:#F97583">+</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 100</span><span style="color:#24292E;--shiki-dark:#E1E4E8">));    </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → [ 400, 1300, 180 ]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(prices.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">filter</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">p</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> p </span><span style="color:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 500</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → [ 300, 80 ]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(prices.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">find</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">p</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> p </span><span style="color:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 500</span><span style="color:#24292E;--shiki-dark:#E1E4E8">));   </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → 300</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(prices.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">some</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">p</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> p </span><span style="color:#D73A49;--shiki-dark:#F97583">></span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 1000</span><span style="color:#24292E;--shiki-dark:#E1E4E8">));  </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → true</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(prices);                        </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → [ 300, 1200, 80 ]</span></span></code></pre>
+<blockquote class="note">
+<p><strong>PHPでは</strong>
+<code>map</code> は <code>array_map</code>、<code>filter</code> は <code>array_filter</code> にあたります。PHP の <code>array_map(関数, 配列)</code> と違い、TypeScript は <code>配列.map(関数)</code> の順に書きます。</p>
+</blockquote>
+<h2 id="72-find-の結果は確かめてから使う">7.2 <code>find</code> の結果は、確かめてから使う</h2>
+<p><strong><code>find</code> は、見つからないと <code>undefined</code> を返します。</strong> そのため戻り値の型は <code>要素の型 | undefined</code> です。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> prices</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#005CC5;--shiki-dark:#79B8FF">300</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">1200</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">80</span><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(prices.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">find</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">p</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> p </span><span style="color:#D73A49;--shiki-dark:#F97583">></span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 1000</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → 1200</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(prices.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">find</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">p</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> p </span><span style="color:#D73A49;--shiki-dark:#F97583">></span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 5000</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → undefined</span></span></code></pre>
+<p>見つかった要素のプロパティを読むときは、第6章の <code>?.</code> と <code>??</code> を使います。見つからなければ、<code>?.</code> の結果は <code>undefined</code> で、<code>??</code> の右の値が使われます。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> items</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ノート"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">120</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ペン"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">80</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> pen</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> items.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">find</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">item</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> item.name </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "ペン"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(pen?.price </span><span style="color:#D73A49;--shiki-dark:#F97583">??</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → 80</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> eraser</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> items.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">find</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">item</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> item.name </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "消しゴム"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(eraser?.price </span><span style="color:#D73A49;--shiki-dark:#F97583">??</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → 0</span></span></code></pre>
+<section class="question"><h2 id="問題-1在庫を探す"><span class="question-kind">問題</span> <span class="question-number">1</span><span class="question-title">在庫を探す</span></h2>
+<p><code>main/exercises/M07-array-methods/problem-01.ts</code></p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 3"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> stocks</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"りんご"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, count: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">3</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"みかん"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, count: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">0</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"りんご"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, count: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">8</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> apple</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> stocks.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">find</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">s</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> s.name </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "りんご"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> orange</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> stocks.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">find</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">s</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> s.name </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "みかん"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> grape</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> stocks.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">find</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">s</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> s.name </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "ぶどう"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(apple?.count);           </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ①</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(orange?.count </span><span style="color:#D73A49;--shiki-dark:#F97583">||</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "なし"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">); </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ②</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(orange?.count </span><span style="color:#D73A49;--shiki-dark:#F97583">??</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "なし"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">); </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ③</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(grape?.count </span><span style="color:#D73A49;--shiki-dark:#F97583">??</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "なし"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);  </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ④</span></span></code></pre>
+<p><code>node main/exercises/M07-array-methods/problem-01.ts</code> を実行すると、①〜④ でそれぞれ何が表示されるか予測してください。</p>
+<details>
+<summary>答えと解説</summary>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>3</span></span>
+<span class="line"><span>なし</span></span>
+<span class="line"><span>0</span></span>
+<span class="line"><span>なし</span></span></code></pre>
+<ul>
+<li>①：<code>find</code> は、条件に合う最初の要素を返します。「りんご」は 2 つありますが、返るのは先にある <code>count: 3</code> の方です。</li>
+<li>②：「みかん」は見つかり、<code>count</code> は <code>0</code> です。<code>||</code> は <code>0</code> も <code>false</code> として扱うので、右の <code>&quot;なし&quot;</code> が使われます（第6章 6.2）。</li>
+<li>③：<code>??</code> が右の値を使うのは、左が <code>null</code> か <code>undefined</code> のときだけです。<code>0</code> はそのまま表示されます。</li>
+<li>④：「ぶどう」はないので、<code>grape</code> は <code>undefined</code> です。<code>?.</code> の結果も <code>undefined</code> になり、<code>??</code> の右の <code>&quot;なし&quot;</code> が使われます。</li>
+</ul>
+</details></section>
+
+<h2 id="73-並べ替えはコピーしてから比べ方を渡す">7.3 並べ替えは、コピーしてから比べ方を渡す</h2>
+<p><code>sort</code> には、気をつける動きが 2 つあります。</p>
+<ul>
+<li><strong>比べ方を渡さない <code>sort()</code> は、要素を文字列として並べます。</strong> 文字列は先頭の文字から比べるので、<code>&quot;1200&quot;</code> は <code>&quot;300&quot;</code> より前です。</li>
+<li><strong><code>sort</code> は、元の配列そのものを並べ替えます。</strong> 下の例の <code>sorted</code> と <code>prices</code> は同じ配列です（第4章の「共有」）。</li>
+</ul>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> prices</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#005CC5;--shiki-dark:#79B8FF">300</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">1200</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">80</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">500</span><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> sorted</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> prices.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">sort</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(sorted); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → [ 1200, 300, 500, 80 ]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(prices); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → [ 1200, 300, 500, 80 ]</span></span></code></pre>
+<p>数値を小さい順に並べるには、<code>[...prices].sort((a, b) =&gt; a - b)</code> と書きます。<code>[...prices]</code> でコピーしてから並べ替えるので、元の配列は変わりません。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> prices</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#005CC5;--shiki-dark:#79B8FF">300</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">1200</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">80</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">500</span><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> ascending</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#D73A49;--shiki-dark:#F97583">...</span><span style="color:#24292E;--shiki-dark:#E1E4E8">prices].</span><span style="color:#6F42C1;--shiki-dark:#B392F0">sort</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">a</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">b</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> a </span><span style="color:#D73A49;--shiki-dark:#F97583">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> b);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(ascending); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → [ 80, 300, 500, 1200 ]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(prices);    </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → [ 300, 1200, 80, 500 ]</span></span></code></pre>
+<p><code>(a, b) =&gt; a - b</code> は「2 つの要素の比べ方」です。負の数を返すと <code>a</code> が前、正の数を返すと <code>b</code> が前になります。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>比べ方</th>
+<th>並ぶ順</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(a, b) =&gt; a - b</code></td>
+<td>小さい順</td>
+</tr>
+<tr>
+<td><code>(a, b) =&gt; b - a</code></td>
+<td>大きい順</td>
+</tr>
+<tr>
+<td><code>(a, b) =&gt; a.price - b.price</code></td>
+<td><code>price</code> の小さい順</td>
+</tr>
+</tbody>
+</table></div>
+<p>表の 3 行目の例です。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> items</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ノート"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">120</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ペン"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">80</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> byPrice</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#D73A49;--shiki-dark:#F97583">...</span><span style="color:#24292E;--shiki-dark:#E1E4E8">items].</span><span style="color:#6F42C1;--shiki-dark:#B392F0">sort</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">a</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">b</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> a.price </span><span style="color:#D73A49;--shiki-dark:#F97583">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> b.price);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(byPrice.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">map</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">item</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> item.name)); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → [ 'ペン', 'ノート' ]</span></span></code></pre>
+<section class="question"><h2 id="問題-2関数の中で並べ替える"><span class="question-kind">問題</span> <span class="question-number">2</span><span class="question-title">関数の中で並べ替える</span></h2>
+<p><code>main/exercises/M07-array-methods/problem-02.ts</code></p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 3"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> highest</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">values</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[])</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> number</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> sorted</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> values.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">sort</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">a</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">b</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> b </span><span style="color:#D73A49;--shiki-dark:#F97583">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> a);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> sorted[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> scores</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#005CC5;--shiki-dark:#79B8FF">40</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">100</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">70</span><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">highest</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(scores));    </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ①</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(scores);             </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ②</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">([</span><span style="color:#D73A49;--shiki-dark:#F97583">...</span><span style="color:#24292E;--shiki-dark:#E1E4E8">scores].</span><span style="color:#6F42C1;--shiki-dark:#B392F0">sort</span><span style="color:#24292E;--shiki-dark:#E1E4E8">()); </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ③</span></span></code></pre>
+<p><code>node main/exercises/M07-array-methods/problem-02.ts</code> を実行すると、①〜③ でそれぞれ何が表示されるか予測してください。</p>
+<details>
+<summary>答えと解説</summary>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>100</span></span>
+<span class="line"><span>[ 100, 70, 40 ]</span></span>
+<span class="line"><span>[ 100, 40, 70 ]</span></span></code></pre>
+<ul>
+<li>①：<code>b - a</code> は大きい順なので、先頭は <code>100</code> です。</li>
+<li>②：<code>values</code> と <code>scores</code> は同じ配列です。関数の中の <code>sort</code> で、<code>scores</code> も大きい順に変わります。</li>
+<li>③：比べ方がないので、文字列として比べます。先頭の文字は <code>&quot;1&quot;</code>、<code>&quot;4&quot;</code>、<code>&quot;7&quot;</code> の順です。</li>
+</ul>
+<blockquote class="note">
+<p><strong>PHPでは</strong>
+PHP の配列は、関数に渡すとコピーになるので、関数の中で並べ替えても元の配列は変わりません。また、PHP の <code>sort</code> は数を数として並べます。</p>
+</blockquote>
+</details></section>
+
+<h2 id="74-メソッドをつなげる合計を出す">7.4 メソッドをつなげる、合計を出す</h2>
+<p><code>map</code> や <code>filter</code> は新しい配列を返すので、続けて別のメソッドを呼べます。上から順に読むと、データの変わり方を追えます。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> items</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ノート"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">120</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"万年筆"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">3000</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ペン"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">80</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> cheapNames</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> items</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  .</span><span style="color:#6F42C1;--shiki-dark:#B392F0">filter</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">item</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> item.price </span><span style="color:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 1000</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#6A737D;--shiki-dark:#6A737D">// 1000 円未満だけ残す</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  .</span><span style="color:#6F42C1;--shiki-dark:#B392F0">map</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">item</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> item.name);           </span><span style="color:#6A737D;--shiki-dark:#6A737D">// 名前だけにする</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(cheapNames); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → [ 'ノート', 'ペン' ]</span></span></code></pre>
+<figure><svg class="fig1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 220" width="660" height="220" role="img" aria-labelledby="fig1-t fig1-d">
+  <title id="fig1-t">filter の結果に map を呼ぶ</title>
+  <desc id="fig1-d">items の 3 件のうち、filter で 1000 円未満のノートとペンの 2 件が残る。万年筆は残らない。filter が 3 件すべてを調べ終えてから、map が残った 2 件を名前に変え、cheapNames は 'ノート' と 'ペン' の配列になる。</desc>
+  <style>
+.fig1 .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+.fig1 .sub { fill: #4b5563; font-size: 12px; }
+.fig1 .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+.fig1 .hl { fill: #2563eb; }
+.fig1 .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+.fig1 .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+.fig1 .line { fill: none; stroke: #64748b; stroke-width: 1.8; }
+.fig1 .tip { fill: #64748b; }
+
+    @media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) .fig1 .txt, :root:not([data-theme="light"]) .fig1 .code { fill: #e5e7eb; }
+:root:not([data-theme="light"]) .fig1 .sub { fill: #9ca3af; }
+:root:not([data-theme="light"]) .fig1 .hl { fill: #60a5fa; }
+:root:not([data-theme="light"]) .fig1 .var { fill: #1e293b; stroke: #64748b; }
+:root:not([data-theme="light"]) .fig1 .obj { fill: #172554; stroke: #60a5fa; }
+:root:not([data-theme="light"]) .fig1 .line { stroke: #94a3b8; }
+:root:not([data-theme="light"]) .fig1 .tip { fill: #94a3b8; }
+
+    }
+:root[data-theme="dark"] .fig1 .txt, :root[data-theme="dark"] .fig1 .code { fill: #e5e7eb; }
+:root[data-theme="dark"] .fig1 .sub { fill: #9ca3af; }
+:root[data-theme="dark"] .fig1 .hl { fill: #60a5fa; }
+:root[data-theme="dark"] .fig1 .var { fill: #1e293b; stroke: #64748b; }
+:root[data-theme="dark"] .fig1 .obj { fill: #172554; stroke: #60a5fa; }
+:root[data-theme="dark"] .fig1 .line { stroke: #94a3b8; }
+:root[data-theme="dark"] .fig1 .tip { fill: #94a3b8; }
+
+    </style>
+  <defs>
+    <marker id="fig1-a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+  <text class="code" x="20" y="26">items</text>
+  <text class="txt sub" x="275" y="26">filter の結果</text>
+  <text class="txt sub" x="530" y="26">map の結果</text>
+
+  <rect class="var" x="20" y="40" width="150" height="32" rx="6"/>
+  <text class="code" x="32" y="61">ノート</text><text class="code" x="158" y="61" text-anchor="end">120</text>
+  <rect class="var" x="20" y="80" width="150" height="32" rx="6"/>
+  <text class="code" x="32" y="101">万年筆</text><text class="code" x="158" y="101" text-anchor="end">3000</text>
+  <rect class="var" x="20" y="120" width="150" height="32" rx="6"/>
+  <text class="code" x="32" y="141">ペン</text><text class="code" x="158" y="141" text-anchor="end">80</text>
+
+  <text class="code" x="222" y="84" text-anchor="middle">.filter(…)</text>
+  <path class="line" d="M178,96 L268,96" marker-end="url(#fig1-a1)"/>
+  <text class="txt sub" x="222" y="116" text-anchor="middle">1000 円未満</text>
+  <text class="txt sub" x="222" y="132" text-anchor="middle">だけ残す</text>
+
+  <rect class="var" x="275" y="60" width="150" height="32" rx="6"/>
+  <text class="code" x="287" y="81">ノート</text><text class="code" x="413" y="81" text-anchor="end">120</text>
+  <rect class="var" x="275" y="100" width="150" height="32" rx="6"/>
+  <text class="code" x="287" y="121">ペン</text><text class="code" x="413" y="121" text-anchor="end">80</text>
+
+  <text class="code" x="477" y="84" text-anchor="middle">.map(…)</text>
+  <path class="line" d="M433,96 L523,96" marker-end="url(#fig1-a1)"/>
+  <text class="txt sub" x="477" y="116" text-anchor="middle">名前だけにする</text>
+
+  <rect class="obj" x="530" y="60" width="110" height="32" rx="6"/>
+  <text class="code" x="585" y="81" text-anchor="middle">'ノート'</text>
+  <rect class="obj" x="530" y="100" width="110" height="32" rx="6"/>
+  <text class="code" x="585" y="121" text-anchor="middle">'ペン'</text>
+  <text class="code hl" x="585" y="152" text-anchor="middle">cheapNames</text>
+
+  <text class="txt sub" x="20" y="186">filter が 3 件すべてを調べ終えてから、map が残った 2 件を変換する。</text>
+  <text class="txt sub" x="20" y="206">どちらも新しい配列を返すので、items は変わらない。</text>
+</svg><figcaption>図7-1 filter の結果に map を呼ぶ</figcaption><script type="application/json" class="viz-data">{"label":"1行ずつ見る","code":"const items = [\n  { name: \"ノート\", price: 120 },\n  { name: \"万年筆\", price: 3000 },\n  { name: \"ペン\", price: 80 },\n];\n\nconst cheapNames = items\n  .filter((item) => item.price \u003c 1000) // 1000 円未満だけ残す\n  .map((item) => item.name);           // 名前だけにする\n\nconsole.log(cheapNames); // → [ 'ノート', 'ペン' ]","panels":[{"id":"filter","label":"filter の結果"},{"id":"map","label":"map の結果"},{"id":"console","label":"コンソールの表示"}],"steps":[{"lines":[1,5],"phase":"items を作る","note":"3 件の商品の配列を作ります。","filter":[],"map":[],"console":[]},{"lines":[8],"phase":"filter：1 件目","note":"ノートでコールバックを呼びます。120 \u003c 1000 は true なので、ノートを残します。","filter":["ノート 120"],"map":[],"console":[]},{"lines":[8],"phase":"filter：2 件目","note":"万年筆でコールバックを呼びます。3000 \u003c 1000 は false なので、万年筆は残しません。","filter":["ノート 120"],"map":[],"console":[]},{"lines":[8],"phase":"filter：3 件目","note":"ペンは 80 \u003c 1000 が true なので残します。3 件を調べ終えたので、filter は 2 件の新しい配列を返します。","filter":["ノート 120","ペン 80"],"map":[],"console":[]},{"lines":[9],"phase":"map：1 件目","note":"filter が返した配列に map を呼びます。ノートのコールバックは、名前の 'ノート' を返します。","filter":["ノート 120","ペン 80"],"map":["'ノート'"],"console":[]},{"lines":[9],"phase":"map：2 件目","note":"ペンは 'ペン' になります。map が返した配列が、cheapNames に入ります。","filter":["ノート 120","ペン 80"],"map":["'ノート'","'ペン'"],"console":[]},{"lines":[11],"phase":"表示する","note":"cheapNames を表示します。items は 3 件のままです。","filter":["ノート 120","ペン 80"],"map":["'ノート'","'ペン'"],"console":["[ 'ノート', 'ペン' ]"]}],"codeHtml":"\u003cpre class=\"shiki numbered shiki-themes github-light github-dark\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\">\u003ccode style=\"counter-reset: line 0\">\u003cspan class=\"line\">\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">const\u003c/span>\u003cspan style=\"color:#005CC5;--shiki-dark:#79B8FF\"> items\u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\"> =\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">  { name: \u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">\"ノート\"\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">, price: \u003c/span>\u003cspan style=\"color:#005CC5;--shiki-dark:#79B8FF\">120\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> },\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">  { name: \u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">\"万年筆\"\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">, price: \u003c/span>\u003cspan style=\"color:#005CC5;--shiki-dark:#79B8FF\">3000\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> },\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">  { name: \u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">\"ペン\"\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">, price: \u003c/span>\u003cspan style=\"color:#005CC5;--shiki-dark:#79B8FF\">80\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> },\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">];\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">const\u003c/span>\u003cspan style=\"color:#005CC5;--shiki-dark:#79B8FF\"> cheapNames\u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\"> =\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> items\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">  .\u003c/span>\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\">filter\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">((\u003c/span>\u003cspan style=\"color:#E36209;--shiki-dark:#FFAB70\">item\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">) \u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">=>\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> item.price \u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">&#x3C;\u003c/span>\u003cspan style=\"color:#005CC5;--shiki-dark:#79B8FF\"> 1000\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">) \u003c/span>\u003cspan style=\"color:#6A737D;--shiki-dark:#6A737D\">// 1000 円未満だけ残す\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">  .\u003c/span>\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\">map\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">((\u003c/span>\u003cspan style=\"color:#E36209;--shiki-dark:#FFAB70\">item\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">) \u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">=>\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> item.name);           \u003c/span>\u003cspan style=\"color:#6A737D;--shiki-dark:#6A737D\">// 名前だけにする\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">console.\u003c/span>\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\">log\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">(cheapNames); \u003c/span>\u003cspan class=\"result-comment\" style=\"color:#6A737D;--shiki-dark:#6A737D\">// → [ 'ノート', 'ペン' ]\u003c/span>\u003c/span>\u003c/code>\u003c/pre>"}</script></figure>
+<p>合計を出すときは <code>reduce</code> を使います。2 つ目の引数が、<code>sum</code> の最初の値です。この教材で使う <code>reduce</code> は、この形だけです。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> prices</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#005CC5;--shiki-dark:#79B8FF">120</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">3000</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">80</span><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> total</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> prices.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">reduce</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">sum</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">price</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> sum </span><span style="color:#D73A49;--shiki-dark:#F97583">+</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> price, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">); </span><span style="color:#6A737D;--shiki-dark:#6A737D">// sum はそれまでの合計。最初は 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(total); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → 3200</span></span></code></pre>
+<p><code>reduce</code> は、要素ごとにコールバックを呼びます。コールバックが返した値が、次の回の <code>sum</code> になります。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>回</th>
+<th><code>sum</code></th>
+<th><code>price</code></th>
+<th>返す値（次の <code>sum</code>）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>0</code></td>
+<td><code>120</code></td>
+<td><code>120</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>120</code></td>
+<td><code>3000</code></td>
+<td><code>3120</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>3120</code></td>
+<td><code>80</code></td>
+<td><code>3200</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>最後の回に返した値が、<code>reduce</code> の結果です。</p>
+<section class="question"><h2 id="問題-3支払い済みの個数"><span class="question-kind">問題</span> <span class="question-number">3</span><span class="question-title">支払い済みの個数</span></h2>
+<p><code>main/exercises/M07-array-methods/problem-03.ts</code></p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 3"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> orders</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { item: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ノート"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, count: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">2</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, paid: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { item: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ペン"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, count: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">5</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, paid: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">false</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { item: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"定規"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, count: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">1</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, paid: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> paidCounts</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> orders.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">filter</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">o</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> o.paid).</span><span style="color:#6F42C1;--shiki-dark:#B392F0">map</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">o</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> o.count);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> total</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> paidCounts.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">reduce</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">sum</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">count</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> sum </span><span style="color:#D73A49;--shiki-dark:#F97583">+</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> count, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">10</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(paidCounts); </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ①</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(total);      </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ②</span></span></code></pre>
+<p><code>node main/exercises/M07-array-methods/problem-03.ts</code> を実行すると、① と ② でそれぞれ何が表示されるか予測してください。</p>
+<details>
+<summary>答えと解説</summary>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>[ 2, 1 ]</span></span>
+<span class="line"><span>13</span></span></code></pre>
+<ul>
+<li>①：<code>filter</code> で <code>paid</code> が <code>true</code> の 2 件が残り、<code>map</code> で <code>count</code> だけの配列になります。</li>
+<li>②：<code>sum</code> は <code>10</code> から始まります。<code>10 + 2</code> が <code>12</code>、<code>12 + 1</code> が <code>13</code> です。</li>
+</ul>
+</details></section>
+
+<h2 id="75-配列の中の-1-件を消す変える">7.5 配列の中の 1 件を消す・変える</h2>
+<p>画面に表示するデータは、元の配列を変えずに、新しい配列を作って更新します（第4章）。1 件を消すときは <code>filter</code>、1 件だけ変えるときは <code>map</code> を使います。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> items</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { id: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">1</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ノート"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">120</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { id: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">2</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ペン"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">80</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// id が 2 のものを消す（id が 2 でないものだけ残す）</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> removed</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> items.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">filter</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">item</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> item.id </span><span style="color:#D73A49;--shiki-dark:#F97583">!==</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 2</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// id が 1 のものだけ、価格を変える（ほかはそのまま返す）</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> updated</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> items.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">map</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">item</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (item.id </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 1</span><span style="color:#D73A49;--shiki-dark:#F97583"> ?</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { </span><span style="color:#D73A49;--shiki-dark:#F97583">...</span><span style="color:#24292E;--shiki-dark:#E1E4E8">item, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">100</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> } </span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> item));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(removed.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">map</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">item</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> item.name));  </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → [ 'ノート' ]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(updated.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">map</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">item</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> item.price)); </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → [ 100, 80 ]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(items.</span><span style="color:#005CC5;--shiki-dark:#79B8FF">length</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);                      </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → 2</span></span></code></pre>
+<p><code>map</code> の中の <code>条件 ? A : B</code> は、第1章の三項演算子です。外側の <code>( )</code> は読みやすくするためのもので、なくても動きます。条件に合う要素は <code>{ ...item, 変更 }</code> で作った新しいオブジェクトに置き換わり、ほかの要素はそのまま入ります。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>したいこと</th>
+<th>書き方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>追加する</td>
+<td><code>[...items, x]</code>（第4章）</td>
+</tr>
+<tr>
+<td>1 件を消す</td>
+<td><code>items.filter((item) =&gt; item.id !== 消す id)</code></td>
+</tr>
+<tr>
+<td>1 件だけ変える</td>
+<td><code>items.map((item) =&gt; (item.id === 変える id ? { ...item, 変更 } : item))</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>実践編と React 編では、画面のデータをこの 3 つの形で更新します。</p>
+<section class="question"><h2 id="問題-4更新した配列を使う"><span class="question-kind">問題</span> <span class="question-number">4</span><span class="question-title">更新した配列を使う</span></h2>
+<p><code>main/exercises/M07-array-methods/problem-04.ts</code></p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 3"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> tasks</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { id: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">1</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, title: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"買い物"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, done: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">false</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { id: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">2</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, title: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"掃除"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, done: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">false</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { id: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">3</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, title: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"洗濯"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, done: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> updated</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> tasks.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">map</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">t</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (t.id </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 2</span><span style="color:#D73A49;--shiki-dark:#F97583"> ?</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { </span><span style="color:#D73A49;--shiki-dark:#F97583">...</span><span style="color:#24292E;--shiki-dark:#E1E4E8">t, done: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> } </span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> t));</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> remaining</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> updated.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">filter</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">t</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#D73A49;--shiki-dark:#F97583"> !</span><span style="color:#24292E;--shiki-dark:#E1E4E8">t.done);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(remaining.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">map</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">t</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> t.title));       </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ①</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(tasks.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">filter</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">t</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#D73A49;--shiki-dark:#F97583"> !</span><span style="color:#24292E;--shiki-dark:#E1E4E8">t.done).</span><span style="color:#005CC5;--shiki-dark:#79B8FF">length</span><span style="color:#24292E;--shiki-dark:#E1E4E8">); </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ②</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(updated[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> tasks[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]);             </span><span style="color:#6A737D;--shiki-dark:#6A737D">// ③</span></span></code></pre>
+<p>オブジェクトの <code>===</code> は、同じものかどうかを比べます（第4章）。<code>!t.done</code> の <code>!</code> は否定（第1章 1.3）で、第6章の <code>値!</code> とは別のものです。<code>node main/exercises/M07-array-methods/problem-04.ts</code> を実行すると、①〜③ でそれぞれ何が表示されるか予測してください。</p>
+<details>
+<summary>答えと解説</summary>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>[ '買い物' ]</span></span>
+<span class="line"><span>2</span></span>
+<span class="line"><span>true</span></span></code></pre>
+<ul>
+<li>①：<code>updated</code> では「掃除」も <code>done</code> が <code>true</code> です。未完了で残るのは「買い物」です。</li>
+<li>②：<code>tasks</code> は変わっていないので、未完了は「買い物」と「掃除」の 2 件です。</li>
+<li>③：<code>id</code> が 1 の要素は、<code>map</code> の中でそのまま返しています。コピーではなく、<code>tasks[0]</code> と同じオブジェクトです。</li>
+</ul>
+</details></section>
+
+<hr>
+<section class="exercise"><h2 id="演習配列のメソッドで商品を扱う">演習：配列のメソッドで商品を扱う</h2>
+<p>商品の配列を扱う 3 つの関数を、配列のメソッドで書きます。</p>
+<p><strong>進め方</strong></p>
+<ol class="phase-strip" aria-label="進め方の段階"><li>関数を書く<span class="range">手順 1〜3</span></li><li>仕上げる<span class="range">手順 4</span></li></ol>
+<h4 class="phase-head">関数を書く<span class="range">手順 1〜3</span></h4>
+<ol class="steps">
+<li class="step" data-no="1">
+<p class="step-do"><code>main/exercises/M07-array-methods/practice-01.ts</code> の、<code>namesUnder</code> の <code>throw</code> の行を書き換える</p>
+<ul class="step-notes">
+<li class="step-note">3 つの関数とも、<code>for</code> 文は使わず、配列のメソッドで書きます。手本の <code>=</code> の右側の式を、<code>return</code> で返します</li>
+<li class="step-note">7.4 の <code>cheapNames</code> の <code>items</code> を <code>products</code> に、<code>1000</code> を <code>limit</code> に変えた形です</li>
+</ul>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> test</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> M07</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>テストの表示で、<code>namesUnder</code> で始まる行がすべて <code>✔</code> になる</span></li>
+</ul>
+</li>
+<li class="step" data-no="2">
+<p class="step-do"><code>sortByPrice</code> の <code>throw</code> の行を書き換える</p>
+<ul class="step-notes">
+<li class="step-note">7.3 の <code>byPrice</code> と同じ形で、コピーしてから並べ替えます</li>
+</ul>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> test</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> M07</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>テストの表示で、<code>sortByPrice</code> で始まる行がすべて <code>✔</code> になる</span></li>
+</ul>
+</li>
+<li class="step" data-no="3">
+<p class="step-do"><code>changePrice</code> の <code>throw</code> の行を書き換える</p>
+<ul class="step-notes">
+<li class="step-note">7.5 の <code>updated</code> と同じ形で、<code>id</code> の代わりに <code>name</code> で比べます。名前が <code>name</code> と同じ商品の価格を変えます</li>
+<li class="step-note"><code>{ ...p, price }</code> は <code>{ ...p, price: price }</code> の省略形です（第4章）</li>
+</ul>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> test</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> M07</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>テストの表示で、<code>changePrice</code> で始まる行がすべて <code>✔</code> になる</span></li>
+</ul>
+</li>
+</ol>
+<h4 class="phase-head">仕上げる<span class="range">手順 4</span></h4>
+<ol start="4" class="steps">
+<li class="step" data-no="4">
+<p class="step-do">章全体の型チェックとテストを実行する</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> check</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> M07</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>「型チェック: OK」「テスト: OK」</span></li>
+</ul>
+</li>
+</ol>
+<p><strong>テストで確かめるもの</strong></p>
+<p><code>products</code> が次の配列のとき、それぞれの関数は表の値を返します。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> products</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ノート"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">120</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"万年筆"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">3000</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ペン"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">80</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { name: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ファイル"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, price: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">200</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">];</span></span></code></pre>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>呼び出し</th>
+<th>返す値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namesUnder(products, 150)</code></td>
+<td><code>[&quot;ノート&quot;, &quot;ペン&quot;]</code>（150 円未満の商品の名前。元の順のまま）</td>
+</tr>
+<tr>
+<td><code>namesUnder(products, 120)</code></td>
+<td><code>[&quot;ペン&quot;]</code>（120 円ちょうどの「ノート」は含めない）</td>
+</tr>
+<tr>
+<td><code>sortByPrice(products)</code></td>
+<td>価格が <code>80</code>、<code>120</code>、<code>200</code>、<code>3000</code> の順に並んだ、新しい配列</td>
+</tr>
+<tr>
+<td><code>changePrice(products, &quot;ペン&quot;, 100)</code></td>
+<td>「ペン」の価格だけを <code>100</code> にした、新しい配列（ほかの商品はそのまま）</td>
+</tr>
+</tbody>
+</table></div>
+<details>
+<summary>ヒント 1：どこを見ればよいか</summary>
+<ul>
+<li><code>namesUnder</code>：7.4「メソッドをつなげる、合計を出す」</li>
+<li><code>sortByPrice</code>：7.3「並べ替えは、コピーしてから比べ方を渡す」</li>
+<li><code>changePrice</code>：7.5「配列の中の 1 件を消す・変える」</li>
+</ul>
+</details>
+<details>
+<summary>ヒント 2：書き出し</summary>
+<ul>
+<li><code>namesUnder</code>：<code>return products.filter(...).map(...);</code> の形です。</li>
+<li><code>sortByPrice</code>：<code>return [...products].sort(...);</code> の形です。比べ方は <code>(a, b) =&gt; a.price - b.price</code> です。</li>
+<li><code>changePrice</code>：<code>return products.map((p) =&gt; (p.name === name ? ... : p));</code> の形です。</li>
+</ul>
+</details>
+<details>
+<summary>テストが失敗したら</summary>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>表示</th>
+<th>よくある原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「<code>namesUnder(products, 150)</code> は 150 円未満の商品の名前を返す」で、オブジェクトの配列が表示される</td>
+<td><code>filter</code> だけで終わっています。<code>map</code> で名前だけにします</td>
+</tr>
+<tr>
+<td>「<code>namesUnder</code> は limit ちょうどの商品を含めない」で <code>+ 'ノート'</code></td>
+<td><code>&lt;=</code> で比べています。「未満」は <code>&lt;</code> です</td>
+</tr>
+<tr>
+<td>「<code>sortByPrice</code> は価格の安い順に並べる」で、並びが変わっていない</td>
+<td>比べ方を渡していません。<code>(a, b) =&gt; a.price - b.price</code> を渡します</td>
+</tr>
+<tr>
+<td>型チェックで <code>The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.</code></td>
+<td><code>a - b</code> と、オブジェクト同士を引いています。<code>a.price - b.price</code> にします</td>
+</tr>
+<tr>
+<td>「<code>sortByPrice</code> は元の配列を変えない」</td>
+<td><code>products.sort(...)</code> を直接呼んでいます。<code>[...products]</code> でコピーしてから並べ替えます</td>
+</tr>
+<tr>
+<td>「<code>changePrice</code> は元の配列を変えない」</td>
+<td>見つけた商品の <code>price</code> を直接書き換えています。<code>{ ...p, price }</code> で新しいオブジェクトを作ります</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="solution"><summary>解答例を見る</summary><p class="solution-file"><code>main/solutions/M07-array-methods/practice-01.ts</code></p><pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Product</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  name</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  price</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> namesUnder</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">products</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Product</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[], </span><span style="color:#E36209;--shiki-dark:#FFAB70">limit</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[] {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> products.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">filter</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">p</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> p.price </span><span style="color:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> limit).</span><span style="color:#6F42C1;--shiki-dark:#B392F0">map</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">p</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> p.name);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> sortByPrice</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">products</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Product</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[])</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Product</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[] {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#D73A49;--shiki-dark:#F97583">...</span><span style="color:#24292E;--shiki-dark:#E1E4E8">products].</span><span style="color:#6F42C1;--shiki-dark:#B392F0">sort</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">a</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">b</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> a.price </span><span style="color:#D73A49;--shiki-dark:#F97583">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> b.price);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> changePrice</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">products</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Product</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[], </span><span style="color:#E36209;--shiki-dark:#FFAB70">name</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">price</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Product</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[] {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> products.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">map</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">p</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (p.name </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> name </span><span style="color:#D73A49;--shiki-dark:#F97583">?</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { </span><span style="color:#D73A49;--shiki-dark:#F97583">...</span><span style="color:#24292E;--shiki-dark:#E1E4E8">p, price } </span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> p));</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre></details>
+</section>
+<hr>
+<h2 id="チェックリスト">チェックリスト</h2>
+<ul>
+<li class="task"><input type="checkbox"> <code>find</code> の結果に <code>?.</code> を使う理由を説明できる</li>
+<li class="task"><input type="checkbox"> 問題 2 の ② で、関数の外の <code>scores</code> の並びが変わる理由を説明できる</li>
+<li class="task"><input type="checkbox"> <code>[...prices].sort((a, b) =&gt; a - b)</code> の <code>[...prices]</code> と <code>a - b</code> の役割を説明できる</li>
+</ul>
+<h2 id="詳しく学ぶ">詳しく学ぶ</h2>
+<ul>
+<li>JavaScript Primer：<a href="https://jsprimer.net/basic/array/" target="_blank" rel="noopener">配列</a></li>
+<li>サバイバルTypeScript：<a href="https://typescriptbook.jp/reference/values-types-variables/array/array-operations" target="_blank" rel="noopener">配列の操作</a>、<a href="https://typescriptbook.jp/reference/values-types-variables/array/how-to-loop-an-array" target="_blank" rel="noopener">配列のループ</a></li>
+</ul>
+
+      </article>
+      <nav class="prev-next"><a class="prev" href="M06-narrowing.html"><small>前へ</small>第6章 null と型の絞り込み</a><a class="next" href="M08-modules.html"><small>次へ</small>第8章 モジュールと型を読む</a></nav>
+    </main>
+  </div>
+</body>
+</html>

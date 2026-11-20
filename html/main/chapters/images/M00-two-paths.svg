@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" width="760" height="330" role="img" aria-labelledby="t d">
+  <title id="t">TypeScript ファイルの 2 つの経路</title>
+  <desc id="d">同じ problem-01.ts を、node で実行すると型注釈を消して JavaScript として実行し 200 と表示する。npm run typecheck で型チェックすると、実行はせずに TS2322 の型エラーを報告する。</desc>
+  <style>
+    .bg { fill: none; }
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 14px; }
+    .sub { fill: #4b5563; font-size: 12px; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; }
+    .ann { fill: #b45309; font-weight: 700; }
+    .card { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .run { stroke: #2563eb; }
+    .run-fill { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .run-txt { fill: #1d4ed8; font-weight: 700; }
+    .chk { stroke: #c2410c; }
+    .chk-fill { fill: #fff7ed; stroke: #c2410c; stroke-width: 1.5; }
+    .chk-txt { fill: #c2410c; font-weight: 700; }
+    .line { fill: none; stroke-width: 2; }
+    .head-run { fill: #2563eb; }
+    .head-chk { fill: #c2410c; }
+    .strike { stroke: #b45309; stroke-width: 1.5; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code { fill: #e5e7eb; }
+      .sub { fill: #9ca3af; }
+      .ann { fill: #fbbf24; }
+      .card { fill: #1e293b; stroke: #64748b; }
+      .run { stroke: #60a5fa; }
+      .run-fill { fill: #172554; stroke: #60a5fa; }
+      .run-txt { fill: #93c5fd; }
+      .chk { stroke: #fb923c; }
+      .chk-fill { fill: #431407; stroke: #fb923c; }
+      .chk-txt { fill: #fdba74; }
+      .head-run { fill: #60a5fa; }
+      .head-chk { fill: #fb923c; }
+      .strike { stroke: #fbbf24; }
+    }
+  </style>
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head-run" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head-chk" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <!-- 元のファイル -->
+  <rect class="card" x="10" y="120" width="250" height="92" rx="8"/>
+  <text class="txt sub" x="22" y="142">problem-01.ts</text>
+  <text class="code" x="22" y="170">const price<tspan class="ann">: number</tspan> = "100";</text>
+  <text class="code" x="22" y="194">console.log(price * 2);</text>
+
+  <!-- 上: 実行の経路 -->
+  <text class="txt run-txt" x="300" y="28">実行する：node</text>
+  <path class="line run" d="M260,150 C280,150 280,75 300,75" marker-end="url(#ar)"/>
+  <rect class="run-fill" x="302" y="42" width="140" height="66" rx="8"/>
+  <text class="txt" x="372" y="68" text-anchor="middle">① 型注釈を消す</text>
+  <text class="code" x="372" y="92" text-anchor="middle" style="font-size:12px">: number</text>
+  <line class="strike" x1="340" y1="88" x2="404" y2="88"/>
+  <path class="line run" d="M442,75 L470,75" marker-end="url(#ar)"/>
+  <rect class="run-fill" x="472" y="42" width="140" height="66" rx="8"/>
+  <text class="txt" x="542" y="68" text-anchor="middle">② JavaScript</text>
+  <text class="txt" x="542" y="90" text-anchor="middle">として実行</text>
+  <path class="line run" d="M612,75 L640,75" marker-end="url(#ar)"/>
+  <text class="code run-txt" x="696" y="72" text-anchor="middle" style="font-size:22px">200</text>
+  <text class="txt sub" x="696" y="94" text-anchor="middle">止まらずに表示</text>
+
+  <!-- 下: 型チェックの経路 -->
+  <text class="txt chk-txt" x="300" y="316">型チェックする：npm run typecheck</text>
+  <path class="line chk" d="M260,182 C280,182 280,255 300,255" marker-end="url(#ac)"/>
+  <rect class="chk-fill" x="302" y="222" width="310" height="66" rx="8"/>
+  <text class="txt" x="457" y="248" text-anchor="middle">tsc が型チェックをする</text>
+  <text class="txt sub" x="457" y="272" text-anchor="middle">プログラムは実行しない</text>
+  <path class="line chk" d="M612,255 L640,255" marker-end="url(#ac)"/>
+  <text class="code chk-txt" x="700" y="252" text-anchor="middle" style="font-size:17px">TS2322</text>
+  <text class="txt sub" x="700" y="274" text-anchor="middle">エラーを報告</text>
+</svg>

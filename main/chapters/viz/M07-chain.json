@@ -1,0 +1,67 @@
+{
+  "label": "1行ずつ見る",
+  "code": "const items = [\n  { name: \"ノート\", price: 120 },\n  { name: \"万年筆\", price: 3000 },\n  { name: \"ペン\", price: 80 },\n];\n\nconst cheapNames = items\n  .filter((item) => item.price < 1000) // 1000 円未満だけ残す\n  .map((item) => item.name);           // 名前だけにする\n\nconsole.log(cheapNames); // → [ 'ノート', 'ペン' ]",
+  "panels": [
+    { "id": "filter", "label": "filter の結果" },
+    { "id": "map", "label": "map の結果" },
+    { "id": "console", "label": "コンソールの表示" }
+  ],
+  "steps": [
+    {
+      "lines": [1, 5],
+      "phase": "items を作る",
+      "note": "3 件の商品の配列を作ります。",
+      "filter": [],
+      "map": [],
+      "console": []
+    },
+    {
+      "lines": [8],
+      "phase": "filter：1 件目",
+      "note": "ノートでコールバックを呼びます。120 < 1000 は true なので、ノートを残します。",
+      "filter": ["ノート 120"],
+      "map": [],
+      "console": []
+    },
+    {
+      "lines": [8],
+      "phase": "filter：2 件目",
+      "note": "万年筆でコールバックを呼びます。3000 < 1000 は false なので、万年筆は残しません。",
+      "filter": ["ノート 120"],
+      "map": [],
+      "console": []
+    },
+    {
+      "lines": [8],
+      "phase": "filter：3 件目",
+      "note": "ペンは 80 < 1000 が true なので残します。3 件を調べ終えたので、filter は 2 件の新しい配列を返します。",
+      "filter": ["ノート 120", "ペン 80"],
+      "map": [],
+      "console": []
+    },
+    {
+      "lines": [9],
+      "phase": "map：1 件目",
+      "note": "filter が返した配列に map を呼びます。ノートのコールバックは、名前の 'ノート' を返します。",
+      "filter": ["ノート 120", "ペン 80"],
+      "map": ["'ノート'"],
+      "console": []
+    },
+    {
+      "lines": [9],
+      "phase": "map：2 件目",
+      "note": "ペンは 'ペン' になります。map が返した配列が、cheapNames に入ります。",
+      "filter": ["ノート 120", "ペン 80"],
+      "map": ["'ノート'", "'ペン'"],
+      "console": []
+    },
+    {
+      "lines": [11],
+      "phase": "表示する",
+      "note": "cheapNames を表示します。items は 3 件のままです。",
+      "filter": ["ノート 120", "ペン 80"],
+      "map": ["'ノート'", "'ペン'"],
+      "console": ["[ 'ノート', 'ペン' ]"]
+    }
+  ]
+}

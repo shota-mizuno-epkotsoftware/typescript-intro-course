@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 200" width="720" height="200" role="img" aria-labelledby="t d">
+  <title id="t">TypeScript が動くまで</title>
+  <desc id="d">TypeScript で書いたコードには、別々の 2 つの作業がある。上は実行で、Node.js や Vite が自動で型を消して JavaScript にし、ブラウザか Node.js で動かす。型の間違いがあっても動く。下は型チェックで、tsc コマンドやエディタの波線が、実行する前に型の間違いを知らせる。実行はしない。</desc>
+  <style>
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 11.5px; }
+    .head { font-weight: 700; }
+    .box { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .run { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .chk { fill: #fff7ed; stroke: #c2410c; stroke-width: 1.5; }
+    .line { fill: none; stroke: #2563eb; stroke-width: 1.8; }
+    .line3 { fill: none; stroke: #c2410c; stroke-width: 1.8; }
+    .tip { fill: #2563eb; }
+    .tip3 { fill: #c2410c; }
+    @media (prefers-color-scheme: dark) {
+      .txt { fill: #e5e7eb; }
+      .sub { fill: #9ca3af; }
+      .box { fill: #1e293b; stroke: #64748b; }
+      .run { fill: #172554; stroke: #60a5fa; }
+      .chk { fill: #431407; stroke: #fb923c; }
+      .line { stroke: #60a5fa; }
+      .line3 { stroke: #fb923c; }
+      .tip { fill: #60a5fa; }
+      .tip3 { fill: #fb923c; }
+    }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip3" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <rect class="box" x="20" y="70" width="140" height="60" rx="8"/>
+  <text class="txt head" x="90" y="96" text-anchor="middle">書く</text>
+  <text class="txt sub" x="90" y="116" text-anchor="middle">TypeScript（.ts）</text>
+
+  <!-- 実行 -->
+  <text class="txt sub" x="200" y="22">実行する</text>
+  <rect class="run" x="200" y="30" width="200" height="56" rx="8"/>
+  <text class="txt head" x="300" y="54" text-anchor="middle">型を消す</text>
+  <text class="txt sub" x="300" y="73" text-anchor="middle">Node.js・Vite が自動で行う</text>
+  <rect class="run" x="440" y="30" width="260" height="56" rx="8"/>
+  <text class="txt head" x="570" y="54" text-anchor="middle">ブラウザ・Node.js で動く</text>
+  <text class="txt sub" x="570" y="73" text-anchor="middle">型の間違いがあっても動く</text>
+  <path class="line" d="M160,90 C180,90 180,58 196,58" marker-end="url(#a1)"/>
+  <path class="line" d="M400,58 L436,58" marker-end="url(#a1)"/>
+
+  <!-- 型チェック -->
+  <text class="txt sub" x="200" y="128">実行とは別に行う</text>
+  <rect class="chk" x="200" y="136" width="200" height="56" rx="8"/>
+  <text class="txt head" x="300" y="160" text-anchor="middle">型チェック</text>
+  <text class="txt sub" x="300" y="179" text-anchor="middle">tsc コマンド・エディタの波線</text>
+  <rect class="box" x="440" y="136" width="260" height="56" rx="8"/>
+  <text class="txt head" x="570" y="160" text-anchor="middle">型の間違いを知らせる</text>
+  <text class="txt sub" x="570" y="179" text-anchor="middle">実行する前に見つかる（実行はしない）</text>
+  <path class="line3" d="M160,110 C180,110 180,164 196,164" marker-end="url(#a3)"/>
+  <path class="line3" d="M400,164 L436,164" marker-end="url(#a3)"/>
+</svg>

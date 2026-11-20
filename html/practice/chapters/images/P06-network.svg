@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-labelledby="t d">
+  <title id="t">Network のタブで見る場所</title>
+  <desc id="d">Chrome の開発者ツールの Network のタブを切り出した図。上の図は通信の一覧で、上の段に通信の速さの選択欄「No throttling」がある（①）。一覧には localhost、client、main.ts、style.css などの行が並び、categories.json の行は Status が 200、Type が fetch、Initiator が categories.ts:14（②）。下の図は categories.json の行を選んだ後で、左に Name の列だけが残り、右に Headers・Preview・Response・Initiator・Timing のタブが出る。Response のタブを選ぶと（③）、返ってきた中身が 3 行で見える。2 行目は "categories": ["食費", "交通費", 100, "日用品", null, "", "娯楽", "食費", "その他"]。これは改修用フォルダの categories.json で、正しくない値が混ざっている。</desc>
+  <!-- 寸法：開発者ツールの一部を実物の大きさ（1 倍）で切り出す。中身の 1 行が切れずに見えるよう、開発者ツールの幅を広げた状態（780）で描く。下の図の Name の列は 150。タブの列 27、行 21、文字 12 -->
+  <style>
+    .dt { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 12px; fill: #1f1f1f; }
+    .gray { fill: #5f6368; }
+    .mono { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; fill: #1f1f1f; }
+    .ln { fill: #80868b; }
+    .str { fill: #c80000; }
+    .num { fill: #1a1aa6; }
+    .key { fill: #881280; }
+    .frame { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+    .dev { fill: #f8f9fa; }
+    .edge { fill: none; stroke: #dadce0; stroke-width: 1; }
+    .icon { fill: none; stroke: #5f6368; stroke-width: 1.2; }
+    .rec { fill: #d93025; }
+    .box { fill: #ffffff; stroke: #80868b; stroke-width: 1; }
+    .filter { fill: #ffffff; stroke: #dadce0; stroke-width: 1; }
+    .chip { fill: #d3e3fd; }
+    .sel { fill: #d3e3fd; }
+    .blue { fill: #1a73e8; }
+    .bar1 { fill: #9aa0a6; }
+    .bar2 { fill: #1a73e8; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 2; }
+    .badge { fill: #ea580c; }
+    .badge-num { font-family: -apple-system, "Segoe UI", sans-serif; font-size: 11px; font-weight: 700; fill: #ffffff; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; fill: #1f2937; }
+    .note-head { font-weight: 700; }
+    .note-sub { fill: #4b5563; }
+    .note-acc { fill: #c2410c; font-weight: 700; }
+    @media (prefers-color-scheme: dark) {
+      .mark { stroke: #fb923c; }
+      .badge { fill: #f97316; }
+      .note { fill: #e5e7eb; }
+      .note-sub { fill: #9ca3af; }
+      .note-acc { fill: #fb923c; }
+    }
+  </style>
+
+  <!-- 上の図：通信の一覧 -->
+  <text class="note note-head" x="10" y="20">ページを読み込み直した後の一覧</text>
+  <rect class="frame" x="10.5" y="30.5" width="779" height="240"/>
+
+  <!-- タブの列 -->
+  <rect class="dev" x="11" y="31" width="778" height="26"/>
+  <path class="edge" d="M11,57.5 H789"/>
+  <rect class="icon" x="19" y="38" width="11" height="11" rx="1"/><path class="icon" d="M25,44 L31,50"/>
+  <rect class="icon" x="40" y="37" width="8" height="13" rx="1.5"/>
+  <text class="dt gray" x="60" y="48.5">Elements</text>
+  <text class="dt gray" x="122" y="48.5">Console</text>
+  <text class="dt gray" x="180" y="48.5">Sources</text>
+  <text class="dt" x="240" y="48.5">Network</text>
+  <rect class="blue" x="236" y="55" width="58" height="2"/>
+  <text class="dt gray" x="306" y="48.5">Performance</text>
+  <text class="dt gray" x="388" y="48.5">Memory</text>
+  <text class="dt gray" x="444" y="48.5">Application</text>
+  <text class="dt gray" x="520" y="48.5">≫</text>
+  <circle class="icon" cx="748" cy="44" r="4.5"/><circle class="icon" cx="748" cy="44" r="1.5"/>
+  <text class="dt gray" x="768" y="48.5">⋮</text>
+
+  <!-- 上の段（記録・消去・絞り込み・検索・ログを残す・キャッシュ・通信の速さ） -->
+  <path class="edge" d="M11,84.5 H789"/>
+  <circle class="rec" cx="22" cy="71" r="5"/>
+  <circle class="icon" cx="42" cy="71" r="5"/><path class="icon" d="M38.5,74.5 L45.5,67.5"/>
+  <path class="edge" d="M56.5,62 V80"/>
+  <path class="icon" d="M64,66 H76 L71.5,71.5 V77 L68.5,75.5 V71.5 Z"/>
+  <circle class="icon" cx="91" cy="70" r="4"/><path class="icon" d="M94,73 L97.5,76.5"/>
+  <path class="edge" d="M108.5,62 V80"/>
+  <rect class="box" x="116" y="65.5" width="11" height="11" rx="2"/>
+  <text class="dt" x="132" y="75.5">Preserve log</text>
+  <rect class="box" x="214" y="65.5" width="11" height="11" rx="2"/>
+  <text class="dt" x="230" y="75.5">Disable cache</text>
+  <path class="edge" d="M314.5,62 V80"/>
+  <text class="dt" x="324" y="75.5">No throttling</text>
+  <path class="icon" d="M399,69 L402.5,72.5 L406,69"/>
+  <path class="icon" d="M432,72 A9,9 0 0 1 446,72 M435,75 A5,5 0 0 1 443,75"/><circle class="icon" cx="439" cy="78" r="0.8"/>
+  <path class="edge" d="M458.5,62 V80"/>
+  <path class="icon" d="M470,77 V65 M465.5,69.5 L470,65 L474.5,69.5"/>
+  <path class="icon" d="M488,65 V77 M483.5,72.5 L488,77 L492.5,72.5"/>
+  <circle class="icon" cx="768" cy="71" r="4.5"/><circle class="icon" cx="768" cy="71" r="1.5"/>
+
+  <!-- 2 段目（絞り込み） -->
+  <path class="edge" d="M11,111.5 H789"/>
+  <rect class="filter" x="16" y="88" width="180" height="20" rx="2"/>
+  <text class="dt gray" x="22" y="102">Filter</text>
+  <rect class="box" x="208" y="92.5" width="11" height="11" rx="2"/>
+  <text class="dt" x="224" y="102">Invert</text>
+  <text class="dt" x="276" y="102">More filters</text>
+  <path class="icon" d="M346,96 L349.5,99.5 L353,96"/>
+  <rect class="chip" x="370" y="89" width="28" height="18" rx="9"/>
+  <text class="dt" x="384" y="102" text-anchor="middle">All</text>
+  <text class="dt" x="408" y="102">Fetch/XHR</text>
+  <text class="dt" x="476" y="102">Doc</text>
+  <text class="dt" x="508" y="102">CSS</text>
+  <text class="dt" x="540" y="102">JS</text>
+  <text class="dt" x="564" y="102">Font</text>
+  <text class="dt" x="600" y="102">Img</text>
+  <text class="dt" x="630" y="102">Media</text>
+  <text class="dt" x="674" y="102">Manifest</text>
+  <text class="dt" x="732" y="102">WS</text>
+
+  <!-- 表の見出し -->
+  <rect class="dev" x="11" y="112" width="778" height="20"/>
+  <path class="edge" d="M11,132.5 H789"/>
+  <text class="dt" x="16" y="126">Name</text>
+  <text class="dt" x="226" y="126">Status</text>
+  <text class="dt" x="286" y="126">Type</text>
+  <text class="dt" x="356" y="126">Initiator</text>
+  <text class="dt" x="516" y="126">Size</text>
+  <text class="dt" x="586" y="126">Time</text>
+  <text class="dt" x="646" y="126">Waterfall</text>
+  <path class="edge" d="M220.5,112 V270 M280.5,112 V270 M350.5,112 V270 M510.5,112 V270 M580.5,112 V270 M640.5,112 V270"/>
+
+  <!-- 行（高さ 21） -->
+  <text class="dt" x="16" y="148">localhost</text>
+  <text class="dt" x="226" y="148">200</text>
+  <text class="dt" x="286" y="148">document</text>
+  <text class="dt" x="356" y="148">Other</text>
+  <text class="dt" x="516" y="148">1.4 kB</text>
+  <text class="dt" x="586" y="148">5 ms</text>
+  <rect class="bar1" x="648" y="140" width="6" height="7"/>
+  <text class="dt" x="16" y="169">client</text>
+  <text class="dt" x="226" y="169">200</text>
+  <text class="dt" x="286" y="169">script</text>
+  <text class="dt" x="356" y="169">(index)</text>
+  <text class="dt" x="516" y="169">32.5 kB</text>
+  <text class="dt" x="586" y="169">12 ms</text>
+  <rect class="bar1" x="656" y="161" width="12" height="7"/>
+  <text class="dt" x="16" y="190">main.ts</text>
+  <text class="dt" x="226" y="190">200</text>
+  <text class="dt" x="286" y="190">script</text>
+  <text class="dt" x="356" y="190">(index)</text>
+  <text class="dt" x="516" y="190">4.2 kB</text>
+  <text class="dt" x="586" y="190">9 ms</text>
+  <rect class="bar1" x="657" y="182" width="9" height="7"/>
+  <text class="dt" x="16" y="211">style.css</text>
+  <text class="dt" x="226" y="211">200</text>
+  <text class="dt" x="286" y="211">stylesheet</text>
+  <text class="dt" x="356" y="211">(index)</text>
+  <text class="dt" x="516" y="211">1.9 kB</text>
+  <text class="dt" x="586" y="211">6 ms</text>
+  <rect class="bar1" x="656" y="203" width="6" height="7"/>
+  <text class="dt gray" x="16" y="232">…</text>
+  <text class="dt" x="16" y="253">categories.json</text>
+  <text class="dt" x="226" y="253">200</text>
+  <text class="dt" x="286" y="253">fetch</text>
+  <text class="dt" x="356" y="253">categories.ts:14</text>
+  <text class="dt" x="516" y="253">0.4 kB</text>
+  <text class="dt" x="586" y="253">3 ms</text>
+  <rect class="bar2" x="700" y="245" width="4" height="7"/>
+
+  <!-- 上の図の印 -->
+  <rect class="mark" x="319" y="61" width="92" height="20" rx="3"/>
+  <circle class="badge" cx="420" cy="71" r="8"/><text class="badge-num" x="420" y="75" text-anchor="middle">1</text>
+  <rect class="mark" x="12" y="238" width="627" height="21" rx="3"/>
+  <circle class="badge" cx="660" cy="248.5" r="8"/><text class="badge-num" x="660" y="252.5" text-anchor="middle">2</text>
+
+  <!-- 下の図：行を選んだ後 -->
+  <text class="note note-head" x="10" y="300">categories.json の行を選んだ後</text>
+  <rect class="frame" x="10.5" y="310.5" width="779" height="160"/>
+  <rect class="dev" x="11" y="311" width="778" height="22"/>
+  <path class="edge" d="M11,333.5 H789"/>
+  <path class="edge" d="M160.5,311 V470"/>
+  <text class="dt" x="16" y="326">Name</text>
+  <path class="icon" d="M168,318 L176,326 M176,318 L168,326"/>
+  <text class="dt gray" x="188" y="326">Headers</text>
+  <text class="dt gray" x="250" y="326">Preview</text>
+  <text class="dt" x="312" y="326">Response</text>
+  <rect class="blue" x="308" y="331" width="62" height="2"/>
+  <text class="dt gray" x="382" y="326">Initiator</text>
+  <text class="dt gray" x="444" y="326">Timing</text>
+
+  <text class="dt" x="16" y="349">localhost</text>
+  <text class="dt" x="16" y="370">client</text>
+  <text class="dt" x="16" y="391">main.ts</text>
+  <text class="dt" x="16" y="412">style.css</text>
+  <text class="dt gray" x="16" y="433">…</text>
+  <rect class="sel" x="11" y="438" width="149" height="21"/>
+  <text class="dt" x="16" y="453">categories.json</text>
+
+  <rect class="dev" x="161" y="334" width="30" height="136"/>
+  <text class="mono ln" x="185" y="352" text-anchor="end">1</text>
+  <text class="mono ln" x="185" y="368" text-anchor="end">2</text>
+  <text class="mono ln" x="185" y="384" text-anchor="end">3</text>
+  <text class="mono" x="198" y="352">{</text>
+  <text class="mono" x="198" y="368" xml:space="preserve">  <tspan class="key">"categories"</tspan>: [<tspan class="str">"食費"</tspan>, <tspan class="str">"交通費"</tspan>, <tspan class="num">100</tspan>, <tspan class="str">"日用品"</tspan>, null, <tspan class="str">""</tspan>, <tspan class="str">"娯楽"</tspan>, <tspan class="str">"食費"</tspan>, <tspan class="str">"その他"</tspan>]</text>
+  <text class="mono" x="198" y="384">}</text>
+
+  <!-- 下の図の印 -->
+  <rect class="mark" x="305" y="313" width="68" height="20" rx="3"/>
+  <circle class="badge" cx="382" cy="300" r="8"/><text class="badge-num" x="382" y="304" text-anchor="middle">3</text>
+  <path class="mark" d="M376,306 L370,313"/>
+  <rect class="mark" x="193" y="339" width="593" height="51" rx="3"/>
+
+  <!-- 下の説明 -->
+  <text class="note" x="10" y="500"><tspan class="note-acc">①</tspan> 通信の速さ。遅い設定にすると、読み込み中の画面を見られる（第1章の問題 6）</text>
+  <text class="note" x="10" y="524"><tspan class="note-acc">②</tspan> categories.json の行。Status の 200 は、成功の返事</text>
+  <text class="note" x="10" y="548"><tspan class="note-acc">③</tspan> Response のタブに、返ってきた中身が出る</text>
+  <text class="note note-sub" x="10" y="578">中身は改修用フォルダ（npm run dev P06）の public/categories.json。正しくない値は、章末の改修で直す。</text>
+</svg>

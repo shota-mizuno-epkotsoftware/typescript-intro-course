@@ -1,0 +1,139 @@
+{
+  "label": "1行ずつ見る",
+  "code": "function wait(ms: number): Promise<void> {\n  return new Promise((resolve) => setTimeout(resolve, ms));\n}\n\nasync function load(name: string): Promise<void> {\n  console.log(`${name} 開始`);\n  await wait(100);\n  console.log(`${name} 完了`);\n}\n\nconsole.log(\"最初の行\");\nsetTimeout(() => console.log(\"タイマー\"), 0);\nload(\"A\");\nconsole.log(\"最後の行\");",
+  "panels": [
+    {
+      "id": "queue",
+      "label": "予約された処理"
+    },
+    {
+      "id": "console",
+      "label": "コンソールの表示"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        1,
+        9
+      ],
+      "phase": "上から順に実行",
+      "note": "関数 wait と load を作ります。作るだけで、まだ呼ばれません。",
+      "queue": [],
+      "console": []
+    },
+    {
+      "lines": [
+        11
+      ],
+      "phase": "上から順に実行",
+      "note": "「最初の行」を表示します。",
+      "queue": [],
+      "console": [
+        "最初の行"
+      ]
+    },
+    {
+      "lines": [
+        12
+      ],
+      "phase": "上から順に実行",
+      "note": "setTimeout は「0 ミリ秒後に表示する」と予約します。まだ表示しません。",
+      "queue": [
+        "0 ミリ秒後：「タイマー」を表示"
+      ],
+      "console": [
+        "最初の行"
+      ]
+    },
+    {
+      "lines": [
+        13
+      ],
+      "phase": "上から順に実行",
+      "note": "load(\"A\") を呼びます。",
+      "queue": [
+        "0 ミリ秒後：「タイマー」を表示"
+      ],
+      "console": [
+        "最初の行"
+      ]
+    },
+    {
+      "lines": [
+        6
+      ],
+      "phase": "上から順に実行",
+      "note": "await より前の行は、呼ばれてすぐに動きます。「A 開始」を表示します。",
+      "queue": [
+        "0 ミリ秒後：「タイマー」を表示"
+      ],
+      "console": [
+        "最初の行",
+        "A 開始"
+      ]
+    },
+    {
+      "lines": [
+        7
+      ],
+      "phase": "上から順に実行",
+      "note": "await で 100 ミリ秒の待ちに入ります。続きの 8 行目を予約して、呼び出した側の次の行（14 行目）へ進みます。",
+      "queue": [
+        "0 ミリ秒後：「タイマー」を表示",
+        "100 ミリ秒後：A の続き（8 行目から）"
+      ],
+      "console": [
+        "最初の行",
+        "A 開始"
+      ]
+    },
+    {
+      "lines": [
+        14
+      ],
+      "phase": "上から順に実行",
+      "note": "「最後の行」を表示します。上から順の処理は、ここで全部終わりです。",
+      "queue": [
+        "0 ミリ秒後：「タイマー」を表示",
+        "100 ミリ秒後：A の続き（8 行目から）"
+      ],
+      "console": [
+        "最初の行",
+        "A 開始",
+        "最後の行"
+      ]
+    },
+    {
+      "lines": [
+        12
+      ],
+      "phase": "0 ミリ秒後",
+      "note": "ここから、予約した処理が時間の早い順に動きます。まず「タイマー」を表示します。",
+      "queue": [
+        "100 ミリ秒後：A の続き（8 行目から）"
+      ],
+      "console": [
+        "最初の行",
+        "A 開始",
+        "最後の行",
+        "タイマー"
+      ]
+    },
+    {
+      "lines": [
+        8
+      ],
+      "phase": "100 ミリ秒後",
+      "note": "待ちが終わり、await の続きが動いて「A 完了」を表示します。",
+      "queue": [],
+      "console": [
+        "最初の行",
+        "A 開始",
+        "最後の行",
+        "タイマー",
+        "A 完了"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "note": "実践編のアプリの地図（HTML 版だけで使う。site/build.ts の renderAppMaps）。import のつながりと行数は、ビルドのときに practice/app/src から作るので、ここには書かない。x は列（0〜2）、y は段。ch はその章の「読む範囲」で読むファイル",
+  "files": [
+    { "id": "style.css", "path": "style.css", "kind": "css", "x": 0, "y": 0, "role": "見た目", "ch": [4] },
+    { "id": "index.html", "path": "index.html", "kind": "html", "x": 0, "y": 1, "role": "画面の骨組み", "ch": [1, 3, 4] },
+    { "id": "main.ts", "path": "src/main.ts", "kind": "ts", "x": 0, "y": 2.5, "role": "入口。起動の流れと update", "ch": [1, 3, 4, 6], "fns": ["update", "loadCategories"] },
+    { "id": "types.ts", "path": "src/types.ts", "kind": "ts", "x": 0, "y": 4.5, "role": "型の定義。実行時には消える", "ch": [2], "fns": ["Entry", "AppState", "Filter"] },
+    { "id": "elements.ts", "path": "src/elements.ts", "kind": "ts", "x": 1, "y": 0, "role": "画面の要素を取得する", "ch": [4], "fns": ["getElements"] },
+    { "id": "render.ts", "path": "src/render.ts", "kind": "ts", "x": 1, "y": 1, "role": "状態から画面を作り直す", "ch": [1, 4], "fns": ["render"] },
+    { "id": "state.ts", "path": "src/state.ts", "kind": "ts", "x": 1, "y": 2, "role": "状態を新しくする関数", "ch": [1, 4], "fns": ["createInitialState", "addEntry", "removeEntry", "setFilter"] },
+    { "id": "validate.ts", "path": "src/validate.ts", "kind": "ts", "x": 1, "y": 3, "role": "入力を確かめて明細を作る", "ch": [3], "fns": ["parseEntryForm", "isValidDate"] },
+    { "id": "storage.ts", "path": "src/storage.ts", "kind": "ts", "x": 1, "y": 4, "role": "localStorage への保存と読み込み", "ch": [6], "fns": ["loadEntries", "saveEntries"] },
+    { "id": "categories.ts", "path": "src/categories.ts", "kind": "ts", "x": 1, "y": 5, "role": "分類の一覧を取ってきて確かめる", "ch": [6], "fns": ["fetchCategories", "parseCategories"] },
+    { "id": "format.ts", "path": "src/format.ts", "kind": "ts", "x": 2, "y": 1, "role": "金額や月を表示用の文字にする", "ch": [2], "fns": ["formatYen", "entryLabel", "formatMonth"] },
+    { "id": "summary.ts", "path": "src/summary.ts", "kind": "ts", "x": 2, "y": 2, "role": "絞り込み・並べ替え・集計", "ch": [5], "fns": ["filterEntries", "sortByDate", "totalOf", "totalsByCategory"] },
+    { "id": "localStorage", "path": "（ブラウザ）", "kind": "ext", "x": 2, "y": 4, "role": "ブラウザの保存場所（ファイルではない）", "ch": [6] },
+    { "id": "categories.json", "path": "public/categories.json", "kind": "json", "x": 2, "y": 5, "role": "分類の一覧（public/ の中）", "ch": [6] }
+  ],
+  "bands": [
+    { "label": "ブラウザが読む", "x": [0, 0], "y": [0, 1] },
+    { "label": "入口", "x": [0, 0], "y": [2.5, 2.5] },
+    { "label": "型", "x": [0, 0], "y": [4.5, 4.5] },
+    { "label": "画面", "x": [1, 2], "y": [0, 1] },
+    { "label": "状態と計算", "x": [1, 2], "y": [2, 2] },
+    { "label": "外から来るデータ", "x": [1, 2], "y": [3, 5] }
+  ],
+  "extraEdges": [
+    { "from": "index.html", "to": "style.css", "kind": "run", "label": "link" },
+    { "from": "index.html", "to": "main.ts", "kind": "run", "label": "script" },
+    { "from": "storage.ts", "to": "localStorage", "kind": "data", "label": "読み書き" },
+    { "from": "categories.ts", "to": "categories.json", "kind": "data", "label": "fetch" }
+  ],
+  "chapters": { "1": "第1章 全体像", "2": "第2章 データの型", "3": "第3章 フォームの入力と検証", "4": "第4章 イベントから再描画まで", "5": "第5章 集計とテスト", "6": "第6章 外から来るデータ", "7": "第7章 変更を読む・総合" }
+}

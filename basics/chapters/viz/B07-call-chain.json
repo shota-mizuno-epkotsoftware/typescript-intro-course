@@ -1,0 +1,200 @@
+{
+  "file": "basics/exercises/B07-combining/problem-01.js",
+  "label": "1行ずつ見る",
+  "code": "function subtotal(price, count) {\n  return price * count;\n}\n\nfunction shippingFee(amount) {\n  if (amount >= 3000) {\n    return 0;\n  }\n  return 500;\n}\n\nfunction payment(price, count) {\n  const amount = subtotal(price, count);\n  return amount + shippingFee(amount);\n}\n\nconsole.log(payment(1200, 2)); // ①\nconsole.log(payment(1000, 3)); // ②",
+  "panels": [
+    {
+      "id": "vars",
+      "label": "今いる関数の変数と、戻り値"
+    },
+    {
+      "id": "console",
+      "label": "ターミナルの表示"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        1,
+        15
+      ],
+      "phase": "関数を作る",
+      "note": "subtotal・shippingFee・payment の 3 つの関数を作ります。まだ呼ばれません。",
+      "vars": [],
+      "console": []
+    },
+    {
+      "lines": [
+        17
+      ],
+      "phase": "① payment を呼ぶ",
+      "note": "payment(1200, 2) を呼びます。引数の price に 1200、count に 2 が入ります。",
+      "vars": [
+        "payment の price：1200",
+        "payment の count：2"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        13
+      ],
+      "phase": "① subtotal を呼ぶ",
+      "note": "payment の中から、subtotal(price, count) を呼びます。1200 と 2 が渡されます。",
+      "vars": [
+        "payment の price：1200",
+        "payment の count：2"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        2
+      ],
+      "phase": "① subtotal の中",
+      "note": "subtotal の引数に 1200 と 2 が入ります。1200 * 2 を計算して、2400 を返します。",
+      "vars": [
+        "subtotal の price：1200",
+        "subtotal の count：2",
+        "subtotal の戻り値：2400"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        13
+      ],
+      "phase": "① amount に入れる",
+      "note": "呼び出しが戻り値の 2400 に置き換わり、amount に入ります。",
+      "vars": [
+        "payment の price：1200",
+        "payment の count：2",
+        "payment の amount：2400"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        14
+      ],
+      "phase": "① shippingFee を呼ぶ",
+      "note": "shippingFee(amount) を呼びます。amount の 2400 が渡されます。",
+      "vars": [
+        "payment の price：1200",
+        "payment の count：2",
+        "payment の amount：2400"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        6,
+        9
+      ],
+      "phase": "① shippingFee の中",
+      "note": "2400 は 3000 以上ではないので、if の中は実行されず、500 を返します。",
+      "vars": [
+        "shippingFee の amount：2400",
+        "shippingFee の戻り値：500"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        14
+      ],
+      "phase": "① payment が返す",
+      "note": "呼び出しが 500 に置き換わります。2400 + 500 を計算して、2900 を返します。",
+      "vars": [
+        "payment の price：1200",
+        "payment の count：2",
+        "payment の amount：2400",
+        "payment の戻り値：2900"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        17
+      ],
+      "phase": "① 表示する",
+      "note": "payment(1200, 2) が 2900 に置き換わり、表示されます。",
+      "vars": [],
+      "console": [
+        "2900"
+      ]
+    },
+    {
+      "lines": [
+        18
+      ],
+      "phase": "② payment を呼ぶ",
+      "note": "payment(1000, 3) を呼びます。引数は、呼ぶたびに新しく作られます。",
+      "vars": [
+        "payment の price：1000",
+        "payment の count：3"
+      ],
+      "console": [
+        "2900"
+      ]
+    },
+    {
+      "lines": [
+        13
+      ],
+      "phase": "② amount に入れる",
+      "note": "subtotal(1000, 3) の戻り値は 3000 です。amount に入ります。",
+      "vars": [
+        "payment の price：1000",
+        "payment の count：3",
+        "payment の amount：3000"
+      ],
+      "console": [
+        "2900"
+      ]
+    },
+    {
+      "lines": [
+        6,
+        7
+      ],
+      "phase": "② shippingFee の中",
+      "note": "shippingFee(3000) を呼びます。3000 は 3000 以上なので、if の中の return が実行され、0 を返します。",
+      "vars": [
+        "shippingFee の amount：3000",
+        "shippingFee の戻り値：0"
+      ],
+      "console": [
+        "2900"
+      ]
+    },
+    {
+      "lines": [
+        14
+      ],
+      "phase": "② payment が返す",
+      "note": "3000 + 0 を計算して、3000 を返します。",
+      "vars": [
+        "payment の price：1000",
+        "payment の count：3",
+        "payment の amount：3000",
+        "payment の戻り値：3000"
+      ],
+      "console": [
+        "2900"
+      ]
+    },
+    {
+      "lines": [
+        18
+      ],
+      "phase": "② 表示する",
+      "note": "payment(1000, 3) が 3000 に置き換わり、表示されます。",
+      "vars": [],
+      "console": [
+        "2900",
+        "3000"
+      ]
+    }
+  ]
+}

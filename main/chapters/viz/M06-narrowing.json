@@ -1,0 +1,52 @@
+{
+  "label": "型の変化を1行ずつ見る",
+  "code": "type Item = { name: string; memo?: string };\n\nfunction memoLength(item: Item): number {\n  if (item.memo === undefined) {\n    return 0;\n  }\n  return item.memo.length; // ここでは item.memo は string\n}\n\nconsole.log(memoLength({ name: \"ノート\" }));              // → 0\nconsole.log(memoLength({ name: \"ペン\", memo: \"黒\" }));    // → 1",
+  "panels": [
+    {
+      "id": "type",
+      "label": "この行での item.memo の型"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        3
+      ],
+      "phase": "関数に入ったところ",
+      "note": "memo は省略できるプロパティなので、型は string | undefined です。このままでは .length を使えません。",
+      "type": [
+        "string | undefined"
+      ]
+    },
+    {
+      "lines": [
+        4
+      ],
+      "phase": "確かめる",
+      "note": "if で undefined かどうかを確かめます。",
+      "type": [
+        "string | undefined"
+      ]
+    },
+    {
+      "lines": [
+        5
+      ],
+      "phase": "if の中",
+      "note": "ここに来るのは undefined のときだけなので、型は undefined に絞り込まれます。",
+      "type": [
+        "undefined"
+      ]
+    },
+    {
+      "lines": [
+        7
+      ],
+      "phase": "if の後",
+      "note": "undefined のときは 5 行目で return しているので、ここに来るのは undefined ではないときだけです。型は string に絞り込まれ、.length を使えます。",
+      "type": [
+        "string"
+      ]
+    }
+  ]
+}

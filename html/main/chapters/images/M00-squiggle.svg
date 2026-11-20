@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 250" width="800" height="250" role="img" aria-labelledby="t d">
+  <title id="t">赤い波線と、エラーの表示</title>
+  <desc id="d">VS Code で problem-01.ts を開いた画面。6 行目の price の下に赤い波線が出ている。波線にマウスカーソルを合わせると、const price: number と、Type 'string' is not assignable to type 'number'. ts(2322) という表示が出る。</desc>
+  <style>
+    .ui { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 13px; fill: #cccccc; }
+    .small { font-size: 12px; }
+    .mono { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 12px; fill: #cccccc; }
+    .faint { fill: #9d9d9d; }
+    .crumb { fill: #a9a9a9; }
+    .lineno { fill: #6e7681; }
+    .k-com { fill: #6a9955; }
+    .k-key { fill: #569cd6; }
+    .k-const { fill: #4fc1ff; }
+    .k-type { fill: #4ec9b0; }
+    .k-str { fill: #ce9178; }
+    .k-num { fill: #b5cea8; }
+    .k-var { fill: #9cdcfe; }
+    .k-fn { fill: #dcdcaa; }
+    .ts { font-family: -apple-system, "Segoe UI", sans-serif; font-size: 9.5px; font-weight: 700; fill: #519aba; }
+    .frame { fill: #1f1f1f; stroke: #3c3c3c; stroke-width: 1; }
+    .bar { fill: #181818; }
+    .tab { fill: #1f1f1f; }
+    .edge { fill: none; stroke: #2b2b2b; stroke-width: 1; }
+    .blue { fill: #0078d4; }
+    .squiggle { fill: none; stroke: #f14c4c; stroke-width: 1.2; }
+    .hover { fill: #202020; stroke: #454545; stroke-width: 1; }
+    .sep { fill: none; stroke: #454545; stroke-width: 1; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 2; }
+    .badge { fill: #ea580c; }
+    .badge-num { font-family: -apple-system, "Segoe UI", sans-serif; font-size: 12px; font-weight: 700; fill: #ffffff; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; fill: #1f2937; }
+    .note-sub { fill: #4b5563; }
+    @media (prefers-color-scheme: dark) {
+      .mark { stroke: #fb923c; }
+      .badge { fill: #fb923c; }
+      .badge-num { fill: #1f2937; }
+      .note { fill: #e5e7eb; }
+      .note-sub { fill: #9ca3af; }
+    }
+  </style>
+
+  <!-- 窓 -->
+  <rect class="frame" x="10" y="10" width="540" height="200" rx="6"/>
+  <path class="bar" d="M16,10 H544 A6,6 0 0 1 550,16 V45 H10 V16 A6,6 0 0 1 16,10 Z"/>
+  <rect class="tab" x="10" y="11" width="160" height="34"/>
+  <rect class="blue" x="10" y="11" width="160" height="2"/>
+  <text class="ts" x="24" y="33">TS</text><text class="ui" x="42" y="34">problem-01.ts</text>
+  <text class="ui faint" x="150" y="34" text-anchor="middle">×</text>
+  <path class="edge" d="M10,45 H550"/>
+  <text class="ui small crumb" x="24" y="61">main › exercises › 00-setup › <tspan class="ts">TS</tspan> problem-01.ts</text>
+
+  <!-- コード（行の高さ 18） -->
+  <text class="mono lineno" x="38" y="80" text-anchor="end">1</text>
+  <text class="mono k-com" x="52" y="80">// 第0章 問題 1</text>
+  <text class="mono lineno" x="38" y="98" text-anchor="end">2</text>
+  <text class="mono k-com" x="52" y="98">// (1) node で実行すると何が表示されるか</text>
+  <text class="mono lineno" x="38" y="116" text-anchor="end">3</text>
+  <text class="mono k-com" x="52" y="116">// (2) npm run typecheck M00 problem-01 を実行するとどうなるか</text>
+  <text class="mono lineno" x="38" y="134" text-anchor="end">4</text>
+  <text class="mono k-com" x="52" y="134">// を予測してから実行してください。</text>
+  <text class="mono lineno" x="38" y="152" text-anchor="end">5</text>
+  <text class="mono" x="38" y="170" text-anchor="end">6</text>
+  <text class="mono" x="52" y="170"><tspan class="k-key">const</tspan> <tspan class="k-const">price</tspan>: <tspan class="k-type">number</tspan> = <tspan class="k-str">"100"</tspan>;</text>
+  <text class="mono lineno" x="38" y="188" text-anchor="end">7</text>
+  <text class="mono" x="52" y="188"><tspan class="k-var">console</tspan>.<tspan class="k-fn">log</tspan>(<tspan class="k-const">price</tspan> * <tspan class="k-num">2</tspan>);</text>
+
+  <!-- price の下の赤い波線 -->
+  <path class="squiggle" d="M95,174 l2,-2 l2,2 l2,-2 l2,2 l2,-2 l2,2 l2,-2 l2,2 l2,-2 l2,2 l2,-2 l2,2 l2,-2 l2,2 l2,-2 l2,2 l2,-2 l2,2"/>
+
+  <!-- カーソルを合わせたときの表示 -->
+  <rect class="hover" x="90" y="68" width="410" height="68" rx="4"/>
+  <text class="mono" x="102" y="88"><tspan class="k-key">const</tspan> <tspan class="k-const">price</tspan>: <tspan class="k-type">number</tspan></text>
+  <path class="sep" d="M90,99 H500"/>
+  <text class="ui" x="102" y="123">Type 'string' is not assignable to type 'number'. <tspan class="faint">ts(2322)</tspan></text>
+
+  <!-- 注目させる印 -->
+  <rect class="mark" x="90" y="159" width="46" height="20" rx="4"/>
+  <circle class="badge" cx="113" cy="149" r="8"/>
+  <text class="badge-num" x="113" y="153" text-anchor="middle">1</text>
+  <rect class="mark" x="86" y="64" width="418" height="76" rx="6"/>
+  <circle class="badge" cx="518" cy="76" r="9"/>
+  <text class="badge-num" x="518" y="80" text-anchor="middle">2</text>
+
+  <!-- 窓の外の説明 -->
+  <circle class="badge" cx="574" cy="164" r="9"/>
+  <text class="badge-num" x="574" y="168" text-anchor="middle">1</text>
+  <text class="note" x="590" y="168">型エラーのある場所に、</text>
+  <text class="note" x="590" y="186">赤い波線が出る</text>
+  <circle class="badge" cx="574" cy="82" r="9"/>
+  <text class="note" x="590" y="86">波線にカーソルを</text>
+  <text class="badge-num" x="574" y="86" text-anchor="middle">2</text>
+  <text class="note" x="590" y="104">合わせると出る。下の段が</text>
+  <text class="note" x="590" y="122">エラーの文</text>
+
+  <text class="note note-sub" x="10" y="238">下の段の文は、npm run typecheck の error TS2322 の文と同じ。上の段は、その変数の型。</text>
+</svg>

@@ -1,0 +1,81 @@
+{
+  "file": "basics/exercises/B06-functions/problem-01.js",
+  "label": "1行ずつ見る",
+  "code": "console.log(\"A\");\n\nfunction show() {\n  console.log(\"B\");\n}\n\nconsole.log(\"C\");\nshow();\nconsole.log(\"D\");",
+  "panels": [
+    {
+      "id": "console",
+      "label": "ターミナルの表示"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        1
+      ],
+      "phase": "1 行目",
+      "note": "A を表示します。",
+      "console": [
+        "A"
+      ]
+    },
+    {
+      "lines": [
+        3,
+        5
+      ],
+      "phase": "関数を宣言する",
+      "note": "show という関数が作られます。中の console.log(\"B\") は、まだ実行されません。",
+      "console": [
+        "A"
+      ]
+    },
+    {
+      "lines": [
+        7
+      ],
+      "phase": "7 行目",
+      "note": "C を表示します。",
+      "console": [
+        "A",
+        "C"
+      ]
+    },
+    {
+      "lines": [
+        8
+      ],
+      "phase": "関数を呼ぶ",
+      "note": "show(); で関数を呼びます。関数の中に移ります。",
+      "console": [
+        "A",
+        "C"
+      ]
+    },
+    {
+      "lines": [
+        4
+      ],
+      "phase": "関数の中",
+      "note": "関数の中の処理が実行されて、B を表示します。",
+      "console": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "lines": [
+        9
+      ],
+      "phase": "呼び出した行の次",
+      "note": "関数の処理が終わると、呼び出した行の次に戻ります。D を表示します。",
+      "console": [
+        "A",
+        "C",
+        "B",
+        "D"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+// 基礎編 第6章 演習 4: 予算の状態を文字列で返す
+// 関数の中を書いてください。
+// 関数の名前と引数、export は書き換えません。
+
+// budget は予算、spent は使った金額
+// 使った金額が予算以下なら「予算内（残り 9500円）」、
+// 予算を超えたら「予算オーバー（1500円）」の形の文字列を返す
+export function budgetMessage(budget, spent) {
+  if (spent <= budget) {
+    return `予算内（残り ${budget - spent}円）`;
+  }
+  return `予算オーバー（${spent - budget}円）`;
+}

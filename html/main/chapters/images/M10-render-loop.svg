@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 290" width="680" height="290" role="img" aria-labelledby="t d">
+  <title id="t">状態を変えて、画面を作り直す</title>
+  <desc id="d">状態は 1 か所の変数 expenses に持つ。追加ボタンを押すとイベントが起きる。イベントの処理で状態 expenses を書き換えて新しくし、render が状態 expenses を読んで一覧と合計を作り直す。画面を見て次の操作をすると、またイベントが起きる。</desc>
+  <style>
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 12px; }
+    .head { font-weight: 700; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+    .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .obj2 { fill: #f8fafc; stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 5 3; }
+    .line { fill: none; stroke: #2563eb; stroke-width: 1.8; }
+    .line2 { fill: none; stroke: #64748b; stroke-width: 1.8; }
+    .tip { fill: #2563eb; }
+    .tip2 { fill: #64748b; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code { fill: #e5e7eb; }
+      .sub { fill: #9ca3af; }
+      .var { fill: #1e293b; stroke: #64748b; }
+      .obj { fill: #172554; stroke: #60a5fa; }
+      .obj2 { fill: #1e293b; stroke: #94a3b8; }
+      .line { stroke: #60a5fa; }
+      .line2 { stroke: #94a3b8; }
+      .tip { fill: #60a5fa; }
+      .tip2 { fill: #94a3b8; }
+    }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip2" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+  <rect class="var" x="20" y="40" width="140" height="70" rx="8"/>
+  <text class="txt head" x="90" y="68" text-anchor="middle">イベント</text>
+  <text class="txt sub" x="90" y="92" text-anchor="middle">「追加」を押す</text>
+  <rect class="obj" x="190" y="40" width="160" height="70" rx="8"/>
+  <text class="txt head" x="270" y="68" text-anchor="middle">2. 状態を新しくする</text>
+  <text class="code" x="270" y="92" text-anchor="middle">expenses = [...]</text>
+  <rect class="obj" x="380" y="40" width="130" height="70" rx="8"/>
+  <text class="txt head" x="445" y="68" text-anchor="middle">3. render()</text>
+  <text class="txt sub" x="445" y="92" text-anchor="middle">状態から作り直す</text>
+  <rect class="var" x="540" y="40" width="120" height="70" rx="8"/>
+  <text class="txt head" x="600" y="68" text-anchor="middle">画面</text>
+  <text class="txt sub" x="600" y="92" text-anchor="middle">一覧と合計</text>
+  <path class="line" d="M160,75 L186,75" marker-end="url(#a1)"/>
+  <path class="line" d="M350,75 L376,75" marker-end="url(#a1)"/>
+  <path class="line" d="M510,75 L536,75" marker-end="url(#a1)"/>
+  <rect class="var" x="300" y="160" width="130" height="56" rx="8"/>
+  <text class="txt head" x="365" y="184" text-anchor="middle">1. 状態</text>
+  <text class="code" x="365" y="205" text-anchor="middle">expenses</text>
+  <path class="line" d="M270,110 C270,170 276,188 296,188" marker-end="url(#a1)"/>
+  <text class="txt sub" x="262" y="156" text-anchor="end">書き換える</text>
+  <path class="line" d="M430,188 C442,188 445,160 445,114" marker-end="url(#a1)"/>
+  <text class="txt sub" x="453" y="156">読む</text>
+  <path class="line2" d="M600,110 C600,300 90,300 90,114" marker-end="url(#a2)"/>
+  <text class="txt sub" x="345" y="276" text-anchor="middle">画面を見て、次の操作をする</text>
+</svg>

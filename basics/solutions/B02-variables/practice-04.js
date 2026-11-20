@@ -1,0 +1,11 @@
+// 基礎編 第2章 演習 4: おつりを計算する
+// おつりを change という名前の変数に入れてから、表示してください。
+// price と paid の行は、値を変えて試したら、元に戻します。
+
+const price = 780; // 品物の値段
+const paid = 1000; // 払った金額
+
+// ここに書く（おつりを計算して、change に入れる行）
+const change = paid - price;
+
+console.log(`おつり: ${change}円`);
