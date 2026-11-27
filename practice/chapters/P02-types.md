@@ -26,7 +26,7 @@
 試しに書き換えるときは、改修用フォルダ `practice/exercises/P02-types/` を使います。完成版から作ったもので、前の章の改修は入っていません。完成版と違う点は 2 つです。
 
 - 最初から、`src/testdata.ts` とテストのファイルに型エラーが出ています。章末の改修で直すものなので、今はそのままにします。
-- 改修のための行が足してあるので、`validate.ts`・`main.ts`・`render.ts` などの行番号が、途中から数行ずれます。本文の行番号は、完成版（`practice/app/`）のものです。
+- 改修のための行が足してあるので、`validate.ts`・`main.ts`・`render.ts` などの行番号がずれる所があります。本文の行番号は、完成版（`practice/app/`）のものです。
 
 問題で波線を見るときは、自分が書き換えたファイルだけを見ます。最初からある型エラーがあっても、画面（`npm run dev P02`）は起動できます。
 
@@ -151,7 +151,7 @@ d: Type '"transfer"' is not assignable to type '"expense" | "income"'.
 
 1. `Entry` 型の値を新しく作っている関数は、アプリの中に 2 つあります。1 つは `storage.ts` の `toEntry` で、保存されたデータから明細を作ります。もう 1 つは、どのファイルの、何という関数ですか。
    - 探し方：`types.ts` の `Entry` の上で「参照へ移動」を使います。
-   - 選ぶのは、明細のオブジェクト（`{ kind: "income", ... }` や、短く書いた `{ kind, ... }`）を書いて返している関数です。`Entry` を受け取るだけの関数は選びません。
+   - 選ぶのは、明細のオブジェクトを書いて返している関数です（`{ kind: "income", ... }` や、短く書いた `{ kind, ... }` の形）。`Entry` を受け取るだけの関数は選びません。
    - テストのファイルと `testdata.ts` は除きます。
 2. `toEntry` の次の抜粋を読み、`memo` のある支出のデータを読み込んだとき、26 行目で返す明細が持つプロパティを、すべて挙げてください。
 
@@ -195,7 +195,7 @@ d: Type '"transfer"' is not assignable to type '"expense" | "income"'.
 
 - `memo` が文字列なので、20 行目の `common` は `{ id, date, amount, memo }` です。
 - 26 行目は、`kind` と、`common` の中身と、`category` を並べたオブジェクトを返します。
-- どちらの関数も、収入と支出を別々のオブジェクトの書き方で作っています。支出に項目を足すときは、2 つの関数の支出の側を直します（章末の改修）。
+- どちらの関数も、収入と支出のオブジェクトを別々に書いています。支出に項目を足すときは、2 つの関数の支出の側を直します（章末の改修）。
 
 `toEntry` の検査の部分は第6章で、`parseEntryForm` の検証の部分は第3章で読みます。
 
@@ -274,6 +274,8 @@ Property 'category' does not exist on type 'Entry'.
   Property 'category' does not exist on type 'Income'.
 ```
 
+この行には `entry.category` が 2 つあるので、同じエラーが 2 つ出ます。
+
 2. `practice/app/src` の中（テストを除く）では次の 6 か所です。
 
 | 場所 | していること |
@@ -289,7 +291,7 @@ Property 'category' does not exist on type 'Entry'.
 
 明細の種別に関わる表示や集計を直すときは、まずこの 6 か所を調べます。
 
-**確かめ方**：1 は、改修用フォルダの `src/summary.ts` で `if` を外し、47 行目の赤い波線を見ます。
+**確かめ方**：1 は、改修用フォルダの `src/summary.ts` で `if` を外し、`totals.set` の行の赤い波線を見ます。
 
 </details>
 
@@ -325,7 +327,7 @@ Property 'category' does not exist on type 'Entry'.
 
 </details>
 
-## 2.5 明細のほかの型を読む
+## 2.5 明細以外の型を読む
 
 判別可能なユニオン型は、明細のほかにも使われています。
 
@@ -516,13 +518,13 @@ export type ParseResult = { ok: true; entry: Entry } | { ok: false; errors: stri
    ```sh
    npm run typecheck P02
    ```
-   - **こうなれば OK**：型エラーが `validate.ts` と `storage.ts` の 2 か所だけになる
+   - **こうなれば OK**：`practice/exercises/P02-types/src/` で始まる行が、`storage.ts` と `validate.ts` の 2 行だけになる
 
 #### 型エラーをたどって直す
 
 3. `src/validate.ts` で、支出を作っている行に `fixed` を足す
    - チェック欄の値は `input.fixed`（`boolean` 型）です
-   - 型エラーは `const entry: Entry =` の行に出ますが、直すのはその下の支出の行です。収入には足しません
+   - 型エラーは `const entry: Entry =` のすぐ下の行に出ます。直すのは、その下の支出の行です。収入には足しません
    ```sh
    npm run typecheck P02
    ```
@@ -615,7 +617,7 @@ export type ParseResult = { ok: true; entry: Entry } | { ok: false; errors: stri
 | 型チェックで `Property 'fixed' does not exist on type 'Entry'.`（`format.ts`） | `kind` を確かめる前に `entry.fixed` を読んでいます。`Expense` に絞り込まれた後で読みます |
 | テストで `+ fixed: false` `- fixed: true`、または `+ fixed: true` `- fixed: false`（`parseEntryForm`） | `fixed` に、入力の値ではなく決まった値を入れています |
 | テスト「保存した明細をそのまま読み戻す」で、収入の明細に `+ fixed: false` | `storage.ts` で、`fixed` を `common` に入れています。収入にも `fixed` が付いてしまいます（この間違いは、型チェックでは見つかりません） |
-| テスト「fixed が true でも false でもない支出…」が失敗する | `Boolean(fixed)` のように、`true` 以外の値も `true` にしています。`fixed === true` にします |
+| テスト「fixed が true でも false でもない支出…」が失敗する | `Boolean(fixed)` のように、`true` 以外の値も `true` にしています。`fixed === true` にします。差分が `+ []` のときは、支出を捨てています（下の行） |
 | テスト「fixed のない支出…を、fixed が false の支出として読む」が失敗し、期待する明細が `-` の行で丸ごと表示される | `fixed` がない支出を捨てています。`typeof fixed === "boolean"` を条件に足すと、こうなります |
 | テストで `+ '交通費'` `- '交通費（固定費）'` | `entryLabel` を、まだ直していません |
 

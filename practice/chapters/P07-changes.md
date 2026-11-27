@@ -29,7 +29,7 @@
 
 `npm run dev P07` で起動して、検索の欄を使います。メモを「昼食」にした支出を 1 件追加し、検索の欄に「昼」と入れます。結果を見たら、画面を `Ctrl` + `C` で止めます。
 
-次のコマンドで、変更の前と後の差分を表示できます（`--no-index` は、2 つのフォルダやファイルを直接比べる指定です）。フォルダ全体の差分には改修で探す箇所も入っているので、このコマンドは章末の改修で使います。問題では、本文に載せた差分を読みます。
+次のコマンドで、変更の前と後の差分を表示できます（`--no-index` は、2 つのフォルダやファイルを直接比べる指定です）。このコマンドは章末の改修で使います。フォルダ全体の差分には、改修で探す箇所も入っているためです。問題では、本文に載せた差分を読みます。
 
 ```sh
 git diff --no-index practice/app practice/exercises/P07-changes
@@ -110,7 +110,7 @@ git diff --no-index practice/app/src/state.ts practice/exercises/P07-changes/src
 
 この 1 行だけを足して、ほかのファイルを変えなかったとすると、完成版のどこに型エラーが出ますか。`Filter` 型の値を作っている場所を探して、答えてください。
 
-探すときは、`practice/app/src` を `month:`・`kind:`・`filterEntries(` で全文検索します。`{ month, kind }` のように、名前だけで書いた場所もあります。
+探すときは、`practice/app/src` を `filterEntries(`・`month:` の順に全文検索します（`kind:` は 30 件近く出るので後にします）。`{ month, kind }` のように、名前だけで書いた場所もあります。
 
 <details>
 <summary>答えと解説</summary>
@@ -231,7 +231,7 @@ Property 'keyword' is missing in type '{ month: string; kind: "all"; }' but requ
 <details>
 <summary>答えと解説</summary>
 
-1. 必要な変更は、最初の状態の `filter` に `keyword: ""` を足すことです（`noFilter` を作って、`createInitialState` で使っている部分）。「ついで」の変更は `removeEntry` の最後の行です。「絞り込みなし」を表す `noFilter` ができたので、ここでも使うように書き換えています。
+1. 必要な変更は、最初の状態の `filter` に `keyword: ""` を足すことです（`noFilter` を作って、`createInitialState` で使っている部分）。「ついで」の変更は `removeEntry` の `filter:` の行です。「絞り込みなし」を表す `noFilter` ができたので、ここでも使うように書き換えています。
 2. 月で絞り込んでいて、その月の最後の明細を削除したときです。変更の前は、月の絞り込みだけが外れていました。変更の後は、種別の絞り込みと検索語まで外れます。
 
 変更の前の `{ ...state.filter, month: "all" }` は、今の絞り込みをコピーして、月だけを `"all"` にします。変更の後の `noFilter` は、絞り込みを全部なくします。
@@ -397,7 +397,7 @@ test("filterEntries は、月・種別・検索語のすべてに合う明細だ
 
 #### 削除の不具合を直す
 
-2. `src/state.ts` の `removeEntry` の最後の行を、変更の前の式（問題 4 の表）に戻す
+2. `src/state.ts` の `removeEntry` の `filter:` の行を、変更の前の式（問題 4 の差分の `-` の行）に戻す
    ```sh
    npm test P07
    ```
@@ -443,7 +443,7 @@ test("filterEntries は、月・種別・検索語のすべてに合う明細だ
    npm run dev P07
    ```
    - [ ] 検索すると、一覧と一緒に、集計の金額と「分類ごとの支出」も、見つかった明細だけのものに変わる
-   - [ ] 検索して 1 件も見つからないとき、「明細はまだありません。」が表示される
+   - [ ] 検索して 1 件も見つからないとき、「明細はまだありません。」が表示される（月や種別で 1 件もないときと同じ文）
    - [ ] 「食費」で検索すると、分類が「食費」の支出が表示される。メモにない言葉で試してください
    - [ ] 問題 4 の確かめ方の手順で削除すると、月だけが「すべて」に戻り、種別と検索の欄はそのまま残る
    - [ ] 検索の欄を空にすると、元の表示に戻る
@@ -501,6 +501,8 @@ test("filterEntries は、月・種別・検索語のすべてに合う明細だ
       .filter((entry) => entryLabel(entry).includes(filter.keyword) || (entry.memo ?? "").includes(filter.keyword));
   ```
 
+  26 行目の末尾の `;` は消します（`;` は、足した行の末尾に 1 つだけ付けます）。
+
   条件を `matchesKeyword` のような関数に分けても構いません（解答例は、関数に分けた形です）。`entryLabel` を使うには、ファイルの先頭に `import { entryLabel } from "./format.ts";` を足します。
 
 </details>
@@ -514,11 +516,13 @@ test("filterEntries は、月・種別・検索語のすべてに合う明細だ
 | 同じテストで、`+ keyword: ''` `- keyword: '給'` だけ | 種別は残していますが、検索語を残していません。今の絞り込みをコピーして、月だけを変えます |
 | テスト「検索語がメモに含まれる明細だけを残す」で、`+ 'a'` `+ 'c'` `+ 'd'` | 最初の状態です。`filterEntries` が、検索語を使っていません |
 | テスト「検索語が分類か入金元に含まれる明細も残す」で `- 'd'` | メモだけを調べています。`entryLabel(entry)` も調べます |
-| 型チェックで `Property 'category' does not exist on type 'Entry'.`（`summary.ts`） | `kind` で絞り込む前に `entry.category` を読んでいます。分類と入金元は、`entryLabel(entry)` で取り出します |
+| 型チェックで `Property 'category' does not exist on type 'Entry'.`（`summary.ts`） | `entry` は、収入か支出か分からない `Entry` 型のままです（種別の `filter` は `"all"` も通すので、型は絞り込まれません）。分類と入金元は、`entryLabel(entry)` で取り出します |
 | 型チェックで `'entry.memo' is possibly 'undefined'.` | メモのない明細があります。`(entry.memo ?? "")` にします |
-| 型チェックで `'\|\|' and '??' operations cannot be mixed without parentheses.` | `entry.memo ?? ""` を、かっこで囲んでいません |
+| 型チェックで `'\|\|' and '??' operations cannot be mixed without parentheses.`（テストでは、ファイルの名前の行だけが `✖` になる） | `entry.memo ?? ""` を、かっこで囲んでいません |
 | テスト「検索語がメモに含まれる明細だけを残す」で `+ 'b'`、または（戻り値に `boolean` と書いた関数に分けたとき）型チェックで `Type 'string \| boolean' is not assignable to type 'boolean'.` | `entry.memo ?? "".includes(...)` と書いています。`(entry.memo ?? "").includes(...)` と、かっこで囲みます |
+| テスト「検索語がメモに含まれる明細だけを残す」で `+ []` | 2 つの条件を `&&`（かつ）でつないでいます。メモと `entryLabel(entry)` のどちらかに含まれていれば残すので、`\|\|` でつなぎます |
 | 型チェックで `Cannot find name 'entryLabel'.` | `summary.ts` で `entryLabel` を `import` していません |
+| 型チェックで `Expected 2 arguments, but got 3.`（`render.ts`） | `renderList` の引数は戻しましたが、`render` 関数の中の呼び出しを戻していません |
 | テスト「…ほかの項目（種別や日付など）は調べない」が失敗する | 明細の全部の項目を調べています。調べるのは、メモと `entryLabel(entry)` です |
 | テストは合格するが、「食費」で検索すると、集計は変わるのに一覧が空になる | `render.ts` の `renderList` に、メモだけを調べる検索の処理が残っています。`renderList` を元に戻します |
 | テストは合格するが、検索しても何も変わらない | 完成版（`npm run dev app`）を起動しています |
@@ -567,7 +571,7 @@ test("filterEntries は、月・種別・検索語のすべてに合う明細だ
 
 どの章でも中心にあったのは、「状態を変える → 状態から画面を作り直す」という形と、「外から来た値は、検査してから正しい型として扱う」という決まりです。
 
-React 編（準備中。オプション）では、同じ家計簿のアプリを、React で書き直したものを読む予定です。`render` 関数と `update` 関数がしていた仕事を、React がどう肩代わりするかを見ていきます。
+[React 編](../../react/chapters/R00-digest.md)（オプション）では、同じ家計簿のアプリを、React で書き直したものを読みます。`render` 関数と `update` 関数がしていた仕事を、React がどう肩代わりするかを見ていきます。
 
 ## 詳しく学ぶ
 

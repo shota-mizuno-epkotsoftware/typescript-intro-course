@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 376" width="760" height="376" role="img" aria-labelledby="t d">
+  <title id="t">ボタンのクリックが、ul に登録した処理に届く</title>
+  <desc id="d">左は演習のメモ一覧の画面。「牛乳」と「卵」の 2 行があり、それぞれの右に「削除」のボタンがある。「牛乳」の行の「削除」を押す。右は要素の入れ子。id が memo-list の ul 要素の中に li 要素が 2 つあり、それぞれの中に data-id を付けた button 要素がある。click の処理は ul 要素に 1 つだけ登録してある。押された button 要素から外側の li 要素、ul 要素へとクリックのイベントが届き、ul 要素に登録した処理が動く。処理の中の event.target は、押された button 要素。event.target.dataset.id で、その data-id の値を読める。data-id の値は、実物では f1ca2c11- から始まる長い文字列。</desc>
+  <!-- 画面は実物の大きさ（1 倍）で一部を切り出す。main/exercises/M11-next-steps/style.css の値と、解答例を当てはめた版で測った位置から（行の高さ 32.4、ボタン 50×32.4、文字 16px）。
+       data-id の値は crypto.randomUUID() の結果なので、動かすたびに変わる。図には、実際に動かして出た値の頭 4 文字を書いた -->
+  <style>
+    .pg { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 16px; fill: #1f2328; }
+    .frame { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+    .dot { fill: #1f2328; }
+    .btn { fill: #f3f4f6; stroke: #8c959f; stroke-width: 1; }
+    .cursor { fill: #ffffff; stroke: #1f1f1f; stroke-width: 1; stroke-linejoin: round; }
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 12px; }
+    .head { font-weight: 700; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; }
+    .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .inner { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.2; }
+    .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .line { fill: none; stroke: #2563eb; stroke-width: 1.8; }
+    .tip { fill: #2563eb; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 2; }
+    .badge { fill: #ea580c; }
+    .badge-num { font-family: -apple-system, "Segoe UI", sans-serif; font-size: 11px; font-weight: 700; fill: #ffffff; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; fill: #1f2937; }
+    .note-sub { fill: #4b5563; font-size: 12px; }
+    .note-acc { fill: #c2410c; font-weight: 700; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code, .note { fill: #e5e7eb; }
+      .sub, .note-sub { fill: #9ca3af; }
+      .var { fill: #1e293b; stroke: #64748b; }
+      .inner { fill: #0f172a; stroke: #64748b; }
+      .obj { fill: #172554; stroke: #60a5fa; }
+      .line { stroke: #60a5fa; }
+      .tip { fill: #60a5fa; }
+      .mark { stroke: #fb923c; }
+      .badge { fill: #f97316; }
+      .note-acc { fill: #fb923c; }
+    }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <!-- 左：画面（メモ一覧の一部） -->
+  <text class="txt head" x="10" y="80">画面</text>
+  <rect class="frame" x="10.5" y="92.5" width="214" height="110" rx="6"/>
+  <circle class="dot" cx="33" cy="132.5" r="2.5"/>
+  <text class="pg" x="44" y="138">牛乳</text>
+  <rect class="btn" x="84.5" y="116.5" width="49" height="31.4" rx="6"/>
+  <text class="pg" x="109" y="138" text-anchor="middle">削除</text>
+  <circle class="dot" cx="33" cy="164.9" r="2.5"/>
+  <text class="pg" x="44" y="170.4">卵</text>
+  <rect class="btn" x="68.5" y="148.9" width="49" height="31.4" rx="6"/>
+  <text class="pg" x="93" y="170.4" text-anchor="middle">削除</text>
+  <rect class="mark" x="81" y="113" width="56" height="38.4" rx="4"/>
+  <path class="cursor" d="M121,134 V150 L125,146.2 L127.8,152.6 L130.4,151.5 L127.6,145.2 H133 Z"/>
+  <circle class="badge" cx="152" cy="118" r="8"/><text class="badge-num" x="152" y="122" text-anchor="middle">1</text>
+
+  <!-- 右：要素の入れ子 -->
+  <text class="txt head" x="270" y="28">要素の入れ子</text>
+  <rect class="var" x="270" y="40" width="480" height="232" rx="8"/>
+  <text class="code" x="284" y="65">&lt;ul id=&quot;memo-list&quot;&gt;</text>
+  <rect class="obj" x="540" y="49" width="198" height="26" rx="13"/>
+  <text class="txt" x="639" y="66.5" text-anchor="middle">click の処理を 1 つ登録</text>
+
+  <rect class="inner" x="290" y="98" width="440" height="80" rx="6"/>
+  <text class="code" x="302" y="118">&lt;li&gt;<tspan class="txt" dx="6">牛乳</tspan></text>
+  <rect class="obj" x="302" y="128" width="300" height="38" rx="6"/>
+  <text class="code" x="314" y="151.5">&lt;button data-id=&quot;f1ca…&quot;&gt;<tspan class="txt" dx="6">削除</tspan></text>
+  <text class="code head" x="634" y="151.5">event.target</text>
+
+  <rect class="inner" x="290" y="186" width="440" height="74" rx="6"/>
+  <text class="code" x="302" y="206">&lt;li&gt;<tspan class="txt" dx="6">卵</tspan></text>
+  <rect class="var" x="302" y="214" width="300" height="34" rx="6"/>
+  <text class="code" x="314" y="235.5">&lt;button data-id=&quot;8f08…&quot;&gt;<tspan class="txt" dx="6">削除</tspan></text>
+
+  <!-- 矢印 -->
+  <path class="line" d="M137,132 C215,132 235,147 298,147" marker-end="url(#a1)"/>
+  <path class="line" d="M560,128 V79" marker-end="url(#a1)"/>
+  <circle class="badge" cx="578" cy="87" r="8"/><text class="badge-num" x="578" y="91" text-anchor="middle">2</text>
+  <circle class="badge" cx="618" cy="147" r="8"/><text class="badge-num" x="618" y="151" text-anchor="middle">3</text>
+
+  <!-- 下の説明 -->
+  <text class="note" x="10" y="302"><tspan class="note-acc">①</tspan> 「牛乳」の行の「削除」を押す。</text>
+  <text class="note" x="10" y="324"><tspan class="note-acc">②</tspan> click のイベントは、外側の &lt;li&gt;、&lt;ul&gt; にも届く。&lt;ul&gt; に登録した処理が動く。</text>
+  <text class="note" x="10" y="346"><tspan class="note-acc">③</tspan> 処理の中の event.target は、押された &lt;button&gt;。event.target.dataset.id は "f1ca…"。</text>
+  <text class="note note-sub" x="10" y="367">data-id の値は、メモごとに違う長い文字列。図には頭の 4 文字だけを書いた。</text>
+</svg>

@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 790 759" width="790" height="759" role="img" aria-labelledby="t d">
+  <title id="t">画面の各部分と、コンポーネント</title>
+  <desc id="d">家計簿の画面に、コンポーネントの枠を重ねた図。画面全体が App。「明細を追加する」の区画のフォームが EntryForm。「集計」の区画の月と種別の選択欄が FilterBar、その下の収入・支出・収支と分類ごとの支出が Summary。「明細」の区画の一覧が EntryList で、その 1 行が EntryItem。</desc>
+  <style>
+    .pg { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 12.8px; fill: #1f2328; }
+    .h1 { font-size: 20.5px; font-weight: 700; }
+    .h2 { font-size: 14px; font-weight: 700; }
+    .h3 { font-size: 12.2px; font-weight: 700; fill: #59636e; }
+    .lbl { font-size: 10.9px; fill: #59636e; }
+    .ctl { font-size: 10.9px; }
+    .small { font-size: 11.5px; }
+    .muted { fill: #59636e; }
+    .inc { fill: #1a7f37; }
+    .exp { fill: #b42318; }
+    .panel { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .ctrl { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .btn { fill: #f6f7f9; stroke: #d8dee4; stroke-width: 0.8; }
+    .rule { fill: none; stroke: #d8dee4; stroke-width: 0.8; }
+    .chev { fill: none; stroke: #1f2328; stroke-width: 1; }
+    .check { fill: #0b63ce; }
+    .tick { fill: none; stroke: #ffffff; stroke-width: 1.6; }
+    .hl { fill: #dbeafe; }
+    .con { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+    .con-bar { fill: #eef1f4; }
+    .con-err { fill: #fdecea; }
+    .con-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 10.5px; fill: #1f2328; }
+    .con-red { fill: #b42318; }
+    .con-ui { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 10.5px; fill: #5f6368; }
+    .con-on { fill: #0b57d0; font-weight: 700; }
+    .codebox { fill: #f6f8fa; stroke: #d8dee4; stroke-width: 0.8; }
+    .code { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; fill: #1f2328; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 1.5; }
+    .mark-b { fill: none; stroke: #2563eb; stroke-width: 1.5; }
+    .lead { fill: none; stroke: #ea580c; stroke-width: 1; }
+    .tag { fill: none; stroke: #ea580c; stroke-width: 1.2; }
+    .tag-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; font-weight: 700; fill: #c2410c; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 12px; fill: #1f2937; }
+    .cap { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; font-weight: 700; fill: #1f2937; }
+    .flow { fill: none; stroke: #6b7280; stroke-width: 1.4; }
+    .flow-head { fill: #6b7280; }
+    @media (prefers-color-scheme: dark) {
+      .mark, .lead, .tag { stroke: #fb923c; }
+      .mark-b { stroke: #60a5fa; }
+      .tag-txt { fill: #fb923c; }
+      .note, .cap { fill: #e5e7eb; }
+      .flow { stroke: #9ca3af; }
+      .flow-head { fill: #9ca3af; }
+    }
+  </style>
+  <rect class="panel" x="8" y="8" width="565" height="715" rx="8"/>
+  <text class="pg h1" x="22" y="36">家計簿</text>
+  <rect class="panel" x="22" y="54" width="537" height="166" rx="6"/>
+  <text class="pg h2" x="38.5" y="84">明細を追加する</text>
+  <text class="pg lbl" x="38.5" y="113">種別</text>
+  <rect class="ctrl" x="38.5" y="118" width="48" height="28" rx="4.8"/>
+  <text class="pg ctl" x="44.5" y="136">支出</text>
+  <path class="chev" d="M71.5,130 L75.0,133.5 L78.5,130"/>
+  <text class="pg lbl" x="99.5" y="113">日付</text>
+  <rect class="ctrl" x="99.5" y="118" width="112" height="28" rx="4.8"/>
+  <text class="pg ctl" x="105.5" y="136">年 /月/日</text>
+  <text class="pg lbl" x="224.5" y="113">金額</text>
+  <rect class="ctrl" x="224.5" y="118" width="136" height="28" rx="4.8"/>
+  <text class="pg lbl" x="373.5" y="113">分類</text>
+  <rect class="ctrl" x="373.5" y="118" width="64" height="28" rx="4.8"/>
+  <text class="pg ctl" x="379.5" y="136">食費</text>
+  <path class="chev" d="M422.5,130 L426.0,133.5 L429.5,130"/>
+  <text class="pg lbl" x="38.5" y="165">メモ</text>
+  <rect class="ctrl" x="38.5" y="170" width="136" height="28" rx="4.8"/>
+  <rect class="btn" x="187.5" y="167" width="36" height="31" rx="4.8"/>
+  <text class="pg" x="205.5" y="187" text-anchor="middle">追加</text>
+  <rect class="panel" x="22" y="236" width="537" height="269" rx="6"/>
+  <text class="pg h2" x="38.5" y="266">集計</text>
+  <text class="pg lbl" x="38.5" y="295">月</text>
+  <rect class="ctrl" x="38.5" y="300" width="76" height="28" rx="4.8"/>
+  <text class="pg ctl" x="44.5" y="318">すべて</text>
+  <path class="chev" d="M99.5,312 L103.0,315.5 L106.5,312"/>
+  <text class="pg lbl" x="127.5" y="295">種別</text>
+  <rect class="ctrl" x="127.5" y="300" width="76" height="28" rx="4.8"/>
+  <text class="pg ctl" x="133.5" y="318">すべて</text>
+  <path class="chev" d="M188.5,312 L192.0,315.5 L195.5,312"/>
+  <text class="pg muted" x="38.5" y="357">収入</text>
+  <text class="pg" x="102.5" y="357">200,000円</text>
+  <text class="pg muted" x="38.5" y="382">支出</text>
+  <text class="pg" x="102.5" y="382">2,000円</text>
+  <text class="pg muted" x="38.5" y="407">収支</text>
+  <text class="pg inc" x="102.5" y="407">198,000円</text>
+  <text class="pg h3" x="38.5" y="440">分類ごとの支出</text>
+  <text class="pg" x="38.5" y="463">交通費: 1,200円</text>
+  <text class="pg" x="38.5" y="485">食費: 800円</text>
+  <rect class="panel" x="22" y="521" width="537" height="189.8" rx="6"/>
+  <text class="pg h2" x="38.5" y="551">明細</text>
+  <text class="pg" x="38.5" y="588.0">2026-11-15</text>
+  <text class="pg" x="131.5" y="588.0">食費<tspan class="ctl muted"> 昼食</tspan></text>
+  <text class="pg exp" x="496.5" y="588.0" text-anchor="end">-800円</text>
+  <rect class="btn" x="506.5" y="568.0" width="36" height="31" rx="4.8"/>
+  <text class="pg" x="524.5" y="588.0" text-anchor="middle">削除</text>
+  <path class="rule" d="M38.5,605.6 H542.5"/>
+  <text class="pg" x="38.5" y="632.6">2026-11-01</text>
+  <text class="pg" x="131.5" y="632.6">給料</text>
+  <text class="pg inc" x="496.5" y="632.6" text-anchor="end">+200,000円</text>
+  <rect class="btn" x="506.5" y="612.6" width="36" height="31" rx="4.8"/>
+  <text class="pg" x="524.5" y="632.6" text-anchor="middle">削除</text>
+  <path class="rule" d="M38.5,650.2 H542.5"/>
+  <text class="pg" x="38.5" y="677.2">2026-10-28</text>
+  <text class="pg" x="131.5" y="677.2">交通費</text>
+  <text class="pg exp" x="496.5" y="677.2" text-anchor="end">-1,200円</text>
+  <rect class="btn" x="506.5" y="657.2" width="36" height="31" rx="4.8"/>
+  <text class="pg" x="524.5" y="677.2" text-anchor="middle">削除</text>
+  <path class="rule" d="M38.5,694.8000000000001 H542.5"/>
+  <rect class="mark-b" x="8" y="8" width="565" height="714.8" rx="3"/>
+  <rect class="mark" x="32" y="96" width="517" height="116" rx="3"/>
+  <rect class="mark" x="32" y="284" width="180" height="52" rx="3"/>
+  <rect class="mark" x="32" y="342" width="300" height="157" rx="3"/>
+  <rect class="mark" x="32" y="563" width="517" height="139.8" rx="3"/>
+  <rect class="mark" x="36" y="567" width="509" height="36" rx="3"/>
+  <rect class="tag" x="610" y="13" width="96" height="18" rx="3"/>
+  <text class="tag-txt" x="617" y="26">App</text>
+  <rect class="tag" x="610" y="141" width="96" height="18" rx="3"/>
+  <text class="tag-txt" x="617" y="154">EntryForm</text>
+  <rect class="tag" x="610" y="301" width="96" height="18" rx="3"/>
+  <text class="tag-txt" x="617" y="314">FilterBar</text>
+  <rect class="tag" x="610" y="411" width="96" height="18" rx="3"/>
+  <text class="tag-txt" x="617" y="424">Summary</text>
+  <rect class="tag" x="610" y="622" width="96" height="18" rx="3"/>
+  <text class="tag-txt" x="617" y="635">EntryList</text>
+  <rect class="tag" x="610" y="576" width="96" height="18" rx="3"/>
+  <text class="tag-txt" x="617" y="589">EntryItem</text>
+  <path class="lead" d="M573,22 H610"/>
+  <path class="lead" d="M549,150 H610"/>
+  <path class="lead" d="M212,310 H610"/>
+  <path class="lead" d="M332,420 H610"/>
+  <path class="lead" d="M549,631 H610"/>
+  <path class="lead" d="M545,585 H610"/>
+  <text class="note" x="8" y="746.8">青い枠の App が state を持ち、オレンジの枠のコンポーネントを並べます。EntryItem は、EntryList が明細の数だけ並べます。</text>
+</svg>

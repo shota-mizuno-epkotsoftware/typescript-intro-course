@@ -61,7 +61,7 @@ elements.entryList.addEventListener("click", (event) => {
 });
 ```
 
-- `click` のイベントを登録しているのは、ボタンではなく、一覧の全体（`elements.entryList`）です。
+- `click` のイベントを登録しているのは、ボタンではなく、一覧の全体（`elements.entryList`）です（イベント委譲。本編第11章の 11.4）。
 - 一覧の中の要素をクリックすると、`click` のイベントは外側の一覧にも届きます。
 
 1. `id` が `"abc"` の明細の「削除」ボタンは、HTML ではどう書かれますか。`<button` から `</button>` までを書いてください。
@@ -117,7 +117,7 @@ elements.entryList.addEventListener("click", (event) => {
 - `state` を入れ替えるのは、`update` の中の `state = next;`（25 行目）だけです。
 - そのため、`removeEntry` が受け取るのは削除前の状態で、`removeEntry` が返した新しい状態（`next`）が、`update` の中で `state` に入ります。
 
-追加（第3章）・削除・絞り込みは、どれも第1章の図1-3 の輪を通ります。違うのは、新しい状態を作る関数と、保存するかどうかです。
+追加（第3章）・削除・絞り込みは、どれも第1章の図1-3 の流れを通ります。違うのは、新しい状態を作る関数と、保存するかどうかです。
 
 | 操作 | 状態を作る関数 | 保存 |
 | --- | --- | --- |
@@ -126,7 +126,7 @@ elements.entryList.addEventListener("click", (event) => {
 | 絞り込み | `setFilter` | しない |
 | 種別の切り替え | `setFormKind` | しない |
 
-**確かめ方**：改修用フォルダの `src/main.ts` の `update` と `src/state.ts` の `removeEntry` の先頭に、`console.log("update")` と `console.log("removeEntry", state.entries.length)` を入れて、「削除」を押します。コンソールに表示される順番と、`removeEntry` が受け取った明細の件数を見ます。
+**確かめ方**：改修用フォルダの `src/main.ts` の `update` と `src/state.ts` の `removeEntry` の先頭に、`console.log("update")` と `console.log("removeEntry", state.entries.length)` を入れて、「削除」を押します。ページを開いたときにも `update` が 1 回表示されるので、「削除」を押した後に増えた行を見ます。表示される順番と、`removeEntry` が受け取った明細の件数を見ます。
 
 </details>
 
@@ -379,7 +379,7 @@ function update(next: AppState): void {
 
 1. `npm run dev P04` で起動し、明細を 3 件にしておく
 2. 開発者ツールを開く
-3. 改修用フォルダの `src/main.ts` に `debugger;` を書いて、保存する。ページが読み込み直され、分類の読み込みが終わった後の `update` で 1 回止まります
+3. 改修用フォルダの `src/main.ts` に `debugger;` を書いて、保存する。ページが読み込み直されます。分類の読み込みが終わると `update` が呼ばれ、そこで 1 回止まります
 4. `▶` のボタンで、続きを実行する
 5. 「削除」を押す。止まったら、`state.entries` と `next.entries` の件数を見る
 
@@ -472,11 +472,12 @@ function update(next: AppState): void {
 <summary>説明の例</summary>
 
 1. スタックトレースを読む（問題 7）。一番上の行がエラーを投げた場所で、下の行をたどると、`click` の処理からどの関数を通ってそこに来たかが分かる。
-2. `update` まで来ていない。原因は一覧の `click` の処理（`main.ts` 81〜89 行目）にあり、82 行目か 86 行目の `if` で先に進んでいない。
+2. `update` まで来ていない。一覧の `click` の処理（`main.ts` 81〜89 行目）の、82 行目か 86 行目の `if` で先に進んでいない。86 行目なら、ボタンに `data-id` を付ける `createEntryItem`（`render.ts`）も調べる。
 3. 残っていれば、`removeEntry`（`state.ts`）の先頭で止め、受け取った `id` が押した明細のものかを調べる。
    - 合っていれば、原因は `removeEntry` の、明細を除く条件にある。
    - 違っていれば、原因はボタンに `id` を付ける `createEntryItem`（`render.ts`）か、`click` の処理にある。
-   - 残っていなければ、状態は正しく作られている。原因は `update` の残りの行か、画面を作り直す `render`（`render.ts`）にある。
+
+   残っていなければ、状態は正しく作られている。原因は `update` の残りの行か、画面を作り直す `render`（`render.ts`）にある。
 
 `debugger;` で止める場所を 1 つ決めると、流れを「そこより前」と「そこより後」に分けられる。止まったかどうかと、止まった時点の値で、どちらに原因があるかが分かる。
 

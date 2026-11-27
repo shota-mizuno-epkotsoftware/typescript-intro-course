@@ -1,0 +1,23 @@
+import { entryLabel, formatSignedYen } from "../format.ts";
+import type { Entry } from "../types.ts";
+
+interface EntryItemProps {
+  entry: Entry;
+  onRemove: (id: string) => void;
+}
+
+export function EntryItem({ entry, onRemove }: EntryItemProps) {
+  return (
+    <li>
+      <span className="date">{entry.date}</span>
+      <span>
+        <span className="label">{entryLabel(entry)}</span>
+        {entry.memo !== undefined && <span className="memo"> {entry.memo}</span>}
+      </span>
+      <span className={`amount amount-${entry.kind}`}>{formatSignedYen(entry)}</span>
+      <button className="remove" onClick={() => onRemove(entry.id)}>
+        削除
+      </button>
+    </li>
+  );
+}

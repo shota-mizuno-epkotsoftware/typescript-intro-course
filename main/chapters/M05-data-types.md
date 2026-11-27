@@ -70,7 +70,7 @@ const category: Category = "travel";
 
 ## 5.3 `let` と `const` で、推論される型が違う
 
-**文字列を直接書くと、`let` の変数は `string`、`const` の変数はリテラル型と推論されます。** `let` の変数は、後で別の文字列を入れられるので `string` です。`const` の変数は、再代入できないので書いた文字列の型です。
+**文字列を直接書くと、`let` の変数は `string`、`const` の変数はリテラル型と推論されます。** `let` の変数は、後で別の文字列を入れられるので `string` です。`const` の変数は、再代入できないので書いた文字列の型です。数値も同じです（`const price = 1200` は `1200` 型）。
 
 そのため、型注釈のない `let` の変数の値は、`Category` 型の変数に入れられません。
 
@@ -89,7 +89,7 @@ const second: Category = b;
 
 次の図は、各型に入る値の範囲を示します。内側の型の値は、外側の型にも入ります。
 
-![型を入る値の範囲として描いた図。いちばん外側の string（let a の型）には "travel" や "abc" など、どんな文字列も入る。その内側の Category には "food" と "transport" だけが入る。さらに内側の "transport" 型（const b の型）には "transport" だけが入る。外側の string の値は、Category に入らない（型エラー）。内側の "transport" 型の値は、外側の Category にも入る。](images/M05-type-range.svg "図5-1 string は Category より広い")
+![型を入る値の範囲として描いた図。いちばん外側の string（let a の型）には "travel" や "abc" など、どんな文字列も入る。その内側の Category には "food" と "transport" だけが入る。さらに内側の "transport" 型（const b の型）には "transport" だけが入る。first = a は、外側の string の値を Category に入れようとするので、入らない（型エラー）。second = b は、内側の "transport" 型の値を外側の Category に入れるので、入る。](images/M05-type-range.svg "図5-1 string は Category より広い")
 
 `let` のまま使いたいときは、`let a: Category = "transport";` のように型注釈を書きます。
 
@@ -137,7 +137,7 @@ printText(large); // ②
 型エラーが出るのは ① だけです。
 
 - ①：`input` の型は `string` です。`copy` は `const` ですが、`string` 型の変数を入れたので、型は `string` です（5.3）。`Argument of type 'string' is not assignable to parameter of type 'Size'.` と表示されます。
-- ②：`Size` は `string` の内側の型です（図5-1）。内側の型の値は、外側の型に入ります。
+- ②：`Size` は `string` の内側の型です。内側の型の値は、外側の型に入ります。
 
 実行結果です。
 
@@ -248,7 +248,7 @@ console.log(stock);             // → { 'ノート': 10, 'ペン': 25 }
 console.log(stock["消しゴム"]); // → undefined
 ```
 
-まだ入れていないキーを読むと `undefined` が返りますが、型は `number` のままです。調べ方は第6章 6.1 で扱います。
+まだ入れていないキーを読むと `undefined` が返りますが、型には `undefined` が出ません。調べ方は第6章 6.1 で扱います。
 
 キーの型にユニオン型を書くと、「このキーが全部そろったオブジェクト」という型になります。キーが 1 つでも足りないと、型エラーになります。ユニオン型にないキーを書いたときも、5.1 の余分なプロパティと同じく型エラーになります。
 
@@ -281,7 +281,7 @@ console.log(countByCategory(purchases)); // → { food: 2, transport: 1 }
 
 ## 5.6 ほかの型を広げる書き方を読む
 
-既存の型にプロパティを足して、新しい型を作れます。`interface` では `extends`、`type` では `&` を使います。`interface` は、`type` と同じようにオブジェクトの形を表す書き方です。
+既存の型にプロパティを足して、新しい型を作れます。`interface` は、`type` と同じようにオブジェクトの形を表す書き方です。足すときは、`interface` では `extends`、`type` では `&`（**インターセクション型**）を使います。
 
 ```ts
 interface Item {
@@ -334,7 +334,7 @@ const broken: Book = { name: "入門書", price: 2000 };
 | 同じ名前を 2 回宣言する | 型エラー | 1 つに統合される |
 | ユニオン型 | 書ける | 書けない |
 
-どちらを使うかは、プロジェクトごとに決めます（サバイバルTypeScript も、そう勧めています）。
+どちらを使うかに決まった正解はなく、プロジェクトで方針を決めます（サバイバルTypeScript に、いくつかの方針が紹介されています）。
 
 ---
 
@@ -368,7 +368,7 @@ console.log(stock, memo, books);
    npm run typecheck M05 problem-03
    ```
 
-2. それぞれのエラーが何を言っているかを、自分の言葉でファイル内のコメント欄に書く
+2. それぞれのエラーが何を言っているかを、自分の言葉に言い換えて、ファイル内のコメント欄に書く
 3. エラーが消えるようにコードを直す
    - 直し方に迷ったら、下の「言い換えの例と修正例」を開きます
 4. もう一度同じコマンドを実行する
@@ -376,6 +376,8 @@ console.log(stock, memo, books);
 
 <details>
 <summary>表示されるエラー</summary>
+
+行番号は、ファイルの先頭のコメントの分だけ、本文のコードとずれます（第0章の問題 1 と同じ）。
 
 ```
 main/exercises/M05-data-types/problem-03.ts(14,57): error TS2353: Object literal may only specify known properties, and 'XL' does not exist in type 'Record<Size, number>'.
@@ -422,7 +424,7 @@ const books: Book[] = [
    - `Category`：`"food"`、`"transport"`、`"other"` のどれかが入る型にします（5.2）
    - `Expense`：`category`（分類。`Category` 型）と `memo`（メモ。文字列。省略できる）を足します（5.1）
    - 2 つとも書くまでは、`practice-01.test.ts` に型エラーが残ります。テストのファイルも調べるので、コマンドにファイル名は付けません
-   - `Unused '@ts-expect-error' directive.` は、「`Category` に `"travel"` も入ってしまう」という意味です。`Category` を書けば消えます
+   - テストの `// @ts-expect-error` は、「次の行は型エラーになるはず」という印です。`Unused '@ts-expect-error' directive.` は、「`Category` に `"travel"` も入ってしまう」という意味です。`Category` を書けば消えます
    - `problem-01.ts` の型エラーが出たら問題 1 に、`problem-03.ts` の型エラーが出たら問題 3 に戻って直します
    ```sh
    npm run typecheck M05
@@ -436,14 +438,14 @@ const books: Book[] = [
    ```sh
    npm test M05
    ```
-   - **こうなれば OK**：テストの表示で、`emptyTotals` で始まる行が `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `emptyTotals` で始まる行が `✔` になる
 3. `totalByCategory` の `throw` の行を書き換える
    - 5.5 の `countByCategory` と同じ形です。`+ 1` の代わりに、`expense.amount` を足します
    - 合計の入れ物は `const totals = emptyTotals();` で作ります
    ```sh
    npm test M05
    ```
-   - **こうなれば OK**：テストの表示で、`totalByCategory` で始まる行がすべて `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `totalByCategory` で始まる行がすべて `✔` になる
 
 #### 仕上げる
 

@@ -44,6 +44,7 @@ npm run dev B10
 
 - ブラウザは Chrome か Edge を使います。ほかのブラウザで開いたときは、表示されたアドレスを Chrome か Edge に貼り付けます。
 - JavaScript のファイルを書き換えて保存すると、画面は自動で読み込み直されます。
+- 保存した後は、コンソールのファイル名に `try.js?t=数字` のように `?t=数字` が付きます。読み飛ばして構いません。
 - 終わるときは、ターミナルで `Ctrl`+`C` を押します。動かしている間は、そのターミナルにほかのコマンドを打てません。
 - 動かしたまま別のコマンドを打つときは、VS Code の「ターミナル」→「新しいターミナル」で、2 つ目のターミナルを開きます（第0章の 0.2）。
 
@@ -53,7 +54,7 @@ npm run dev B10
 
 コンソールは、ブラウザで `F12` キー（macOS は `Cmd`+`Option`+`I`）を押し、開いた画面の「Console」（コンソール）を選ぶと表示されます。`try.js を読み込みました` と表示されていれば、`try.js` が実行されています。
 
-![ブラウザの窓の左にページがあり、「ここに表示します」の文章、「押す」のボタン、100 と入った入力欄が、上から順に並んでいる。右に開発者ツールが開いていて、Console のタブに、console.log の表示の「try.js を読み込みました」が出ている。その行の右端に、try.js:3 とファイル名と行番号が出ている。](images/B10-browser-console.svg "図10-1 ブラウザの画面とコンソール")
+![ブラウザの窓の左にページがあり、「ここに表示します」の文章、「押す」のボタン、100 と入った入力欄が、上から順に並んでいる。3 つの部品には、try.html で付けた id（message、button、amount）の札が添えてある。右に開発者ツールが開いていて、Console のタブに、console.log の表示の「try.js を読み込みました」が出ている。その行の右端に、try.js:3 とファイル名と行番号が出ている。](images/B10-browser-console.svg "図10-1 ブラウザの画面とコンソール")
 
 この章のコード例は、`basics/exercises/B10-dom/try.js` に打ち、「試すためのページ」で動きを見ます（前のコード例は消してから打ちます）。
 
@@ -105,7 +106,7 @@ button.addEventListener("click", () => {
 - `addEventListener` は、関数を登録するだけです。渡した関数の中は、その場では実行されません。登録が済むと、次の行に進みます。
 - 渡した関数は、クリックされるたびに 1 回ずつ実行されます。呼ぶのはブラウザです。関数を引数で渡す形は、第9章の `map` や `filter` と同じです。
 - 引数のないアロー関数は、`=>` の左に `( )` だけを書きます。
-- 関数を先に `const show = () => { ... };` と変数に入れたときは、`addEventListener("click", show)` と名前だけを渡します。`show()` と書くと、その場で呼んだ結果を渡します（第9章の 9.1）。
+- 変数に入れた関数は、`addEventListener("click", show)` と名前だけを渡します。`show()` と書くと、その場で呼んだ結果を渡します（第9章の 9.1）。
 
 ## 問題 1：いつ実行されるか
 
@@ -226,7 +227,7 @@ console.log(Number(""));         // → 0
 ```
 
 - 数値に変えられない文字列は、`NaN` になります（第6章の 6.2）。
-- 何も打たれていない入力欄の値は、空の文字列 `""` です。`Number("")` は `0` です。空かどうかは、数値に変える前に `値 === ""` で調べます。
+- 何も打たれていない入力欄の値は、空の文字列 `""` です。`Number("")` は `0` です。
 
 `NaN` かどうかは、`Number.isNaN(値)` で調べます。`値 === NaN` では調べられません。`NaN` は、`NaN` 自身と比べても `false` になる決まりです。
 
@@ -251,20 +252,17 @@ console.log(message);
 message.textContent = "こんにちは";
 ```
 
-1 行目は、`id` のつづりが違います。コンソールには `null` と表示され、3 行目は次のエラーになります。
+1 行目は、`id` のつづりが違います。コンソールには `null` と表示され、3 行目は次のエラーになります。ブラウザのエラーも、コンソールに出ます。
 
 ```
 Uncaught TypeError: Cannot set properties of null (setting 'textContent')
 ```
 
-`message.addEventListener(...)` のように取り出す行では、`Cannot read properties of null (reading 'addEventListener')` と出ます。どちらも、`.` の左が `null` だという意味です。
+![開発者ツールの Console に、2 行が出ている。1 行目は console.log の表示の null。2 行目は赤いエラーの行で、Uncaught TypeError: Cannot set properties of null (setting 'textContent') と書かれ、その下に at で始まる行が続く。読む所は 3 つある。1 つ目は行の右端の try.js?t=1795730940221:3 で、ファイル名と行番号（try.js の 3 行目）を表す。間の ?t=数字 は読み飛ばす。2 つ目は TypeError から後ろで、エラーの種類と説明を表す。先頭の Uncaught は読み飛ばす。3 つ目は説明の中の of null で、. の左が null だという意味。at で始まる行は読まない。](images/B10-console-error.svg "図10-4 コンソールに出たエラーの読む所")
 
-`of null` と書かれたエラーが出たら、その要素を `querySelector` で取っている行の `"` の中と、HTML の `id` を見比べます。`#` を書き忘れると、タグの名前で探します。その名前のタグがなければ、同じエラーになります。
+`message.addEventListener(...)` のように取り出す行では、`Cannot read properties of null (reading 'addEventListener')` と出ます。これも `of null` のエラーです。
 
-ブラウザのエラーもコンソールに出ます。ファイル名と行番号は、図10-1 の `try.js:3` と同じく、その行の右端に出ます。
-
-- 先頭の `Uncaught` は、読み飛ばして構いません。
-- 保存して読み込み直した後は、`try.js?t=1794757813954:3` のように、間に `?t=数字` が入ります。
+`of null` と書かれたエラーが出たら、その要素を `querySelector` で取っている行の `"` の中と、HTML の `id` を見比べます。`querySelector("message")` のように `#` を書き忘れると、`<message>` というタグを探します。その名前のタグがなければ、同じエラーになります。
 
 ---
 
@@ -335,6 +333,8 @@ Uncaught TypeError: Cannot read properties of null (reading 'addEventListener')
 
 ボタンで数を増やしたり、0 に戻したりする画面を作ります。`basics/exercises/B10-dom/practice-02.js` には、要素を取る行と、数を入れる変数 `count` の宣言が書いてあります。その下を書きます。
 
+![演習 2 のページには、上から「演習 2」の見出し、数の 0、「1 増やす」と「0 に戻す」のボタンが並んでいる。数の 0 の要素は id が count で、practice-02.js の変数 countText に入っている。「1 増やす」のボタンは id が plus で、変数 plusButton に入っている。「0 に戻す」のボタンは id が reset で、変数 resetButton に入っている。](images/B10-practice-02-ids.svg "図10-5 演習 2 の画面と、id と変数")
+
 **画面で確かめること**
 
 - [ ] 「1 増やす」を押すたびに、数が `1`、`2`、`3` と増える
@@ -344,7 +344,7 @@ Uncaught TypeError: Cannot read properties of null (reading 'addEventListener')
 **進め方**
 
 1. `basics/exercises/B10-dom/practice-02.js` に、「1 増やす」が押されたときの処理を書く
-   - ファイルの上の、3 つの要素と `count` の宣言を読んでから書きます
+   - ファイルの上の、3 つの要素と `count` の宣言を読んでから書きます（どの変数が画面のどの部品かは、図10-5）
    - **こうなれば OK**：「演習 2」のページで「1 増やす」を押すたびに、数が 1 ずつ増える
 2. 「0 に戻す」が押されたときの処理を書く
    - **こうなれば OK**：上の「画面で確かめること」がすべて当てはまる
@@ -375,6 +375,7 @@ plusButton.addEventListener("click", () => {
 
 | 画面やコンソールの様子 | よくある原因 |
 | --- | --- |
+| コンソールに `of null` のエラーが出る | `querySelector` の `"` の中が、図10-5 の id と違います（10.7） |
 | 何回押しても `1` のまま | `count` を入れ直していません。`countText.textContent = count + 1;` では、`count` の値は変わりません |
 | ページを開いた時点で `1` になり、押しても変わらない | `addEventListener("click", plus())` のように、関数に `( )` を付けて渡しています（10.4） |
 | 押すたびに `01`、`011` と伸びる | `countText.textContent + 1` と書いています。画面の文字は文字列なので、つながります。足す相手は `count` です |
@@ -405,6 +406,8 @@ plusButton.addEventListener("click", () => {
 | `addAmount(1000, "abc")` | `1000`（数値に変えられないときは、足さない） |
 | `addAmount(1000, "")` | `1000` |
 
+![演習 3 のページには、上から「演習 3」の見出し、入力欄と「足す」のボタン、「合計: 0円」の文章が並んでいる。入力欄は id が amount で、practice-03-page.js の変数 amount に入っている。「足す」のボタンは id が add で、変数 button に入っている。「合計: 0円」の要素は id が total で、変数 totalText に入っている。](images/B10-practice-03-ids.svg "図10-6 演習 3 の画面と、id と変数")
+
 **画面で確かめること**
 
 - [ ] `1200` と打って「足す」を押すと、`合計: 1200円` と表示される
@@ -413,17 +416,15 @@ plusButton.addEventListener("click", () => {
 
 **進め方**
 
-1. `basics/exercises/B10-dom/practice-03.js` の `addAmount` を書く
+1. `basics/exercises/B10-dom/practice-03.js` の `addAmount` を書き、答え合わせをする
    - 文字列を数値に変える `Number(text)` と、`NaN` かどうかを調べる `Number.isNaN(値)` を使います（10.6）
-   - **こうなれば OK**：`addAmount` の中に、`Number(text)` と `Number.isNaN(` がある
-2. 答え合わせをする
-   - 画面を動かしたまま、2 つ目のターミナルで打ちます（10.1）
+   - 答え合わせは、画面を動かしたまま、2 つ目のターミナルで打ちます（10.1）
    ```sh
    npm test B10
    ```
    - **こうなれば OK**：`演習 3  合格` と表示される
-3. `basics/exercises/B10-dom/practice-03-page.js` に、「足す」が押されたときの処理を書く
-   - `addAmount` を呼んで `total` を入れ直し、画面に表示します
+2. `basics/exercises/B10-dom/practice-03-page.js` に、「足す」が押されたときの処理を書く
+   - `addAmount` を呼んで `total` を入れ直し、画面に表示します（どの変数が画面のどの部品かは、図10-6）
    - 先頭の `import` で始まる行は、別のファイルに書いた関数を使うための行です。この行があるので、`addAmount` を呼べます
    - 入力欄の値（`value`）は、押されたときに関数の中で取り出します
    - **こうなれば OK**：「演習 3」のページで、上の「画面で確かめること」がすべて当てはまる
@@ -454,8 +455,9 @@ plusButton.addEventListener("click", () => {
 | --- | --- |
 | `npm test` の「実際の値」が `"1000500"` | `text` を数値に変えずに足しています（問題 2、10.6） |
 | `npm test` の「実際の値」が `NaN` | `NaN` かどうかを調べていないか、`=== NaN` で比べています。`Number.isNaN` に渡すのは、数値に変えた後の値です |
+| コンソールに `of null` のエラーが出る | `querySelector` の `"` の中が、図10-6 の id と違います（10.7） |
 | 画面が `合計: 01200円`、次に `合計: 01200500円` | 画面のコードで `addAmount` を呼ばずに、`total + amount.value` と書いています |
-| 押しても画面が `合計: 0円` のまま | 表示する行がないか、`addAmount` に `amount.value` ではなく `amount` を渡しています。`amount.value` を関数の外で取り出している場合も、同じ表示です |
+| 押しても画面が `合計: 0円` のまま | コンソールにエラーが出ていれば、先にそれを直します。出ていなければ、表示する行がないか、`addAmount` に `amount.value` ではなく `amount` を渡しています。`amount.value` を関数の外で取り出している場合も、同じ表示です |
 | 全角の数字を打つと、合計が変わらない | 正しい動きです。`Number("１２００")` は `NaN` です |
 
 </details>

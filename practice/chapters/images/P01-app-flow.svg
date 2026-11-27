@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 770 340" width="770" height="340" role="img" aria-labelledby="t d">
-  <title id="t">起動の流れと、操作のたびに回る輪</title>
-  <desc id="d">上の段は起動の流れで、1 回だけ通る。index.html の script から main.ts が実行され、getElements で要素を取得し、loadEntries で localStorage から明細を読み、createInitialState で最初の状態を作る。イベントの処理を登録してから、render で最初の画面を作る（分類は読み込み中）。loadCategories が分類を読み込み終わると、setCategories で新しい状態を作って update を呼ぶ。下の段は操作のたびに回る輪。update が状態を入れ替え、render が画面を作り直す。画面で操作すると、登録したイベントの処理が state.ts の関数で新しい状態を作り、また update を呼ぶ。update は、明細が変わったときだけ saveEntries で localStorage に保存する。</desc>
+  <title id="t">起動の流れと、操作のたびに繰り返す流れ</title>
+  <desc id="d">上の段は起動の流れで、1 回だけ通る。index.html の script から main.ts が実行され、getElements で要素を取得し、loadEntries で localStorage から明細を読み、createInitialState で最初の状態を作る。イベントの処理を登録してから、render で最初の画面を作る（分類は読み込み中）。loadCategories が分類を読み込み終わると、setCategories で新しい状態を作って update を呼ぶ。下の段は操作のたびに繰り返す流れ。update が状態を入れ替え、render が画面を作り直す。画面で操作すると、登録したイベントの処理が state.ts の関数で新しい状態を作り、また update を呼ぶ。update は、明細が変わったときだけ saveEntries で localStorage に保存する。</desc>
   <style>
     .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
     .sub { fill: #4b5563; font-size: 11.5px; }
@@ -63,7 +63,7 @@
   <text class="txt sub" x="416" y="147" text-anchor="middle">明細が変わったときだけ保存</text>
   <path class="line2" d="M594,174 C578,160 556,142 536,136" marker-end="url(#a2)"/>
 
-  <!-- 操作のたびに回る輪 -->
+  <!-- 操作のたびに繰り返す流れ -->
   <rect class="obj" x="580" y="174" width="154" height="54" rx="8"/>
   <text class="code head" x="657" y="197" text-anchor="middle">update(next)</text>
   <text class="txt sub" x="657" y="216" text-anchor="middle">状態を入れ替える</text>
@@ -84,5 +84,5 @@
   <text class="code head" x="142" y="197" text-anchor="middle">state.ts の関数</text>
   <text class="txt sub" x="142" y="216" text-anchor="middle">addEntry などで新しい状態を作る</text>
   <path class="line" d="M264,201 L576,201" marker-end="url(#a1)"/>
-  <text class="txt sub" x="411" y="252" text-anchor="middle">操作のたびに、この輪を回る</text>
+  <text class="txt sub" x="411" y="252" text-anchor="middle">操作のたびに、この流れを繰り返す</text>
 </svg>

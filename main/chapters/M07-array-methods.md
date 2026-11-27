@@ -15,7 +15,7 @@
 | --- | --- | --- |
 | `map(変換)` | 各要素を変換する | 変換した値の新しい配列 |
 | `filter(条件)` | 条件が `true` の要素をすべて残す | 残った要素の新しい配列 |
-| `find(条件)` | 条件が `true` の最初の要素を探す | 見つかった要素 1 つ |
+| `find(条件)` | 条件が `true` の最初の要素を探す | 見つかった要素 1 つ（なければ `undefined`） |
 | `some(条件)` | 条件が `true` の要素が 1 つでもあるか調べる | `true` / `false` |
 
 この 4 つは、元の配列を変えません。
@@ -306,7 +306,7 @@ console.log(tasks.filter((t) => !t.done).length); // ②
 console.log(updated[0] === tasks[0]);             // ③
 ```
 
-オブジェクトの `===` は、同じものかどうかを比べます（第4章）。`!t.done` の `!` は否定（第1章 1.3）で、第6章の `値!` とは別のものです。`node main/exercises/M07-array-methods/problem-04.ts` を実行すると、①〜③ でそれぞれ何が表示されるか予測してください。
+オブジェクトの `===` は、同じものかどうかを比べます（第4章）。`!t.done` の `!` は否定（第1章 1.3）です。第6章の `値!` とは別のものです。`node main/exercises/M07-array-methods/problem-04.ts` を実行すると、①〜③ でそれぞれ何が表示されるか予測してください。
 
 <details>
 <summary>答えと解説</summary>
@@ -339,20 +339,20 @@ true
    ```sh
    npm test M07
    ```
-   - **こうなれば OK**：テストの表示で、`namesUnder` で始まる行がすべて `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `namesUnder` で始まる行がすべて `✔` になる
 2. `sortByPrice` の `throw` の行を書き換える
    - 7.3 の `byPrice` と同じ形で、コピーしてから並べ替えます
    ```sh
    npm test M07
    ```
-   - **こうなれば OK**：テストの表示で、`sortByPrice` で始まる行がすべて `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `sortByPrice` で始まる行がすべて `✔` になる
 3. `changePrice` の `throw` の行を書き換える
    - 7.5 の `updated` と同じ形で、`id` の代わりに `name` で比べます。名前が `name` と同じ商品の価格を変えます
    - `{ ...p, price }` は `{ ...p, price: price }` の省略形です（第4章）
    ```sh
    npm test M07
    ```
-   - **こうなれば OK**：テストの表示で、`changePrice` で始まる行がすべて `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `changePrice` で始まる行がすべて `✔` になる
 
 #### 仕上げる
 
@@ -406,9 +406,9 @@ const products = [
 | 表示 | よくある原因 |
 | --- | --- |
 | 「`namesUnder(products, 150)` は 150 円未満の商品の名前を返す」で、オブジェクトの配列が表示される | `filter` だけで終わっています。`map` で名前だけにします |
-| 「`namesUnder` は limit ちょうどの商品を含めない」で `+ 'ノート'` | `<=` で比べています。「未満」は `<` です |
+| 「`namesUnder` は limit ちょうどの商品を含めない」で `+   'ノート',` | `<=` で比べています。「未満」は `<` です |
 | 「`sortByPrice` は価格の安い順に並べる」で、並びが変わっていない | 比べ方を渡していません。`(a, b) => a.price - b.price` を渡します |
-| 型チェックで `The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.` | `a - b` と、オブジェクト同士を引いています。`a.price - b.price` にします |
+| 型チェックで `The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.`（right-hand side の同じエラーも出る） | `a - b` と、オブジェクト同士を引いています。`a.price - b.price` にします |
 | 「`sortByPrice` は元の配列を変えない」 | `products.sort(...)` を直接呼んでいます。`[...products]` でコピーしてから並べ替えます |
 | 「`changePrice` は元の配列を変えない」 | 見つけた商品の `price` を直接書き換えています。`{ ...p, price }` で新しいオブジェクトを作ります |
 

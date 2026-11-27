@@ -62,7 +62,7 @@ if (!existsSync(join(dir, "tsconfig.json")) && basicsTests(dir).length > 0) {
   console.log("");
   // 演習の数を言う（テストの検査の数と見間違えないように）。1 つだけ答え合わせしたときは、その演習の合否だけを言う
   if (passed < results.length) {
-    console.log(number !== undefined ? `結果: 演習 ${number} は不合格です。上の ✖ の行を見て直します。` : `結果: 答え合わせをする演習 ${results.length} 個のうち、${passed} 個が合格です。`);
+    console.log(number !== undefined ? `結果: 演習 ${number} は不合格です。✖ の行の下の説明を見て直します。` : `結果: 答え合わせをする演習 ${results.length} 個のうち、${passed} 個が合格です。`);
   } else if (number !== undefined) console.log(`結果: 演習 ${number} は合格です。`);
   else {
     // テストのない演習（画面で確かめる演習）がある章では、「すべて」と言わない
@@ -135,6 +135,10 @@ function printTestResult(output: string): void {
     for (const block of details) {
       // エラーが起きた場所の一覧（at で始まる行）は省く
       console.log(block.split("\n").filter((line) => !/^\s+at /.test(line)).map((line) => line.replace(/ \([\d.]+ms\)$/, "")).join("\n").trimEnd(), "\n");
+    }
+    // テストのファイルそのものが実行できなかったとき（書き間違いで読み込めない、など）は、理由が出ないので、調べ方を知らせる
+    if (details.some((block) => /\.test\.ts[^\n]*\n\s*'test failed'/.test(block))) {
+      console.log(`ファイルの名前の行が ✖ のときは、テストを実行する前にエラーが起きています。npm run typecheck ${arg} で、書き間違いがないかを調べます。\n`);
     }
   }
 }

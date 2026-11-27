@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-labelledby="t d">
+  <title id="t">key が同じ行の state を引き継ぐ</title>
+  <desc id="d">上の段は key={index}、下の段は key={entry.id}。それぞれ左が A を削除する前（A の「削除」を押して、A は確認中で confirming が true、B は false）、右が A を削除した後。同じ key の行どうしを線で結ぶ。React は、線で結んだ行を同じ行と見なす。上の段では、削除する前の A の key が 0 で、削除した後の B の key も 0 なので、A の confirming（true）が B に引き継がれ、B の行は「削除する／やめる」の 2 つのボタンになる。下の段では、B の key は削除の前も後も B の id なので、B は自分の confirming（false）のままで、「削除」のボタン 1 つになる。</desc>
+  <style>
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 11.5px; }
+    .head { font-weight: 700; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+    .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .bad { fill: #fff7ed; stroke: #c2410c; stroke-width: 1.5; }
+    .bad-txt { fill: #c2410c; }
+    .area { fill: none; stroke: #cbd5e1; stroke-width: 1.2; }
+    .link { fill: none; stroke: #64748b; stroke-width: 1.6; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code { fill: #e5e7eb; }
+      .sub { fill: #9ca3af; }
+      .var { fill: #1e293b; stroke: #64748b; }
+      .obj { fill: #172554; stroke: #60a5fa; }
+      .bad { fill: #431407; stroke: #fb923c; }
+      .bad-txt { fill: #fdba74; }
+      .area { stroke: #475569; }
+      .link { stroke: #94a3b8; }
+    }
+  </style>
+
+  <!-- 列の見出し -->
+  <text class="txt head" x="40" y="24">A を削除する前（A の「削除」を押した）</text>
+  <text class="txt head" x="440" y="24">A を削除した後</text>
+
+  <!-- 上の段：key={index} -->
+  <rect class="area" x="20" y="36" width="720" height="152" rx="10"/>
+  <text class="code head" x="34" y="58">key={index}</text>
+
+  <text class="txt sub" x="54" y="82">明細</text>
+  <text class="txt sub" x="84" y="82">key</text>
+  <text class="txt sub" x="160" y="82">confirming</text>
+  <text class="txt sub" x="240" y="82">ボタン</text>
+  <text class="txt sub" x="454" y="82">明細</text>
+  <text class="txt sub" x="484" y="82">key</text>
+  <text class="txt sub" x="560" y="82">confirming</text>
+  <text class="txt sub" x="640" y="82">ボタン</text>
+
+  <rect class="var" x="40" y="90" width="300" height="34" rx="6"/>
+  <text class="txt head" x="54" y="112">A</text>
+  <text class="code" x="84" y="112">0</text>
+  <text class="code" x="160" y="112">true</text>
+  <text class="txt sub" x="240" y="112">削除する／やめる</text>
+
+  <rect class="var" x="40" y="132" width="300" height="34" rx="6"/>
+  <text class="txt head" x="54" y="154">B</text>
+  <text class="code" x="84" y="154">1</text>
+  <text class="code" x="160" y="154">false</text>
+  <text class="txt sub" x="240" y="154">削除</text>
+
+  <rect class="bad" x="440" y="90" width="300" height="34" rx="6"/>
+  <text class="txt head" x="454" y="112">B</text>
+  <text class="code" x="484" y="112">0</text>
+  <text class="code" x="560" y="112">true</text>
+  <text class="txt sub bad-txt" x="640" y="112">削除する／やめる</text>
+  <text class="txt sub" x="454" y="146">key 0 の state（A の true）を引き継ぐ</text>
+
+  <path class="link" d="M340,107 L440,107"/>
+  <text class="txt sub" x="390" y="100" text-anchor="middle">key が同じ</text>
+
+  <!-- 下の段：key={entry.id} -->
+  <rect class="area" x="20" y="204" width="720" height="152" rx="10"/>
+  <text class="code head" x="34" y="226">key={entry.id}</text>
+
+  <text class="txt sub" x="54" y="250">明細</text>
+  <text class="txt sub" x="84" y="250">key</text>
+  <text class="txt sub" x="160" y="250">confirming</text>
+  <text class="txt sub" x="240" y="250">ボタン</text>
+  <text class="txt sub" x="454" y="250">明細</text>
+  <text class="txt sub" x="484" y="250">key</text>
+  <text class="txt sub" x="560" y="250">confirming</text>
+  <text class="txt sub" x="640" y="250">ボタン</text>
+
+  <rect class="var" x="40" y="258" width="300" height="34" rx="6"/>
+  <text class="txt head" x="54" y="280">A</text>
+  <text class="code" x="84" y="280">A の id</text>
+  <text class="code" x="160" y="280">true</text>
+  <text class="txt sub" x="240" y="280">削除する／やめる</text>
+
+  <rect class="var" x="40" y="300" width="300" height="34" rx="6"/>
+  <text class="txt head" x="54" y="322">B</text>
+  <text class="code" x="84" y="322">B の id</text>
+  <text class="code" x="160" y="322">false</text>
+  <text class="txt sub" x="240" y="322">削除</text>
+
+  <rect class="obj" x="440" y="258" width="300" height="34" rx="6"/>
+  <text class="txt head" x="454" y="280">B</text>
+  <text class="code" x="484" y="280">B の id</text>
+  <text class="code" x="560" y="280">false</text>
+  <text class="txt sub" x="640" y="280">削除</text>
+  <text class="txt sub" x="454" y="314">B 自身の state（false）のまま</text>
+
+  <path class="link" d="M340,317 L440,275"/>
+  <text class="txt sub" x="395" y="312" text-anchor="middle">key が同じ</text>
+</svg>

@@ -1,0 +1,123 @@
+{
+  "label": "1行ずつ見る",
+  "code": "function shippingFee(amount) {\n  if (amount >= 3000) {\n    return 0;\n  }\n  return 500;\n}\n\nconsole.log(shippingFee(5000)); // → 0\nconsole.log(shippingFee(1200)); // → 500",
+  "panels": [
+    {
+      "id": "vars",
+      "label": "今いる関数の変数と、戻り値"
+    },
+    {
+      "id": "console",
+      "label": "ターミナルの表示"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        1,
+        6
+      ],
+      "phase": "関数を作る",
+      "note": "shippingFee という関数を作ります。中の行は、まだ実行されません。",
+      "vars": [],
+      "console": []
+    },
+    {
+      "lines": [
+        8
+      ],
+      "phase": "1 回目：呼ぶ",
+      "note": "shippingFee(5000) を呼びます。引数の amount に 5000 が入ります。",
+      "vars": [
+        "amount：5000"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        2
+      ],
+      "phase": "1 回目：条件を調べる",
+      "note": "5000 >= 3000 は true なので、if の { } の中に進みます。",
+      "vars": [
+        "amount：5000"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        3
+      ],
+      "phase": "1 回目：return で終わる",
+      "note": "return 0; を実行します。0 を返して、関数はここで終わります。5 行目には進みません。",
+      "vars": [
+        "amount：5000",
+        "戻り値：0"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        8
+      ],
+      "phase": "1 回目：表示する",
+      "note": "shippingFee(5000) が戻り値の 0 に置き換わり、表示されます。",
+      "vars": [],
+      "console": [
+        "0"
+      ]
+    },
+    {
+      "lines": [
+        9
+      ],
+      "phase": "2 回目：呼ぶ",
+      "note": "shippingFee(1200) を呼びます。amount に 1200 が入ります。",
+      "vars": [
+        "amount：1200"
+      ],
+      "console": [
+        "0"
+      ]
+    },
+    {
+      "lines": [
+        2
+      ],
+      "phase": "2 回目：条件を調べる",
+      "note": "1200 >= 3000 は false なので、if の { } の中には入りません。3 行目は実行されません。",
+      "vars": [
+        "amount：1200"
+      ],
+      "console": [
+        "0"
+      ]
+    },
+    {
+      "lines": [
+        5
+      ],
+      "phase": "2 回目：return で終わる",
+      "note": "if の下の return 500; を実行します。500 を返して、関数が終わります。",
+      "vars": [
+        "amount：1200",
+        "戻り値：500"
+      ],
+      "console": [
+        "0"
+      ]
+    },
+    {
+      "lines": [
+        9
+      ],
+      "phase": "2 回目：表示する",
+      "note": "shippingFee(1200) が戻り値の 500 に置き換わり、表示されます。",
+      "vars": [],
+      "console": [
+        "0",
+        "500"
+      ]
+    }
+  ]
+}

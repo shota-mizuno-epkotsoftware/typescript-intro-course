@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 790 433" width="790" height="433" role="img" aria-labelledby="t d">
+  <title id="t">家計簿の画面と、要素の id・変数</title>
+  <desc id="d">ブラウザで「第10章 演習: 家計簿」を開いた画面。上から、見出しの「家計簿」、名前と金額の入力欄と「追加」のボタンが並ぶフォーム、赤い文字のメッセージ「金額は 1 以上の整数で入力してください」、「昼食: 800円」「電車: 200円」の 2 行の一覧、「合計 1,000円」が並ぶ。フォームの id は expense-form で変数は form、名前の入力欄の id は name で変数は nameInput、金額の入力欄の id は amount で変数は amountInput、メッセージの id は error で変数は errorText、一覧の id は list で変数は list、合計の id は total で変数は totalText。</desc>
+  <!-- 寸法：幅 700 の窓を 0.8 倍（ページの幅 36rem が収まる幅。図の右に札を置くため、900 より狭くした）。タブの列 40、ツールバー 45。
+       ページは main/exercises/M10-dom/style.css の値と、解答例を当てはめた版を幅 700 で開いて測った位置から（文字 16px → 12.8）。
+       画面の状態：「昼食・800」「電車・200」を追加した後、「本・abc」で「追加」を押したところ -->
+  <style>
+    .ui { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 10.5px; fill: #1f1f1f; }
+    .gray { fill: #5f6368; }
+    .frame { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+    .strip { fill: #dfe3e8; }
+    .white { fill: #ffffff; }
+    .omni { fill: #eef1f4; }
+    .edge { fill: none; stroke: #dadce0; stroke-width: 1; }
+    .icon { fill: none; stroke: #5f6368; stroke-width: 1.3; }
+    .red { fill: #ff5f57; }
+    .yellow { fill: #febc2e; }
+    .green { fill: #28c840; }
+    .pg { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 12.8px; fill: #1f2328; }
+    .h1 { font-size: 25.6px; font-weight: 700; }
+    .bold { font-weight: 700; }
+    .err { fill: #b42318; }
+    .dot { fill: #1f2328; }
+    .btn { fill: #f3f4f6; stroke: #8c959f; stroke-width: 0.8; }
+    .input { fill: #ffffff; stroke: #8c959f; stroke-width: 0.8; }
+    .rule { fill: none; stroke: #d0d7de; stroke-width: 0.8; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 1.5; }
+    .lead { fill: none; stroke: #ea580c; stroke-width: 1; }
+    .tag { fill: none; stroke: #ea580c; stroke-width: 1.2; }
+    .tag-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; font-weight: 700; fill: #c2410c; }
+    .var-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; fill: #1f2937; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; fill: #1f2937; }
+    .cap { font-size: 11.5px; fill: #4b5563; }
+    @media (prefers-color-scheme: dark) {
+      .mark, .lead, .tag { stroke: #fb923c; }
+      .tag-txt { fill: #fb923c; }
+      .var-txt, .note { fill: #e5e7eb; }
+      .cap { fill: #9ca3af; }
+    }
+  </style>
+
+  <!-- 窓とタブの列（高さ 32） -->
+  <rect class="frame" x="10" y="10" width="560" height="340" rx="9"/>
+  <path class="strip" d="M19,10 H561 A9,9 0 0 1 570,19 V42 H10 V19 A9,9 0 0 1 19,10 Z"/>
+  <circle class="red" cx="24" cy="26" r="4.8"/><circle class="yellow" cx="40" cy="26" r="4.8"/><circle class="green" cx="56" cy="26" r="4.8"/>
+  <path class="white" d="M76,42 V22 A5,5 0 0 1 81,17 H231 A5,5 0 0 1 236,22 V42 Z"/>
+  <text class="ui" x="88" y="33">第10章 演習: 家計簿</text>
+  <text class="ui gray" x="223" y="33" text-anchor="middle">×</text>
+  <text class="ui gray" x="250" y="33">+</text>
+
+  <!-- ツールバー（高さ 36） -->
+  <rect class="white" x="10.5" y="42" width="559" height="36"/>
+  <path class="icon" d="M32,60 H22 M26.5,55.5 L22,60 L26.5,64.5"/>
+  <path class="icon" d="M42,60 H52 M47.5,55.5 L52,60 L47.5,64.5"/>
+  <path class="icon" d="M74,56 A5,5 0 1 0 75,62 M74,52 V56 H70"/>
+  <rect class="omni" x="92" y="46.5" width="460" height="27" rx="13.5"/>
+  <circle class="icon" cx="106" cy="60" r="5"/><path class="icon" d="M106,58 V58.3 M106,60 V62.8"/>
+  <text class="ui" x="118" y="64">localhost:5173/practice-01.html</text>
+  <path class="edge" d="M10.5,78 H569.5"/>
+
+  <!-- ページ -->
+  <text class="pg h1" x="59.6" y="136">家計簿</text>
+  <text class="pg" x="59.6" y="184.3">名前</text>
+  <rect class="input" x="89.4" y="164.2" width="132.2" height="31" rx="5"/>
+  <text class="pg" x="97.5" y="184.3">本</text>
+  <text class="pg" x="231.2" y="184.3">金額</text>
+  <rect class="input" x="261" y="164.2" width="132.2" height="31" rx="5"/>
+  <text class="pg" x="269.1" y="184.3">abc</text>
+  <rect class="btn" x="402.8" y="164.2" width="42.6" height="31" rx="5"/>
+  <text class="pg" x="424.1" y="184.3" text-anchor="middle">追加</text>
+  <text class="pg err" x="59.6" y="223.4">金額は 1 以上の整数で入力してください</text>
+  <circle class="dot" cx="66.5" cy="254" r="2"/>
+  <text class="pg" x="75.6" y="258">昼食: 800円</text>
+  <circle class="dot" cx="66.5" cy="275.7" r="2"/>
+  <text class="pg" x="75.6" y="279.7">電車: 200円</text>
+  <path class="rule" d="M59.6,299 H520.4"/>
+  <text class="pg bold" x="59.6" y="320.7">合計 1,000円</text>
+
+  <!-- id の付いた要素の囲み -->
+  <rect class="mark" x="54" y="158.5" width="399" height="42.5" rx="3"/>
+  <rect class="mark" x="87" y="162" width="137" height="35.5" rx="3"/>
+  <rect class="mark" x="258.6" y="162" width="137" height="35.5" rx="3"/>
+  <rect class="mark" x="54" y="209.5" width="470" height="19.5" rx="3"/>
+  <rect class="mark" x="54" y="244.5" width="470" height="41" rx="3"/>
+  <rect class="mark" x="54" y="295" width="470" height="33" rx="3"/>
+
+  <!-- 札への線 -->
+  <path class="lead" d="M200,162 V126 H590"/>
+  <path class="lead" d="M360,162 V148 H590"/>
+  <path class="lead" d="M453,171 H590"/>
+  <path class="lead" d="M524,219 H590"/>
+  <path class="lead" d="M524,265 H590"/>
+  <path class="lead" d="M524,311.5 H590"/>
+
+  <!-- id の札と、その要素を入れた変数 -->
+  <text class="note cap" x="590" y="106">id</text>
+  <text class="note cap" x="706" y="106">変数</text>
+  <rect class="tag" x="590" y="117" width="108" height="18" rx="4"/><text class="tag-txt" x="597" y="130">#name</text>
+  <text class="var-txt" x="706" y="130">nameInput</text>
+  <rect class="tag" x="590" y="139" width="108" height="18" rx="4"/><text class="tag-txt" x="597" y="152">#amount</text>
+  <text class="var-txt" x="706" y="152">amountInput</text>
+  <rect class="tag" x="590" y="162" width="108" height="18" rx="4"/><text class="tag-txt" x="597" y="175">#expense-form</text>
+  <text class="var-txt" x="706" y="175">form</text>
+  <rect class="tag" x="590" y="210" width="108" height="18" rx="4"/><text class="tag-txt" x="597" y="223">#error</text>
+  <text class="var-txt" x="706" y="223">errorText</text>
+  <rect class="tag" x="590" y="256" width="108" height="18" rx="4"/><text class="tag-txt" x="597" y="269">#list</text>
+  <text class="var-txt" x="706" y="269">list</text>
+  <rect class="tag" x="590" y="302.5" width="108" height="18" rx="4"/><text class="tag-txt" x="597" y="315.5">#total</text>
+  <text class="var-txt" x="706" y="315.5">totalText</text>
+
+  <!-- 下の説明 -->
+  <text class="note" x="10" y="377">オレンジの札は、practice-01.html で要素に付けた id。</text>
+  <text class="note" x="10" y="400">札の横の名前は、practice-01-view.ts でその要素を入れた変数。</text>
+  <text class="note" x="10" y="423">「追加」のボタンは変数に入れない。押すと、フォームの submit のイベントが起きる。</text>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 476" width="660" height="476" role="img" aria-labelledby="t d">
+  <title id="t">配列を文字列にして保存し、文字列から配列に戻す</title>
+  <desc id="d">上の段は保存する流れ。配列（id が f1ca… で text が 牛乳 のメモ 1 件）を JSON.stringify で文字列にし、setItem で下の localStorage に入れる。localStorage はブラウザの中にあり、キー ts-lecture:memos と値の文字列の組を持つ。ページを読み込み直しても残る。下の段は読み込む流れ。getItem で localStorage から文字列を取り出し（保存がなければ null）、JSON.parse で新しい配列にする。</desc>
+  <style>
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 12px; }
+    .head { font-weight: 700; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; }
+    .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .sep { fill: none; stroke: #cbd5e1; stroke-width: 1; }
+    .line { fill: none; stroke: #2563eb; stroke-width: 1.8; }
+    .tip { fill: #2563eb; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code { fill: #e5e7eb; }
+      .sub { fill: #9ca3af; }
+      .var { fill: #1e293b; stroke: #64748b; }
+      .obj { fill: #172554; stroke: #60a5fa; }
+      .sep { stroke: #475569; }
+      .line { stroke: #60a5fa; }
+      .tip { fill: #60a5fa; }
+    }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <!-- 上の段：保存する -->
+  <text class="txt head" x="20" y="28">保存する</text>
+  <rect class="var" x="20" y="42" width="250" height="60" rx="8"/>
+  <text class="txt head" x="145" y="66" text-anchor="middle">配列</text>
+  <text class="code" x="145" y="88" text-anchor="middle">[{ id: "f1ca…", text: "牛乳" }]</text>
+  <path class="line" d="M270,72 L376,72" marker-end="url(#a1)"/>
+  <text class="code" x="323" y="62" text-anchor="middle">JSON.stringify</text>
+  <rect class="obj" x="380" y="42" width="260" height="60" rx="8"/>
+  <text class="txt head" x="510" y="66" text-anchor="middle">文字列</text>
+  <text class="code" x="510" y="88" text-anchor="middle">'[{"id":"f1ca…","text":"牛乳"}]'</text>
+  <path class="line" d="M510,102 L510,146" marker-end="url(#a1)"/>
+  <text class="code" x="520" y="128">setItem</text>
+
+  <!-- 中：localStorage -->
+  <rect class="var" x="380" y="150" width="260" height="180" rx="8"/>
+  <text class="code head" x="510" y="174" text-anchor="middle">localStorage</text>
+  <text class="txt sub" x="510" y="194" text-anchor="middle">ブラウザの中</text>
+  <path class="sep" d="M392,206 H628"/>
+  <text class="txt sub" x="396" y="226">キー</text>
+  <text class="code" x="396" y="245">ts-lecture:memos</text>
+  <text class="txt sub" x="396" y="268">値（文字列）</text>
+  <text class="code" x="396" y="287">[{"id":"f1ca…","text":"牛乳"}]</text>
+  <path class="sep" d="M392,300 H628"/>
+  <text class="txt sub" x="510" y="319" text-anchor="middle">読み込み直しても残る</text>
+  <path class="line" d="M510,330 L510,376" marker-end="url(#a1)"/>
+  <text class="code" x="520" y="358">getItem</text>
+
+  <!-- 下の段：読み込む -->
+  <text class="txt head" x="20" y="366">読み込む</text>
+  <rect class="var" x="20" y="380" width="250" height="60" rx="8"/>
+  <text class="txt head" x="145" y="404" text-anchor="middle">新しい配列</text>
+  <text class="code" x="145" y="426" text-anchor="middle">[{ id: "f1ca…", text: "牛乳" }]</text>
+  <path class="line" d="M380,410 L274,410" marker-end="url(#a1)"/>
+  <text class="code" x="327" y="400" text-anchor="middle">JSON.parse</text>
+  <rect class="obj" x="380" y="380" width="260" height="60" rx="8"/>
+  <text class="txt head" x="510" y="404" text-anchor="middle">文字列</text>
+  <text class="code" x="510" y="426" text-anchor="middle">'[{"id":"f1ca…","text":"牛乳"}]'</text>
+  <text class="txt sub" x="510" y="462" text-anchor="middle">保存がなければ null</text>
+</svg>

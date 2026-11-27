@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 510" width="800" height="510" role="img" aria-labelledby="t d">
+  <title id="t">2 回の読み込みと、後片付け</title>
+  <desc id="d">上から下へ時間が進む。開発中の最初の表示で、React はエフェクトを 1 回目、後片付け、2 回目の順に呼ぶ。エフェクト 1 回目は、変数 ignore① を false で作り、読み込み①を始める。1 回目の後片付けは、2 回目を動かす前に呼ばれ、ignore① を true にする。エフェクト 2 回目は、別の変数 ignore② を false で作り、読み込み②を始める。読み込み①と②は、どちらも通信中のまま進み、どちらも終わる。読み込み①が終わると、if (!ignore①) は ignore① が true なので通らず、setState は実行されない。読み込み②が終わると、ignore② は false なので、setState を呼んで state を更新する。①と②が終わる順は、逆になることもある。</desc>
+  <style>
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 11.5px; }
+    .head { font-weight: 700; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+    .small { font-size: 11.5px; }
+    .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .area { fill: none; stroke: #cbd5e1; stroke-width: 1.2; }
+    .skip { fill: none; stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 5 3; }
+    .line2 { fill: none; stroke: #64748b; stroke-width: 1.6; }
+    .dash { fill: none; stroke: #94a3b8; stroke-width: 1.6; stroke-dasharray: 5 3; }
+    .tip2 { fill: #64748b; }
+    .tip3 { fill: #94a3b8; }
+    .muted { fill: #6b7280; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code { fill: #e5e7eb; }
+      .sub { fill: #9ca3af; }
+      .var { fill: #1e293b; stroke: #64748b; }
+      .obj { fill: #172554; stroke: #60a5fa; }
+      .area { stroke: #475569; }
+      .skip { stroke: #64748b; }
+      .line2 { stroke: #94a3b8; }
+      .dash { stroke: #64748b; }
+      .tip2 { fill: #94a3b8; }
+      .tip3 { fill: #64748b; }
+      .muted { fill: #9ca3af; }
+    }
+  </style>
+  <defs>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip2" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip3" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <!-- 時間の向き -->
+  <text class="txt sub" x="22" y="64" text-anchor="middle">時間</text>
+  <path class="line2" d="M22,72 L22,470" marker-end="url(#a2)"/>
+
+  <!-- 見出し -->
+  <text class="txt sub" x="46" y="30">読み込み</text>
+  <text class="txt sub" x="376" y="30">React が呼ぶ（開発中の最初の表示）</text>
+  <text class="txt sub" x="646" y="30">変数 ignore</text>
+  <text class="txt sub" x="646" y="46">（回ごとに別の箱）</text>
+
+  <!-- React が呼ぶ順 -->
+  <rect class="var" x="376" y="56" width="220" height="64" rx="8"/>
+  <text class="txt head" x="390" y="76">エフェクト 1 回目</text>
+  <text class="code small" x="390" y="94">let ignore = false</text>
+  <text class="txt sub" x="390" y="111">読み込み①を始める</text>
+  <path class="line2" d="M486,120 L486,133" marker-end="url(#a2)"/>
+
+  <rect class="var" x="376" y="136" width="220" height="64" rx="8"/>
+  <text class="txt head" x="390" y="156">1 回目の後片付け</text>
+  <text class="code small" x="390" y="174">ignore = true</text>
+  <text class="txt sub" x="390" y="191">2 回目を動かす前に呼ばれる</text>
+  <path class="line2" d="M486,200 L486,213" marker-end="url(#a2)"/>
+
+  <rect class="var" x="376" y="216" width="220" height="64" rx="8"/>
+  <text class="txt head" x="390" y="236">エフェクト 2 回目</text>
+  <text class="code small" x="390" y="254">let ignore = false</text>
+  <text class="txt sub" x="390" y="271">読み込み②を始める</text>
+
+  <!-- ignore の箱 -->
+  <rect class="area" x="646" y="56" width="130" height="140" rx="8"/>
+  <text class="code head" x="660" y="76">ignore①</text>
+  <rect class="var" x="666" y="84" width="90" height="26" rx="5"/>
+  <text class="code" x="711" y="102" text-anchor="middle">false</text>
+  <path class="line2" d="M711,112 L711,150" marker-end="url(#a2)"/>
+  <rect class="obj" x="666" y="154" width="90" height="26" rx="5"/>
+  <text class="code" x="711" y="172" text-anchor="middle">true</text>
+
+  <rect class="area" x="646" y="216" width="130" height="64" rx="8"/>
+  <text class="code head" x="660" y="236">ignore②</text>
+  <rect class="var" x="666" y="244" width="90" height="26" rx="5"/>
+  <text class="code" x="711" y="262" text-anchor="middle">false</text>
+
+  <path class="line2" d="M596,97 L662,97" marker-end="url(#a2)"/>
+  <text class="txt sub" x="629" y="90" text-anchor="middle">作る</text>
+  <path class="line2" d="M596,167 L662,167" marker-end="url(#a2)"/>
+  <text class="txt sub" x="629" y="160" text-anchor="middle">変える</text>
+  <path class="line2" d="M596,257 L662,257" marker-end="url(#a2)"/>
+  <text class="txt sub" x="629" y="250" text-anchor="middle">作る</text>
+
+  <!-- 読み込み①（通信中） -->
+  <path class="line2" d="M376,88 L180,88" marker-end="url(#a2)"/>
+  <rect class="var" x="46" y="72" width="130" height="258" rx="8"/>
+  <text class="txt head" x="111" y="94" text-anchor="middle">読み込み①</text>
+  <text class="txt" x="111" y="196" text-anchor="middle">通信中</text>
+  <text class="code small" x="111" y="214" text-anchor="middle">fetchCategories</text>
+
+  <!-- 読み込み②（通信中） -->
+  <path class="line2" d="M376,248 L330,248" marker-end="url(#a2)"/>
+  <rect class="var" x="196" y="232" width="130" height="98" rx="8"/>
+  <text class="txt head" x="261" y="254" text-anchor="middle">読み込み②</text>
+  <text class="txt" x="261" y="286" text-anchor="middle">通信中</text>
+  <text class="code small" x="261" y="304" text-anchor="middle">fetchCategories</text>
+
+  <!-- 終わった後 -->
+  <path class="line2" d="M111,330 L111,346" marker-end="url(#a2)"/>
+  <rect class="var" x="46" y="350" width="130" height="44" rx="8"/>
+  <text class="code" x="111" y="369" text-anchor="middle">if (!ignore①)</text>
+  <text class="txt sub" x="111" y="386" text-anchor="middle">ignore① は true</text>
+  <path class="dash" d="M111,394 L111,424" marker-end="url(#a3)"/>
+  <text class="code small muted" x="118" y="413">false</text>
+  <rect class="skip" x="46" y="428" width="130" height="42" rx="8"/>
+  <text class="code muted" x="111" y="446" text-anchor="middle">setState(…)</text>
+  <text class="txt sub" x="111" y="462" text-anchor="middle">実行されない</text>
+
+  <path class="line2" d="M261,330 L261,346" marker-end="url(#a2)"/>
+  <rect class="var" x="196" y="350" width="130" height="44" rx="8"/>
+  <text class="code" x="261" y="369" text-anchor="middle">if (!ignore②)</text>
+  <text class="txt sub" x="261" y="386" text-anchor="middle">ignore② は false</text>
+  <path class="line2" d="M261,394 L261,424" marker-end="url(#a2)"/>
+  <text class="code small" x="268" y="413">true</text>
+  <rect class="obj" x="196" y="428" width="130" height="42" rx="8"/>
+  <text class="code" x="261" y="446" text-anchor="middle">setState(…)</text>
+  <text class="txt sub" x="261" y="462" text-anchor="middle">state を更新する</text>
+
+  <text class="txt" x="46" y="498">①と②が終わる順は、逆になることもあります。</text>
+</svg>

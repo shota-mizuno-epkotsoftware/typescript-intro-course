@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 512" width="740" height="512" role="img" aria-labelledby="t d">
+  <title id="t">npm install が終わった VS Code の画面</title>
+  <desc id="d">TSLecture フォルダを開いた VS Code の画面。左のファイルの一覧には、.vscode、basics、html、images、main、node_modules、practice、react、scripts のフォルダと、package.json や README.md などのファイルが並ぶ。node_modules は npm install で増えたフォルダ。下のターミナルには、npm install と打った後に、added 28 packages, and audited 29 packages in 917ms、found 0 vulnerabilities と表示され、その下に npm warn で始まる行が続く。</desc>
+  <!-- 寸法：900×560 の窓を 0.8 倍。タイトルバー 35、アイコンの列 48、エクスプローラー 260、ステータスバー 22（VS Code の既定の大きさ）。パネルは、npm install の表示が全部見えるように、既定の 220 より高くしてある（境目を上に引いた状態） -->
+  <style>
+    .ui { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 10.5px; fill: #cccccc; }
+    .mono { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 10px; fill: #cccccc; }
+    .small { font-size: 9px; }
+    .bold { font-weight: 700; }
+    .faint { fill: #9d9d9d; }
+    .t-bold { font-weight: 700; }
+    .t-yellow { fill: #e5e510; }
+    .t-blue { fill: #3b8eea; }
+    .t-green { fill: #0dbc79; font-weight: 700; }
+    .frame { fill: #1f1f1f; stroke: #3c3c3c; stroke-width: 1; }
+    .bar { fill: #181818; }
+    .edge { fill: none; stroke: #2b2b2b; stroke-width: 1; }
+    .blue { fill: #0078d4; }
+    .icon { fill: none; stroke: #858585; stroke-width: 1.3; }
+    .icon-on { fill: none; stroke: #d7d7d7; stroke-width: 1.3; }
+    .red { fill: #ff5f57; }
+    .yellow { fill: #febc2e; }
+    .green { fill: #28c840; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 2; }
+    .badge { fill: #ea580c; }
+    .badge-num { font-family: -apple-system, "Segoe UI", sans-serif; font-size: 11px; font-weight: 700; fill: #ffffff; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; fill: #1f2937; }
+    .note-sub { fill: #4b5563; }
+    .note-acc { fill: #c2410c; font-weight: 700; }
+    @media (prefers-color-scheme: dark) {
+      .mark { stroke: #fb923c; }
+      .badge { fill: #f97316; }
+      .note { fill: #e5e7eb; }
+      .note-sub { fill: #9ca3af; }
+      .note-acc { fill: #fb923c; }
+    }
+  </style>
+
+  <!-- 窓とタイトルバー（高さ 28） -->
+  <rect class="frame" x="10" y="10" width="720" height="448" rx="9"/>
+  <path class="bar" d="M19,10 H721 A9,9 0 0 1 730,19 V38 H10 V19 A9,9 0 0 1 19,10 Z"/>
+  <circle class="red" cx="24" cy="24" r="4.8"/><circle class="yellow" cx="40" cy="24" r="4.8"/><circle class="green" cx="56" cy="24" r="4.8"/>
+  <text class="ui faint" x="370" y="27.5" text-anchor="middle">TSLecture</text>
+  <path class="edge" d="M10,38 H730"/>
+
+  <!-- アイコンの列（幅 38.4） -->
+  <rect class="bar" x="10" y="38" width="38.4" height="402.4"/>
+  <rect class="blue" x="10" y="38" width="1.6" height="38.4"/>
+  <path class="icon-on" d="M23,48 h8 l4.5,4.5 v11.5 h-12.5 z M31,48 v4.5 h4.5"/>
+  <circle class="icon" cx="28" cy="93" r="5.5"/><path class="icon" d="M32,97 L36,101"/>
+  <circle class="icon" cx="24" cy="126" r="2.2"/><circle class="icon" cx="33" cy="126" r="2.2"/><circle class="icon" cx="24" cy="142" r="2.2"/><path class="icon" d="M24,128.2 V139.8 M33,128.2 C33,135 24,133 24,139.8"/>
+
+  <!-- エクスプローラー（幅 208、行の高さ 17.6）。並びは、配布用のリポジトリの直下（フォルダ、ファイルの順） -->
+  <rect class="bar" x="48.4" y="38" width="208" height="402.4"/>
+  <path class="edge" d="M256.4,38 V440.4"/>
+  <text class="ui small" x="64" y="55.5">エクスプローラー</text>
+  <text class="ui small bold" x="56" y="78.5"><tspan dy="-2">⌄</tspan><tspan dy="2"> TSLECTURE</tspan></text>
+  <text class="ui" x="64" y="96">› .vscode</text>
+  <text class="ui" x="64" y="113.6">› basics</text>
+  <text class="ui" x="64" y="131.2">› html</text>
+  <text class="ui" x="64" y="148.8">› images</text>
+  <text class="ui" x="64" y="166.4">› main</text>
+  <text class="ui faint" x="64" y="184">› node_modules</text>
+  <text class="ui" x="64" y="201.6">› practice</text>
+  <text class="ui" x="64" y="219.2">› react</text>
+  <text class="ui" x="64" y="236.8">› scripts</text>
+  <text class="ui" x="72" y="254.4">.gitignore</text>
+  <text class="ui" x="72" y="272">.oxlintrc.json</text>
+  <text class="ui" x="72" y="289.6">overview.md</text>
+  <text class="ui" x="72" y="307.2">package-lock.json</text>
+  <text class="ui" x="72" y="324.8">package.json</text>
+  <text class="ui" x="72" y="342.4">README.md</text>
+  <text class="ui" x="72" y="360">references.md</text>
+  <text class="ui" x="72" y="377.6">tools.md</text>
+  <text class="ui" x="72" y="395.2">troubleshooting.md</text>
+  <text class="ui" x="72" y="412.8">tsconfig.base.json</text>
+  <text class="ui" x="72" y="430.4">tsconfig.json</text>
+
+  <!-- パネル（見出し 28） -->
+  <rect class="bar" x="256.4" y="150" width="473.6" height="290.4"/>
+  <path class="edge" d="M256.4,150 H730"/>
+  <text class="ui small faint" x="270" y="167.6">問題</text>
+  <text class="ui small faint" x="300" y="167.6">出力</text>
+  <text class="ui small faint" x="330" y="167.6">デバッグ コンソール</text>
+  <text class="ui small" x="428" y="167.6">ターミナル</text>
+  <rect class="blue" x="426" y="173.6" width="49" height="1.3"/>
+  <text class="mono" x="270" y="200" xml:space="preserve">$ npm install</text>
+  <text class="mono" x="270" y="228.8" xml:space="preserve">added 28 packages, and audited 29 packages in 917ms</text>
+  <text class="mono" x="270" y="257.6" xml:space="preserve">9 packages are looking for funding</text>
+  <text class="mono" x="270" y="272" xml:space="preserve">  run `npm fund` for details</text>
+  <text class="mono" x="270" y="300.8" xml:space="preserve">found <tspan class="t-green">0</tspan> vulnerabilities</text>
+  <text class="mono" x="270" y="315.2" xml:space="preserve"><tspan class="t-bold">npm</tspan> <tspan class="t-yellow">warn</tspan> <tspan class="t-blue">install-scripts</tspan> 1 package has install scripts not yet covered by </text>
+  <text class="mono" x="270" y="329.6" xml:space="preserve">allowScripts:</text>
+  <text class="mono" x="270" y="344" xml:space="preserve"><tspan class="t-bold">npm</tspan> <tspan class="t-yellow">warn</tspan> <tspan class="t-blue">install-scripts</tspan>   fsevents@2.3.3 (install: (install scripts prese</text>
+  <text class="mono" x="270" y="358.4" xml:space="preserve">nt))</text>
+  <text class="mono" x="270" y="372.8" xml:space="preserve"><tspan class="t-bold">npm</tspan> <tspan class="t-yellow">warn</tspan> <tspan class="t-blue">install-scripts</tspan></text>
+  <text class="mono" x="270" y="387.2" xml:space="preserve"><tspan class="t-bold">npm</tspan> <tspan class="t-yellow">warn</tspan> <tspan class="t-blue">install-scripts</tspan> Run `npm install-scripts ls` to review, or `npm i</text>
+  <text class="mono" x="270" y="401.6" xml:space="preserve">nstall-scripts approve &lt;pkg&gt;` to allow.</text>
+  <text class="mono" x="270" y="416" xml:space="preserve">$ </text>
+
+  <!-- ステータスバー（高さ 17.6） -->
+  <path class="bar" d="M10,440.4 H730 V449 A9,9 0 0 1 721,458 H19 A9,9 0 0 1 10,449 Z"/>
+  <path class="edge" d="M10,440.4 H730"/>
+  <text class="ui small faint" x="20" y="452.5">⊗ 0  ⚠ 0</text>
+  <!-- 注目の印 -->
+  <rect class="mark" x="54" y="171.6" width="164" height="17.6" rx="3"/>
+  <circle class="badge" cx="232" cy="180.4" r="9"/><text class="badge-num" x="232" y="184.4" text-anchor="middle">1</text>
+  <rect class="mark" x="265" y="217.6" width="316" height="16.4" rx="3"/>
+  <circle class="badge" cx="596" cy="225.8" r="9"/><text class="badge-num" x="596" y="229.8" text-anchor="middle">2</text>
+  <rect class="mark" x="265" y="304.4" width="456" height="102" rx="3"/>
+  <circle class="badge" cx="707" cy="290" r="9"/><text class="badge-num" x="707" y="294" text-anchor="middle">3</text>
+
+  <!-- 説明 -->
+  <text class="note" x="10" y="484"><tspan class="note-acc">①</tspan> 左の一覧に node_modules が増える　<tspan class="note-acc">②</tspan> added で始まる行が出る（数は違ってよい）</text>
+  <text class="note" x="10" y="505"><tspan class="note-acc">③</tspan> npm warn で始まる行は、気にしなくてよい</text>
+</svg>

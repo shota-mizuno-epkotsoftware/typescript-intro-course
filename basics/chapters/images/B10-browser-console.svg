@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 530" width="740" height="530" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 554" width="740" height="554" role="img" aria-labelledby="t d">
   <title id="t">ブラウザの画面とコンソール</title>
-  <desc id="d">ブラウザの窓の左にページがあり、「ここに表示します」の文章、「押す」のボタン、100 と入った入力欄が、上から順に並んでいる。右に開発者ツールが開いていて、Console のタブに、console.log の表示の「try.js を読み込みました」が出ている。その行の右端に、try.js:3 とファイル名と行番号が出ている。</desc>
+  <desc id="d">ブラウザの窓の左にページがあり、「ここに表示します」の文章、「押す」のボタン、100 と入った入力欄が、上から順に並んでいる。3 つの部品には、try.html で付けた id（message、button、amount）の札が添えてある。右に開発者ツールが開いていて、Console のタブに、console.log の表示の「try.js を読み込みました」が出ている。その行の右端に、try.js:3 とファイル名と行番号が出ている。</desc>
   <!-- 寸法：900×560 の窓を 0.8 倍。タブの列 40、ツールバー 45、開発者ツールは右に開き、ページと 55:45（Chrome の既定）。開発者ツールのタブ 26、Console のツールバー 26、メッセージの行 21 -->
   <style>
     .ui { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 10.5px; fill: #1f1f1f; }
@@ -26,6 +26,10 @@
     .yellow { fill: #febc2e; }
     .green { fill: #28c840; }
     .mark { fill: none; stroke: #ea580c; stroke-width: 2; }
+    .idmark { fill: none; stroke: #ea580c; stroke-width: 1.5; }
+    .lead { fill: none; stroke: #ea580c; stroke-width: 1; }
+    .tag { fill: none; stroke: #ea580c; stroke-width: 1.2; }
+    .tag-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; font-weight: 700; fill: #c2410c; }
     .badge { fill: #ea580c; }
     .badge-num { font-family: -apple-system, "Segoe UI", sans-serif; font-size: 11px; font-weight: 700; fill: #ffffff; }
     .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; fill: #1f2937; }
@@ -34,7 +38,8 @@
     .note-acc { fill: #c2410c; font-weight: 700; }
     .brace { fill: none; stroke: #94a3b8; stroke-width: 1.5; }
     @media (prefers-color-scheme: dark) {
-      .mark { stroke: #fb923c; }
+      .mark, .idmark, .lead, .tag { stroke: #fb923c; }
+      .tag-txt { fill: #fb923c; }
       .badge { fill: #f97316; }
       .note { fill: #e5e7eb; }
       .note-sub { fill: #9ca3af; }
@@ -70,6 +75,17 @@
   <rect class="input" x="23" y="205" width="150" height="25" rx="2"/>
   <text class="page" x="31" y="222">100</text>
 
+  <!-- id の付いた要素の囲みと、id の札 -->
+  <rect class="idmark" x="18" y="138" width="112" height="20" rx="3"/>
+  <rect class="idmark" x="19" y="162" width="54" height="33" rx="3"/>
+  <rect class="idmark" x="19" y="201" width="158" height="33" rx="3"/>
+  <path class="lead" d="M130,148 H250"/>
+  <path class="lead" d="M73,178.5 H250"/>
+  <path class="lead" d="M177,217.5 H250"/>
+  <rect class="tag" x="250" y="139" width="100" height="18" rx="4"/><text class="tag-txt" x="258" y="152">id=&quot;message&quot;</text>
+  <rect class="tag" x="250" y="169.5" width="100" height="18" rx="4"/><text class="tag-txt" x="258" y="182.5">id=&quot;button&quot;</text>
+  <rect class="tag" x="250" y="208.5" width="100" height="18" rx="4"/><text class="tag-txt" x="258" y="221.5">id=&quot;amount&quot;</text>
+
   <!-- 開発者ツール（右に開く。幅 324） -->
   <path class="split" d="M406,78 V457.5"/>
   <rect class="dev" x="406.5" y="78.5" width="323" height="21"/>
@@ -101,4 +117,5 @@
   <text class="note note-head" x="568" y="490" text-anchor="middle">開発者ツール（F12 で開く）</text>
 
   <text class="note note-sub" x="10" y="520">console.log の表示は、開発者ツールの Console に出る。<tspan class="note-acc">①</tspan> は、ファイル名と行番号。</text>
+  <text class="note note-sub" x="10" y="544">オレンジの札は、try.html でその要素に付けた id。</text>
 </svg>

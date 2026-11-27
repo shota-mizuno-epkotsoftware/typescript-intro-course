@@ -26,7 +26,7 @@ export function formatPrice(price: number): string {
 }
 ```
 
-`main.ts`（試すときは、`main/exercises/M08-modules/` に作って貼り、`node main/exercises/M08-modules/main.ts` で実行します。`shop.ts` はこのフォルダにあります。試した後は `main.ts` を消します）
+`main.ts`（`shop.ts` と同じ `main/exercises/M08-modules/` にあります。`node main/exercises/M08-modules/main.ts` で実行します）
 
 ```ts
 import type { Item } from "./shop.ts"; // 型は import type で読み込む
@@ -39,15 +39,16 @@ console.log(formatPrice(note.price)); // → 132円
 - `from` には、読み込むファイルを `./`（同じフォルダ）から書きます。
 - `{ }` の中には、使いたい名前を書きます。`import { a, b } from "./x.ts";` のように並べられます。
 - `export` を付けていないものを `import` すると、型エラーになります。
+- `{ }` を付けない `import 名前 from …` は、そのファイルが代表として 1 つだけ出したもの（`export default`）を読み込みます。テストのファイルの `import assert from "node:assert/strict";` がこの形です。
 - `Math.round` は、小数を四捨五入して整数にする関数です。
 
 **型だけを読み込むときは `import type` と書きます。** `import type` の行は、型と同じく実行時に消えます（第2章）。
 
-- 型を普通の `import` で読み込むと、型エラーになります。`node` で実行しても `does not provide an export named` で止まります。
+- この教材の設定では、型を普通の `import` で読み込むと、型エラーになります。`node` で実行しても `does not provide an export named` で止まります。
 - 逆に、関数を `import type` で読み込むと、型としてしか使えません。実行時には消えるので、呼び出す行が型エラーになります。
 
 > **コラム: 拡張子を書くかどうか**
-> この教材では、Node.js がそのまま実行できるように、`./shop.ts` と拡張子まで書きます。Vite などを使うプロジェクトでは、よく `./shop` のように拡張子を省きます。どちらも同じファイルを指します。
+> この教材では、Node.js がそのまま実行できるように、`./shop.ts` と拡張子まで書きます。Vite などを使うプロジェクトでは、よく `./shop` のように拡張子を省きます。省くと、型エラーになり、`node` でも動きません。
 
 > **PHPでは**
 > PHP の `require` は、ファイルの中身をその場で読み込みます。TypeScript の `import` は、`export` されたものだけを名前を指定して読み込みます。
@@ -60,7 +61,7 @@ console.log(formatPrice(note.price)); // → 132円
 - 何か所から `import` されても、実行されるのは最初の 1 回だけ
 - そのため、ファイルの中の変数は 1 つだけで、`import` した側のファイルの間で共有される
 
-次の例では、`header.ts` と `main.ts` がどちらも `config.ts` を `import` しています（説明のための例です）。
+次の例では、`header.ts` と `app.ts` がどちらも `config.ts` を `import` しています（説明のための例です）。
 
 `config.ts`
 
@@ -77,32 +78,32 @@ import { config } from "./config.ts";
 
 console.log("header.ts を実行しました");
 
-export function useDarkTheme(): void {
+export function switchToDark(): void {
   config.theme = "dark";
 }
 ```
 
-`main.ts`
+`app.ts`
 
 ```ts
 import { config } from "./config.ts";
-import { useDarkTheme } from "./header.ts";
+import { switchToDark } from "./header.ts";
 
-console.log("main.ts の本体");
-useDarkTheme();
+console.log("app.ts の本体");
+switchToDark();
 console.log(config.theme);
 ```
 
-`main.ts` を実行すると、次のように表示されます。
+`app.ts` を実行すると、次のように表示されます。
 
 ```
 config.ts を実行しました
 header.ts を実行しました
-main.ts の本体
+app.ts の本体
 dark
 ```
 
-`config.ts` の表示は 1 回だけです。`header.ts` が書き換えた `config` を `main.ts` からも読めるので、最後は `dark` です。
+`config.ts` の表示は 1 回だけです。`header.ts` が書き換えた `config` を `app.ts` からも読めるので、最後は `dark` です。
 
 > **PHPでは**
 > 1 回だけ実行される点は、`require_once` に似ています。
@@ -162,13 +163,13 @@ problem-01.ts の本体
 - ①：本体が動く前に、`start.ts` が `increment()` を 1 回呼んでいます。`count` は 1 つだけなので、`1` の続きで `2` です。
 - ②：`first` には、`start.ts` を実行したときの結果の `1` が入っています。
 
-![problem-01.ts と start.ts の両方が counter.ts を import している。counter.ts の console.log は 1 回だけ実行され、count は 1 つだけ。両方のファイルが同じ count を使い、最後は 2 になる。](images/M08-module-once.svg "図8-1 counter.ts は1回だけ実行され、count は1つ")
+![problem-01.ts と start.ts の両方が counter.ts を import している。counter.ts の console.log は 1 回だけ実行され、count は 1 つだけ。両方のファイルが同じ count を使い、最後は 2 になる。](images/M08-module-once.svg "図8-1 counter.ts は 1 回だけ実行され、count は 1 つ")
 
 </details>
 
-## 8.3 `<>` は「中身の型」を表す
+## 8.3 `<>` に型を渡す（ジェネリクス）
 
-`Array<string>` は「文字列の配列」で、`string[]` と同じ意味です。`<>` の中に型を入れて、中身の型を指定する仕組みを**ジェネリクス**と呼びます。この教材では自分では定義せず、読むだけにします。
+`Array<string>` は「文字列の配列」で、`string[]` と同じ意味です。`<>` の中に型を渡す仕組みを**ジェネリクス**と呼びます。この教材では自分では定義せず、読むだけにします。
 
 ```ts
 const names: Array<string> = ["ノート", "ペン"]; // string[] と同じ
@@ -189,7 +190,7 @@ console.log(scores.math);  // → 80
 
 ## 8.4 `Map` でキーと値を集める
 
-`Map` は、キーと値の組を集める専用のオブジェクトです。`new Map<string, number>()` で作り、`set` と `get` で値を出し入れします（`new 名前()` は第1章のクラスと同じ）。
+`Map` は、キーと値の組を集める専用のオブジェクトです。`new Map<string, number>()` で作り、`set` で値を入れ、`get` で値を読みます。`new 名前()` は、第1章のクラスと同じ書き方です。
 
 ```ts
 const stock = new Map<string, number>(); // キーが string、値が number の Map
@@ -308,7 +309,10 @@ console.log(draft.price); // → undefined
 ```ts
 type Profile = { name: string; age: number };
 
-function updateProfile(profile: Profile, changes: Partial<Profile>): Profile {
+function updateProfile(
+  profile: Profile,
+  changes: Partial<Profile>,
+): Profile {
   return { ...profile, ...changes };
 }
 
@@ -318,7 +322,7 @@ console.log(updateProfile(alice, { age: 21 })); // → { name: 'Alice', age: 21 
 console.log(alice.age);                         // → 20
 ```
 
-`Partial<Profile>` の値は、プロパティが足りないかもしれないので、そのままでは `Profile` 型の変数に入れられません。`updateProfile` では、先に書いた `...profile` ですべてのプロパティがそろうので、戻り値を `Profile` 型にできます。
+`Partial<Profile>` の値は、そのままでは `Profile` 型の変数に入れられません（プロパティが足りないかもしれないため）。`updateProfile` では、先に書いた `...profile` ですべてのプロパティがそろうので、戻り値を `Profile` 型にできます。
 
 変えない項目は `changes` に書きません。`{ age: undefined }` のように `undefined` を書くと、`age` は `undefined` で上書きされます。型チェックでは見つかりません。
 
@@ -348,7 +352,7 @@ console.log(item.name);
    npm run typecheck M08 problem-03
    ```
 
-2. それぞれのエラーが何を言っているかを、自分の言葉でファイル内のコメント欄に書く
+2. それぞれのエラーが何を言っているかを、自分の言葉に言い換えて、ファイル内のコメント欄に書く
 3. `shop.ts` は変えずに、エラーが消えるようにこのファイルを直す
 4. もう一度同じコマンドを実行する
    - **こうなれば OK**：「型チェック: OK」と表示される
@@ -417,13 +421,13 @@ console.log(item.name);
    ```sh
    npm test M08
    ```
-   - **こうなれば OK**：テストの表示で、`describeItem` で始まる行が `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `describeItem` で始まる行が `✔` になる
 3. `applyChanges` の `throw` の行を書き換える
    - 8.6 の `updateProfile` と同じ形です
    ```sh
    npm test M08
    ```
-   - **こうなれば OK**：テストの表示で、`applyChanges` で始まる行がすべて `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `applyChanges` で始まる行がすべて `✔` になる
 4. `totalByName` の `throw` の行を書き換える
    - 先に `const totals = new Map<string, number>();` で空の `Map` を作ります
    - 問題 2 の形で、`1` を足す代わりに `item.price` を足します
@@ -432,7 +436,7 @@ console.log(item.name);
    ```sh
    npm test M08
    ```
-   - **こうなれば OK**：テストの表示で、`totalByName` で始まる行がすべて `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `totalByName` で始まる行がすべて `✔` になる
 
 #### 仕上げる
 

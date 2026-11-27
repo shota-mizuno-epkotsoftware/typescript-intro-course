@@ -1,0 +1,125 @@
+{
+  "label": "1行ずつ見る",
+  "code": "const prices = [100, 200, 300];\nconst doubled = prices.map((price) => price * 2);\n\nconsole.log(doubled); // → [ 200, 400, 600 ]\nconsole.log(prices);  // → [ 100, 200, 300 ]",
+  "panels": [
+    {
+      "id": "call",
+      "label": "コールバックの引数と、返した値"
+    },
+    {
+      "id": "result",
+      "label": "map が作っている配列"
+    },
+    {
+      "id": "console",
+      "label": "ターミナルの表示"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        1
+      ],
+      "phase": "prices を作る",
+      "note": "3 つの要素の配列を作ります。",
+      "call": [],
+      "result": [],
+      "console": []
+    },
+    {
+      "lines": [
+        2
+      ],
+      "phase": "map：1 回目",
+      "note": "map が、1 つ目の要素でコールバックを呼びます。price に 100 が入り、100 * 2 の 200 を返します。",
+      "call": [
+        "price：100",
+        "返した値：200"
+      ],
+      "result": [
+        "200"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        2
+      ],
+      "phase": "map：2 回目",
+      "note": "2 つ目の要素でコールバックを呼びます。price に 200 が入り、400 を返します。",
+      "call": [
+        "price：200",
+        "返した値：400"
+      ],
+      "result": [
+        "200",
+        "400"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        2
+      ],
+      "phase": "map：3 回目",
+      "note": "3 つ目の要素でコールバックを呼びます。price に 300 が入り、600 を返します。",
+      "call": [
+        "price：300",
+        "返した値：600"
+      ],
+      "result": [
+        "200",
+        "400",
+        "600"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        2
+      ],
+      "phase": "doubled に入れる",
+      "note": "要素は 3 つなので、コールバックが呼ばれるのは 3 回です。map は、返ってきた値を並べた新しい配列を返し、doubled に入ります。",
+      "call": [],
+      "result": [
+        "200",
+        "400",
+        "600"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        4
+      ],
+      "phase": "doubled を表示する",
+      "note": "map が作った配列を表示します。",
+      "call": [],
+      "result": [
+        "200",
+        "400",
+        "600"
+      ],
+      "console": [
+        "[ 200, 400, 600 ]"
+      ]
+    },
+    {
+      "lines": [
+        5
+      ],
+      "phase": "prices を表示する",
+      "note": "元の配列の prices は変わりません。",
+      "call": [],
+      "result": [
+        "200",
+        "400",
+        "600"
+      ],
+      "console": [
+        "[ 200, 400, 600 ]",
+        "[ 100, 200, 300 ]"
+      ]
+    }
+  ]
+}

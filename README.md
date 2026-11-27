@@ -2,7 +2,7 @@
 
 PHP でプログラミングの基礎を学んだ人が、自習で TypeScript のコードを**読める**ようになり、フロントエンド（画面の見た目と動き）のコードを扱えるようになるための教材です。
 
-メインは本編です。PHP の基礎があやふやな人は、先に基礎編から始めます。本編の後は、オプションの実践編で、小さなアプリのコードを読みます。
+メインは本編です。PHP の基礎があやふやな人は、先に基礎編から始めます。本編の後は、オプションの実践編で、小さなアプリのコードを読みます。その後に、同じアプリの React 版を読む React 編（オプション）もあります。実践編と React 編は、それぞれ 1 ページです。
 
 講座で学ぶ技術どうしのつながりは、[学ぶ技術の関係](overview.md) で先に見渡せます。
 
@@ -100,7 +100,7 @@ echo $base . " / " . $result;
 
 迷わずに答えられた問題を数えて、入口の目安にします。
 
-- **4 問以上**：[本編 第0章](main/chapters/M00-setup.md) からが目安です。外れた問題・迷った問題があれば、表の基礎編の章を先に読んでおくと安心です。
+- **4 問以上**：[本編 第0章](main/chapters/M00-setup.md) からが目安です。外れた問題・迷った問題があれば、表の基礎編の章を先に読んでおくと安心です。そのときも、準備は本編 第0章の 0.1・0.2 で済ませてから読みます。
 - **3 問以下**：[基礎編 第0章](basics/chapters/B00-setup.md) からが目安です。基礎編は、知っている章を飛ばして進めても構いません。
 
 どちらから始めても、途中で入口を変えて構いません。本編で詰まったときに戻る基礎編の章は、[本編 第0章](main/chapters/M00-setup.md) の「詰まったとき」にあります。
@@ -121,14 +121,14 @@ echo $base . " / " . $result;
 | --- | --- | --- |
 | 基礎編 | オプション（本編の前） | PHP で一度学んだ基礎を、JavaScript で手を動かして確かめ直す |
 | 本編 | メイン | TypeScript の文法と型の考え方。最後にブラウザの画面を動かす |
-| 実践編 | オプション（本編の後） | 小さな Web アプリのコードを読み解き、簡単な改修をする |
-| React 編（準備中） | オプション（実践編の後） | 実践編のアプリを React で書き直したものを読み、改修する |
+| 実践編 | オプション（本編の後） | 1 ページで、小さな Web アプリのコードを読み解き、3 つの改修をする |
+| React 編 | オプション（実践編の後） | 1 ページで、実践編のアプリを React で書き直したものを読み、4 つの改修をする |
+
+進む順は、本編（12 章）→ 実践編（1 ページ）→ React 編（1 ページ）です。実践編と React 編には、同じ内容を 7 章に分けて詳しく読む「詳細版」もあります。読むかどうかは任意です。
 
 講座で説明しないツールは [ツール一覧](tools.md)、困ったときは [つまずき集](troubleshooting.md) にあります。
 
 ## 目次
-
-準備中の章は、章の名前だけを載せています。内容は変わることがあります。
 
 ### 基礎編
 
@@ -147,7 +147,7 @@ echo $base . " / " . $result;
 | 8 | [オブジェクト](basics/chapters/B08-objects.md) |
 | 9 | [配列のメソッド](basics/chapters/B09-array-methods.md) |
 | 10 | [画面を動かす](basics/chapters/B10-dom.md) |
-| 11 | [修了課題](basics/chapters/B11-final.md) |
+| 11 | [まとめの演習](basics/chapters/B11-final.md) |
 
 ### 本編
 
@@ -164,38 +164,53 @@ echo $base . " / " . $result;
 | 8 | [モジュールと型を読む](main/chapters/M08-modules.md) |
 | 9 | [非同期](main/chapters/M09-async.md) |
 | 10 | [ブラウザと DOM、イベント](main/chapters/M10-dom.md) |
-| 11 | [実践編への準備](main/chapters/M11-next-steps.md) |
+| 11 | [データの保存と通信](main/chapters/M11-next-steps.md) |
 
 ### 実践編
 
-本編を終えてから進めるオプションの編です。家計簿の Web アプリのコードを章ごとに読み、改修します。進め方は [実践編 第1章](practice/chapters/P01-overview.md) にあります。
+本編を終えてから進めるオプションの編です。**[実践編](practice/chapters/P00-digest.md) の 1 ページ**で、家計簿の Web アプリのコードを読み、3 つの改修をします。
 
-| # | 章 |
-| --- | --- |
-| 1 | [全体像と、画面が表示されるまで](practice/chapters/P01-overview.md) |
-| 2 | [データの型](practice/chapters/P02-types.md) |
-| 3 | [フォームの入力と検証](practice/chapters/P03-form.md) |
-| 4 | [イベントから再描画まで](practice/chapters/P04-events.md) |
-| 5 | [集計とテスト](practice/chapters/P05-summary.md) |
-| 6 | [外から来るデータ](practice/chapters/P06-external.md) |
-| 7 | [変更を読む・総合](practice/chapters/P07-changes.md) |
+**実践編 詳細版**は、同じ内容を 7 章に分けて、問題を解きながら詳しく読む版です。読むかどうかは任意です。
+
+<details>
+<summary>実践編 詳細版の章（7 章）</summary>
+
+右の列に改修の番号がある章の改修は、実践編の改修と同じものです。
+
+| # | 詳細版の章 | 実践編の改修 |
+| --- | --- | --- |
+| 1 | [全体像と、画面が表示されるまで](practice/chapters/P01-overview.md) | |
+| 2 | [データの型](practice/chapters/P02-types.md) | 改修 1 |
+| 3 | [フォームの入力と検証](practice/chapters/P03-form.md) | |
+| 4 | [イベントから再描画まで](practice/chapters/P04-events.md) | |
+| 5 | [集計とテスト](practice/chapters/P05-summary.md) | |
+| 6 | [外から来るデータ](practice/chapters/P06-external.md) | 改修 2 |
+| 7 | [変更を読む・総合](practice/chapters/P07-changes.md) | 改修 3 |
+
+</details>
 
 ### React 編
 
-実践編の家計簿アプリを React で書き直したものを読み、改修します（準備中。オプション）。
+実践編を終えてから進めるオプションの編です。**[React 編](react/chapters/R00-digest.md) の 1 ページ**で、実践編の家計簿アプリを React で書き直したものを読み、4 つの改修をします。
 
-| # | 章 | 状態 |
+**React 編 詳細版**は、同じ内容を 7 章に分けて、問題を解きながら詳しく読む版です。読むかどうかは任意です。
+
+<details>
+<summary>React 編 詳細版の章（7 章）</summary>
+
+右の列に改修の番号がある章の改修は、React 編の改修と同じものです。
+
+| # | 詳細版の章 | React 編の改修 |
 | --- | --- | --- |
-| 1 | DOM 版と React 版を並べる | 準備中 |
-| 2 | JSX を読む | 準備中 |
-| 3 | コンポーネントと props | 準備中 |
-| 4 | 状態と再描画 | 準備中 |
-| 5 | イベントとフォーム | 準備中 |
-| 6 | 部品の間のデータの流れ | 準備中 |
-| 7 | 集計と表示 | 準備中 |
-| 8 | 副作用 | 準備中 |
-| 9 | 変更を読む | 準備中 |
-| 10 | 総合：初見の React 画面 | 準備中 |
+| 1 | [全体像と JSX の入口](react/chapters/R01-overview.md) | |
+| 2 | [コンポーネントと props](react/chapters/R02-components.md) | |
+| 3 | [状態と再描画](react/chapters/R03-state.md) | 改修 2 |
+| 4 | [イベントとフォーム](react/chapters/R04-form.md) | 改修 3 |
+| 5 | [データの流れと集計](react/chapters/R05-flow.md) | 改修 1 |
+| 6 | [副作用](react/chapters/R06-effects.md) | 改修 4 |
+| 7 | [変更を読む・総合](react/chapters/R07-changes.md) | |
+
+</details>
 
 ## 参考資料
 

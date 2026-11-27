@@ -9,9 +9,9 @@
 
 ## 1.1 実践編の進め方
 
-実践編では、家計簿のアプリのコードを読みます。本編と違い、**コードが教材の本体**です。本文は、どこをどの順で読み、何を考えるかの案内です。
+**この章からは、実践編の詳細版です。** 標準の道は 1 ページの [実践編](P00-digest.md) で、詳細版は、その要点を詳しく読みたい人が読みます。そこで済ませた改修（第2・6・7章）は、飛ばして構いません。実践編では、家計簿のアプリのコードを読みます。本編と違い、**コードが教材の本体**です。本文は、どこをどの順で読み、何を考えるかの案内です。
 
-コマンドでは、実践編の章を `P01`〜`P07` という章ID で表します。第1章のコマンドは `npm run dev P01`・`npm test P01`・`npm run check P01` です。実行する npm のコマンドは、`npm run dev`・`npm test`・`npm run typecheck`・`npm run check` の 4 つです（役割は 1.3 のコラム）。`package.json` のほかのコマンドは教材の作成者が使うものなので、実行しません。
+コマンドでは、実践編の章を `P01`〜`P07` という章ID で表します。第1章のコマンドは `npm run dev P01`・`npm test P01`・`npm run check P01` です。実践編で実行する npm のコマンドは、`npm run dev`・`npm test`・`npm run typecheck`・`npm run check` の 4 つです（役割は 1.3 のコラム）。`package.json` のほかのコマンドは、実践編では実行しません。
 
 ### 1 章の流れ
 
@@ -41,11 +41,10 @@
 | `practice/app/` | 読む用の完成版 |
 | `practice/exercises/P01-overview/` | この章の改修用（完成版のコピー）。フォルダの名前は章ID で始まります |
 | `practice/solutions/P01-overview/` | 改修の解答例。`npm run dev P01 answer` のように `answer` を付けると、解答例を当てはめた版を起動して見比べられます |
-| `practice/overlays/` | 教材の作成者が使うフォルダ。開く必要はありません |
 
 - 完成版（`practice/app/`）は書き換えません。本文が行番号で場所を示すためです。
 - 試しに書き換えるときは、改修用フォルダを使います。試した後は `git restore ファイルのパス` で元に戻します。「確かめ方」には、この手順を書いていません。
-- 完成版・改修用フォルダ・解答例の版は、同じアドレスで開くと明細のデータを共有します。どの版で追加・削除した明細も、ほかの版を開き直すと画面に出ます。2 つの版を同時に起動すると、後の版のアドレスは `5174` などに変わり、データは別になります。
+- 明細のデータは、画面のアドレスごとに保存されます。同じアドレスなら、完成版・改修用フォルダ・解答例のどの版で追加・削除した明細も、ほかの版を開き直すと画面に出ます。2 つの版を同時に起動すると、後の版のアドレスは `5174` などに変わり、データは別になります。
 - 問題の番号は章ごとに 1 からです。実践編の本文では、実践編の章を「第3章」、本編の章を「本編第10章」と呼びます。
 
 ## 1.2 動かしてから読む
@@ -180,7 +179,7 @@ practice/app/
 
 初めて見るプロジェクトでは、`package.json` の `scripts` を読むと、起動・テスト・型チェックのコマンドが分かります。`npm test app` で、完成版のテストを実行できます。
 
-**確かめ方**：`npm run dev app` を打つと、最初に `> node scripts/dev.ts app` と表示されます。
+**確かめ方**：`npm run dev app` を打つと、`> dev` の行の次に `> node scripts/dev.ts app` と表示されます。
 
 </details>
 
@@ -237,10 +236,12 @@ const elements = getElements();
 let state = createInitialState(loadEntries());
 ```
 
-1. 1 行目の `getElements` は、`elements.ts` にあります。`Elements` の型（1〜21行目）と `getElements`（47〜73行目）を読んで、戻り値の `entryList` が画面のどの要素かを、`index.html` の id で答えてください。また、`index.html` にその id の要素がなかったら、どうなりますか。`findElement`（23〜29行目）を読んで答えてください。
+18 行目の `state` は、画面を作るためにアプリが覚えている値（**状態**）を入れる変数です。本編第10章の家計簿の `expenses` にあたります。
+
+1. 17 行目の `getElements` は、`elements.ts` にあります。`Elements` の型（1〜21行目）と `getElements`（47〜73行目）を読んで、戻り値の `entryList` が画面のどの要素かを、`index.html` の id で答えてください。また、`index.html` にその id の要素がなかったら、どうなりますか。`findElement`（23〜29行目）を読んで答えてください。
 2. `state.ts` の `createInitialState`（4〜12行目）を読み、5 つのプロパティの値を答えてください。保存された明細がまだ 1 件もないとき、この 2 行を実行した直後の `state` の中身です。
 
-`findElement` を読むのに必要な書き方は、`document.querySelector`（本編第10章）と `instanceof`（本編第6章）です。
+`findElement` を読むのに必要な書き方は、`document.querySelector`（本編第10章）と `instanceof`（本編第10章の 10.6）です。
 
 <details>
 <summary>答えと解説</summary>
@@ -291,7 +292,7 @@ export function createInitialState(entries: Entry[]): AppState {
 
 型の定義は、`types.ts` の `AppState` にあります。
 
-`state` は、画面を作るためにアプリが覚えている値をまとめた変数です（入力欄に打っている途中の値は入りません）。この変数を**状態**と呼びます。本編第10章の家計簿では `expenses` の配列だけでしたが、このアプリでは、絞り込みの条件や読み込みの状況も状態に入っています。
+状態に入るのは、上の表の 5 つです（入力欄に打っている途中の値は入りません）。このアプリでは、絞り込みの条件や読み込みの状況も状態に入っています。
 
 `let` で宣言されているのは、後で別の状態に入れ替えるためです（問題 9）。
 
@@ -310,13 +311,15 @@ render(state, elements);
 await loadCategories();
 ```
 
+`render`（`render.ts`）は、フォーム・絞り込み・集計・一覧を、それぞれ別の関数で作ります（1.5 で読みます）。ここでは、フォームを作る `renderForm` を読みます。
+
 `renderForm` を読むのに必要な書き方は次の 2 つです。
 
 - `classList.toggle("hidden", 条件)` は、条件が `true` なら `hidden` というクラスを付け、`false` なら外します。`hidden` の付いた要素は画面に表示されません。
 - `categoryStatusText({ categories }: AppState)` の `{ categories }` は、引数の分割代入です（本編第4章）。`AppState` 型の引数から、`categories` だけを取り出しています。
 
-1. 1 行目の `render` が実行された時点で、分類の選択欄の中身と、フォームの下の文言（`id="category-status"`）はどうなっていますか。`render.ts` の `renderForm`（39〜53行目）と、その上の `categoryStatusText` を読んで答えてください。
-2. 2 行目の `loadCategories` が終わると、画面はどう変わりますか。`main.ts` の `loadCategories`（29〜38行目）と、その中で呼ぶ `update`（20〜27行目）を読んで答えてください。
+1. 91 行目の `render` が実行された時点で、分類の選択欄の中身と、フォームの下の文言（`id="category-status"`）はどうなっていますか。`render.ts` の `renderForm`（39〜53行目）と、その上の `categoryStatusText` を読んで答えてください。
+2. 92 行目の `loadCategories` が終わると、画面はどう変わりますか。`main.ts` の `loadCategories`（29〜38行目）と、その中で呼ぶ `update`（20〜27行目）を読んで答えてください。
 
 <details>
 <summary>答えと解説</summary>
@@ -351,7 +354,7 @@ async function loadCategories(): Promise<void> {
 
 読み込みは一瞬で終わるので、普段は 1 の画面に気づきません。
 
-**確かめ方**：開発者ツールの「Network」タブで、通信の速さを一番遅い設定にしてから、ページを読み込み直します。設定は、タブの上の段の「No throttling」の選択欄で「3G」などを選びます。「分類を読み込んでいます…」が表示されるのが見えます。確かめたら、設定を元に戻します。
+**確かめ方**：開発者ツールの「Network」タブで、通信の速さを遅くしてから、ページを読み込み直します。タブの上の段の「No throttling」の選択欄で「3G」を選びます（「Offline」は選びません）。「分類を読み込んでいます…」が表示されるのが見えます。確かめたら、設定を元に戻します。
 
 </details>
 
@@ -403,7 +406,7 @@ function renderList(entries: Entry[], elements: Elements): void {
 }
 ```
 
-2 行目を読むのに必要な書き方は次のとおりです。
+100 行目を読むのに必要な書き方は次のとおりです。
 
 - `要素.replaceChildren(a, b)` は、要素の今の中身を全部消してから、`a` と `b` を入れます。`要素.append(a, b)` は、今の中身を残したまま、末尾に `a` と `b` を足します。
 - `.map(createEntryItem)` は、関数の名前をそのまま渡しています。`.map((entry) => createEntryItem(entry))` と同じ意味です。
@@ -483,7 +486,7 @@ export function setFilter(state: AppState, changes: Partial<Filter>): AppState {
 
 どちらの場合も、**状態は変わっているのに画面が古いまま**です。状態を変えることと、画面を作り直すことは、別の作業です。`update` にまとめておけば、作り直し忘れが起きません。
 
-**確かめ方**：1 は、改修用フォルダの `main.ts` で、`saveEntries(next.entries);` の上に `console.log("保存します");` を入れます。明細を追加したときと、絞り込みを変えたときで、コンソールの表示を比べます。2 は、同じファイルの `update` の中の `render(state, elements);` の行を消して、画面を見ます。
+**確かめ方**：1 は、改修用フォルダの `main.ts` で、`saveEntries(next.entries);` の上に `console.log("保存します");` を入れます。明細を追加したときと、絞り込みを変えたときで、コンソールの表示を比べます。2 は、同じファイルの `update` の中の `render(state, elements);` の行を消して、画面を見ます。`render` の行を消したままだと、章末の改修で画面が更新されません。
 
 </details>
 
@@ -548,7 +551,7 @@ form.addEventListener("submit", (event) => {
 
 その後は、操作のたびに「`update` で状態を新しくする → `render` で画面を作り直す」を繰り返す。
 
-![上の段は起動の流れで、1 回だけ通る。index.html の script から main.ts が実行され、getElements で要素を取得し、loadEntries で localStorage から明細を読み、createInitialState で最初の状態を作る。イベントの処理を登録してから、render で最初の画面を作る（分類は読み込み中）。loadCategories が分類を読み込み終わると、setCategories で新しい状態を作って update を呼ぶ。下の段は操作のたびに回る輪。update が状態を入れ替え、render が画面を作り直す。画面で操作すると、登録したイベントの処理が state.ts の関数で新しい状態を作り、また update を呼ぶ。update は、明細が変わったときだけ saveEntries で localStorage に保存する。](images/P01-app-flow.svg "図1-3 起動の流れと、操作のたびに回る輪")
+![上の段は起動の流れで、1 回だけ通る。index.html の script から main.ts が実行され、getElements で要素を取得し、loadEntries で localStorage から明細を読み、createInitialState で最初の状態を作る。イベントの処理を登録してから、render で最初の画面を作る（分類は読み込み中）。loadCategories が分類を読み込み終わると、setCategories で新しい状態を作って update を呼ぶ。下の段は操作のたびに繰り返す流れ。update が状態を入れ替え、render が画面を作り直す。画面で操作すると、登録したイベントの処理が state.ts の関数で新しい状態を作り、また update を呼ぶ。update は、明細が変わったときだけ saveEntries で localStorage に保存する。](images/P01-app-flow.svg "図1-3 起動の流れと、操作のたびに繰り返す流れ")
 
 後の章で読むファイルも、この図のどこかに当たります。迷ったら、この図に戻ってください。
 

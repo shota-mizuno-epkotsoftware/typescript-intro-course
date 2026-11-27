@@ -9,12 +9,14 @@
     "test": "node scripts/check.ts test",
     "typecheck": "node scripts/check.ts typecheck",
     "check": "node scripts/check.ts check",
-    "dev": "node scripts/dev.ts"
+    "dev": "node scripts/dev.ts",
+    "lint": "node scripts/lint.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "oxlint": "^1.95.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.8"
   },

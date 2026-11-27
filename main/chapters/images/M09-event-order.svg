@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 300" width="700" height="300" role="img" aria-labelledby="t d">
-  <title id="t">上から順の処理が終わってから、予約した処理が動く</title>
-  <desc id="d">上から順に実行する処理（最初の行の表示、タイマーの予約、A 開始の表示、A の続きの予約、最後の行の表示）が全部終わった後、予約した処理が時間の早い順に動く。0 ミリ秒のタイマー、100 ミリ秒の A 完了の順。</desc>
+  <title id="t">上から順の処理が終わってから、タイマーが時間の早い順に終わる</title>
+  <desc id="d">上から順に実行する処理（最初の行の表示、タイマーの予約、A 開始の表示、A が 100 ミリ秒の待ちに入る、最後の行の表示）が全部終わった後、タイマーが時間の早い順に終わる。0 ミリ秒のタイマーの表示、100 ミリ秒の待ちが終わった A 完了の順。</desc>
   <style>
     .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
     .sub { fill: #4b5563; font-size: 12px; }
@@ -34,7 +34,7 @@
   <text class="txt" x="36" y="90"><tspan class="num">表示</tspan>　最初の行</text>
   <text class="txt sub" x="36" y="118">予約　「タイマー」を 0 ミリ秒後に</text>
   <text class="txt" x="36" y="146"><tspan class="num">表示</tspan>　A 開始</text>
-  <text class="txt sub" x="36" y="174">予約　A の続きを 100 ミリ秒後に</text>
+  <text class="txt sub" x="36" y="174">待ち　A の続きは 100 ミリ秒後に</text>
   <text class="txt" x="36" y="202"><tspan class="num">表示</tspan>　最後の行</text>
   <text class="txt sub" x="36" y="248">ここで、上から順の処理が全部終わる</text>
 
@@ -42,7 +42,7 @@
 
   <!-- 予約された処理 -->
   <rect class="later" x="350" y="30" width="330" height="240" rx="8"/>
-  <text class="txt head" x="366" y="56">② 予約した処理が、時間の早い順に動く</text>
+  <text class="txt head" x="366" y="56">② タイマーが、時間の早い順に終わる</text>
   <text class="txt sub" x="366" y="76">経過（ミリ秒）</text>
   <line class="axis" x1="390" y1="82" x2="390" y2="250"/>
   <text class="txt sub" x="366" y="104">0</text>

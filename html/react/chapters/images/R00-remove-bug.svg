@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 890 232" width="890" height="232" role="img" aria-labelledby="t d">
+  <title id="t">削除しても、明細が消えない</title>
+  <desc id="d">明細の区画を、直す前と直した後で並べた図。直す前は、食費の行の「削除」を押しても、2 行とも残っている。直した後は、押した行がすぐに消えて、給料の 1 行になる。</desc>
+  <style>
+    .pg { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 12.8px; fill: #1f2328; }
+    .h1 { font-size: 20.5px; font-weight: 700; }
+    .h2 { font-size: 14px; font-weight: 700; }
+    .h3 { font-size: 12.2px; font-weight: 700; fill: #59636e; }
+    .lbl { font-size: 10.9px; fill: #59636e; }
+    .ctl { font-size: 10.9px; }
+    .small { font-size: 11.5px; }
+    .muted { fill: #59636e; }
+    .inc { fill: #1a7f37; }
+    .exp { fill: #b42318; }
+    .panel { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .ctrl { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .btn { fill: #f6f7f9; stroke: #d8dee4; stroke-width: 0.8; }
+    .rule { fill: none; stroke: #d8dee4; stroke-width: 0.8; }
+    .chev { fill: none; stroke: #1f2328; stroke-width: 1; }
+    .check { fill: #0b63ce; }
+    .tick { fill: none; stroke: #ffffff; stroke-width: 1.6; }
+    .hl { fill: #dbeafe; }
+    .con { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+    .con-bar { fill: #eef1f4; }
+    .con-err { fill: #fdecea; }
+    .con-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 10.5px; fill: #1f2328; }
+    .con-red { fill: #b42318; }
+    .con-ui { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 10.5px; fill: #5f6368; }
+    .con-on { fill: #0b57d0; font-weight: 700; }
+    .codebox { fill: #f6f8fa; stroke: #d8dee4; stroke-width: 0.8; }
+    .code { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; fill: #1f2328; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 1.5; }
+    .mark-b { fill: none; stroke: #2563eb; stroke-width: 1.5; }
+    .lead { fill: none; stroke: #ea580c; stroke-width: 1; }
+    .tag { fill: none; stroke: #ea580c; stroke-width: 1.2; }
+    .tag-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; font-weight: 700; fill: #c2410c; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 12px; fill: #1f2937; }
+    .cap { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; font-weight: 700; fill: #1f2937; }
+    .flow { fill: none; stroke: #6b7280; stroke-width: 1.4; }
+    .flow-head { fill: #6b7280; }
+    @media (prefers-color-scheme: dark) {
+      .mark, .lead, .tag { stroke: #fb923c; }
+      .mark-b { stroke: #60a5fa; }
+      .tag-txt { fill: #fb923c; }
+      .note, .cap { fill: #e5e7eb; }
+      .flow { stroke: #9ca3af; }
+      .flow-head { fill: #9ca3af; }
+    }
+  </style>
+  <text class="cap" x="10" y="22">直す前：「削除」を押しても、行が残る</text>
+  <text class="cap" x="480" y="22">直した後：押した行が、すぐに消える</text>
+  <rect class="panel" x="10" y="34" width="400" height="145.2" rx="6"/>
+  <text class="pg h2" x="26.5" y="64">明細</text>
+  <text class="pg" x="26.5" y="101.0">2026-11-15</text>
+  <text class="pg" x="119.5" y="101.0">食費<tspan class="ctl muted"> 昼食</tspan></text>
+  <text class="pg exp" x="347.5" y="101.0" text-anchor="end">-800円</text>
+  <rect class="btn" x="357.5" y="81.0" width="36" height="31" rx="4.8"/>
+  <text class="pg" x="375.5" y="101.0" text-anchor="middle">削除</text>
+  <path class="rule" d="M26.5,118.6 H393.5"/>
+  <text class="pg" x="26.5" y="145.6">2026-11-01</text>
+  <text class="pg" x="119.5" y="145.6">給料</text>
+  <text class="pg inc" x="347.5" y="145.6" text-anchor="end">+200,000円</text>
+  <rect class="btn" x="357.5" y="125.6" width="36" height="31" rx="4.8"/>
+  <text class="pg" x="375.5" y="145.6" text-anchor="middle">削除</text>
+  <path class="rule" d="M26.5,163.2 H393.5"/>
+  <rect class="panel" x="480" y="34" width="400" height="100.6" rx="6"/>
+  <text class="pg h2" x="496.5" y="64">明細</text>
+  <text class="pg" x="496.5" y="101.0">2026-11-01</text>
+  <text class="pg" x="589.5" y="101.0">給料</text>
+  <text class="pg inc" x="817.5" y="101.0" text-anchor="end">+200,000円</text>
+  <rect class="btn" x="827.5" y="81.0" width="36" height="31" rx="4.8"/>
+  <text class="pg" x="845.5" y="101.0" text-anchor="middle">削除</text>
+  <path class="rule" d="M496.5,118.6 H863.5"/>
+  <rect class="mark" x="354" y="78" width="44" height="39" rx="3"/>
+  <rect class="mark-b" x="20" y="78" width="380" height="39" rx="3"/>
+  <path class="flow" d="M424,110 L466,110"/>
+  <path class="flow-head" d="M466,110 L459.7,113.0 L459.7,107.0 Z"/>
+  <text class="note" x="20" y="200">オレンジの枠の「削除」を押した後の画面です。</text>
+</svg>

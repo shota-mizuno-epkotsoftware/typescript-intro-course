@@ -228,7 +228,7 @@ export function saveEntries(entries: Entry[]): void {
 
 2. その 1 件だけを捨てます。
 
-   40 行目の `data.map(toEntry)` で、要素ごとに `Entry` か `null` になり、`.filter((entry) => entry !== null)` で `null` が除かれます。
+   40 行目の `data.map(toEntry)` で、要素ごとに `Entry` か `null` になり、`.filter((entry) => entry !== null)` で `null` が除かれます。このような単純な条件の `filter` では、結果の型からも `null` が除かれ、`Entry[]` になります。
 
 3. 残っていません。
 
@@ -372,7 +372,7 @@ async function loadCategories(): Promise<void> {
 
 **確かめ方**：改修用フォルダの `src/categories.ts` で、`"./categories.json"` を `"./categorie.json"` に変えて、画面とコンソールを見ます。
 
-この手順では、エラーは 16 行目ではなく、18 行目で投げられます。開発用のサーバーは、見つからないファイルにも `index.html` の中身を「成功」として返すからです。Network のタブで、`categorie.json` の返事の中身が HTML になっていることを見てください。
+この手順では、エラーは 16 行目ではなく、18 行目で投げられます。開発用のサーバーが、見つからないファイルの代わりに `index.html` の中身を「成功」として返すためです。Network のタブで、`categorie.json` の返事の中身が HTML になっていることを見てください。URL を変えたままだと、章末の改修で報告の不具合を再現できません。
 
 </details>
 
@@ -435,7 +435,7 @@ await loadCategories();
 | --- | --- | --- |
 | フォームの入力 | `parseEntryForm`（`validate.ts`） | `{ ok: false, errors }` を返し、`main.ts` がメッセージを画面に表示する。入力は残す |
 | 保存された明細 | `parseStoredEntries`、`toEntry`（`storage.ts`） | 正しくない明細だけを捨てる。全体が読めなければ、空の配列にする |
-| 分類の一覧 | `parseCategories`（`categories.ts`） | `categories` が配列でなければ、エラーを投げる。`loadCategories` が受け取り、画面に決まった文を表示する。配列の中の文字列でない要素は除く |
+| 分類の一覧 | `parseCategories`（`categories.ts`） | `categories` がないか配列でなければ、エラーを投げる。`loadCategories` が受け取り、画面に決まった文を表示する。配列の中の文字列でない要素は除く |
 
 3 つとも、外から来た値を検査してから、正しい型の値にしています。検査が済んだ値（`Entry`、`string[]`）は、アプリの中のどこでも型のとおりに使えます。
 
@@ -465,7 +465,7 @@ await loadCategories();
    - 一覧の `categories.json` の行を選ぶと、右に出る「Response」のタブに、返ってきた中身が出ます（問題 5 の答えの中の図6-1 の ②・③）
    - **こうなれば OK**：中身に `100`、`null`、`""`、2 つ目の `"食費"` が見える
 3. 返ってきたデータが、どの関数を通って選択欄に入るかをたどり、原因の場所を見つける
-   - **こうなれば OK**：`100` や `""` がそこをそのまま通る理由を説明できる（答えは章末の折りたたみ「コラム: 型チェックに通るのに…」）
+   - **こうなれば OK**：`100` や `""` を取り除く検査が、どの関数にないかを言える（答えは、解答例のリンクの下の折りたたみ「コラム: 型チェックに通るのに…」）
 
 #### 読み込む側を直す
 

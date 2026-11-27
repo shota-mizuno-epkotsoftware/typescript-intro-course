@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 770 262" width="770" height="262" role="img" aria-labelledby="t d">
+  <title id="t">React 版で、操作のたびに繰り返す流れ</title>
+  <desc id="d">操作のたびに繰り返す流れ。画面で操作すると、渡しておいた関数が動き、setState で、state.ts の関数（addEntry など）で状態を更新するよう React に頼む。ここまでは自分で書く。その先は React がする。React は新しい状態を覚え、コンポーネントの関数をもう一度呼ぶ。関数は、新しい状態から JSX を返す。React は、前の JSX と違う所だけを画面に反映する。DOM 版では、状態を入れ替える update と、画面を作り直す render を、自分で書いていた。</desc>
+  <style>
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 11.5px; }
+    .head { font-weight: 700; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+    .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .area { fill: none; stroke: #cbd5e1; stroke-width: 1.2; }
+    .line { fill: none; stroke: #64748b; stroke-width: 1.8; }
+    .tip { fill: #64748b; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code { fill: #e5e7eb; }
+      .sub { fill: #9ca3af; }
+      .var { fill: #1e293b; stroke: #64748b; }
+      .obj { fill: #172554; stroke: #60a5fa; }
+      .area { stroke: #475569; }
+      .line { stroke: #94a3b8; }
+      .tip { fill: #94a3b8; }
+    }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <!-- 自分で書く範囲 -->
+  <rect class="area" x="10" y="34" width="264" height="218" rx="10"/>
+  <text class="txt head" x="22" y="24">自分で書く</text>
+
+  <!-- React がする範囲 -->
+  <rect class="area" x="298" y="34" width="462" height="218" rx="10"/>
+  <text class="txt head" x="310" y="24">React がする</text>
+  <text class="txt sub" x="406" y="24">DOM 版では、update と render を自分で書いていた</text>
+
+  <!-- 上の段 -->
+  <rect class="var" x="22" y="56" width="240" height="54" rx="8"/>
+  <text class="code head" x="142" y="79" text-anchor="middle">setState</text>
+  <text class="txt sub" x="142" y="98" text-anchor="middle">addEntry などで更新するよう頼む</text>
+  <path class="line" d="M262,83 L308,83" marker-end="url(#a1)"/>
+  <rect class="var" x="312" y="56" width="180" height="54" rx="8"/>
+  <text class="txt head" x="402" y="79" text-anchor="middle">新しい状態を覚える</text>
+  <text class="txt sub" x="402" y="98" text-anchor="middle">状態を入れ替える</text>
+  <path class="line" d="M492,83 L536,83" marker-end="url(#a1)"/>
+  <rect class="obj" x="540" y="56" width="204" height="54" rx="8"/>
+  <text class="txt head" x="642" y="79" text-anchor="middle">関数をもう一度呼ぶ</text>
+  <text class="txt sub" x="642" y="98" text-anchor="middle">App などが JSX を返す</text>
+  <path class="line" d="M642,110 L642,168" marker-end="url(#a1)"/>
+
+  <!-- 下の段 -->
+  <rect class="obj" x="540" y="172" width="204" height="54" rx="8"/>
+  <text class="txt head" x="642" y="195" text-anchor="middle">違う所だけ画面に反映</text>
+  <text class="txt sub" x="642" y="214" text-anchor="middle">前の JSX と比べる</text>
+  <path class="line" d="M540,199 L496,199" marker-end="url(#a1)"/>
+  <rect class="var" x="312" y="172" width="180" height="54" rx="8"/>
+  <text class="txt head" x="402" y="195" text-anchor="middle">画面</text>
+  <text class="txt sub" x="402" y="214" text-anchor="middle">一覧・集計・フォーム</text>
+  <path class="line" d="M312,199 L266,199" marker-end="url(#a1)"/>
+  <rect class="var" x="22" y="172" width="240" height="54" rx="8"/>
+  <text class="txt head" x="142" y="195" text-anchor="middle">操作</text>
+  <text class="txt sub" x="142" y="214" text-anchor="middle">渡しておいた関数が動く</text>
+  <path class="line" d="M142,172 L142,114" marker-end="url(#a1)"/>
+</svg>

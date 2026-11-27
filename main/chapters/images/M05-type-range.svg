@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 250" width="640" height="250" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 240" width="660" height="240" role="img" aria-labelledby="t d">
   <title id="t">string は Category より広い</title>
-  <desc id="d">型を、入る値の範囲として描いた図。いちばん外側の string（let a の型）には、"travel" や "abc" など、どんな文字列も入る。その内側の Category には "food" と "transport" だけが入る。さらに内側の "transport" 型（const b の型）には "transport" だけが入る。外側の string の値は、Category に入らない（型エラー）。内側の "transport" 型の値は、外側の Category にも入る。</desc>
+  <desc id="d">型を、入る値の範囲として描いた図。いちばん外側の string（let a の型）には、"travel" や "abc" など、どんな文字列も入る。その内側の Category には "food" と "transport" だけが入る。さらに内側の "transport" 型（const b の型）には "transport" だけが入る。first = a は、外側の string の値を Category に入れようとするので、入らない（型エラー）。second = b は、内側の "transport" 型の値を外側の Category に入れるので、入る。</desc>
   <style>
     .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
     .sub { fill: #4b5563; font-size: 12px; }
@@ -15,6 +15,7 @@
     .chk-x { fill: none; stroke: #c2410c; stroke-width: 2.4; stroke-linecap: round; }
     .chk-txt { fill: #c2410c; font-weight: 700; }
     .tip-chk { fill: #c2410c; }
+    .ok-txt { fill: #1d4ed8; font-weight: 700; }
     @media (prefers-color-scheme: dark) {
       .txt, .code { fill: #e5e7eb; }
       .sub { fill: #9ca3af; }
@@ -26,33 +27,41 @@
       .chk, .chk-x { stroke: #fb923c; }
       .chk-txt { fill: #fdba74; }
       .tip-chk { fill: #fb923c; }
+      .ok-txt { fill: #93c5fd; }
     }
   </style>
   <defs>
     <marker id="ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip-chk" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
   </defs>
 
   <!-- string（let a の型） -->
-  <rect class="outer" x="20" y="20" width="600" height="210" rx="10"/>
-  <text class="code head" x="36" y="44">string</text>
-  <text class="txt sub" x="96" y="44">let a の型</text>
-  <text class="code" x="480" y="118">"travel"</text>
-  <text class="code" x="480" y="148">"abc"</text>
-  <text class="txt sub" x="480" y="178">ほかの文字列</text>
+  <rect class="outer" x="20" y="16" width="620" height="208" rx="10"/>
+  <text class="code head" x="36" y="40">string</text>
+  <text class="txt sub" x="92" y="40">（let a の型）</text>
+  <text class="code" x="500" y="84">"travel"</text>
+  <text class="code" x="500" y="110">"abc"</text>
+  <text class="txt sub" x="500" y="136">ほかの文字列</text>
 
   <!-- Category -->
-  <rect class="obj" x="40" y="60" width="330" height="156" rx="10"/>
-  <text class="code head" x="56" y="84">Category</text>
-  <text class="code" x="56" y="196">"food"</text>
+  <rect class="obj" x="40" y="54" width="350" height="154" rx="10"/>
+  <text class="code head" x="56" y="78">Category</text>
+  <text class="code" x="56" y="112">"food"</text>
 
   <!-- "transport" 型（const b の型） -->
-  <rect class="inner" x="196" y="128" width="156" height="68" rx="8"/>
-  <text class="txt sub" x="208" y="148">const b の型</text>
-  <text class="code" x="274" y="180" text-anchor="middle">"transport"</text>
+  <rect class="inner" x="196" y="100" width="178" height="92" rx="8"/>
+  <text class="code head" x="210" y="122">"transport"</text>
+  <text class="txt sub" x="210" y="140">（const b の型）</text>
+  <text class="code" x="210" y="174">"transport"</text>
 
+  <!-- 入る：second = b -->
+  <path class="line" d="M192,160 L112,160" marker-end="url(#ao)"/>
+  <text class="code" x="152" y="150" text-anchor="middle">second = b</text>
+  <text class="txt ok-txt" x="152" y="180" text-anchor="middle">入る</text>
 
-  <!-- 入らない（型エラー） -->
-  <path class="chk" d="M470,114 L382,114" marker-end="url(#ac)"/>
-  <path class="chk-x" d="M364,106 L378,122 M378,106 L364,122"/>
-  <text class="txt chk-txt" x="382" y="96">入らない（型エラー）</text>
+  <!-- 入らない：first = a -->
+  <path class="chk" d="M600,178 L398,178" marker-end="url(#ac)"/>
+  <path class="chk-x" d="M492,170 L506,186 M506,170 L492,186"/>
+  <text class="code" x="499" y="164" text-anchor="middle">first = a</text>
+  <text class="txt chk-txt" x="499" y="206" text-anchor="middle">入らない（型エラー）</text>
 </svg>

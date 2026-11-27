@@ -6,9 +6,22 @@ body {
   line-height: 1.7;
   color: #1f2328;
 }
-input, button { font: inherit; padding: 0.3rem 0.6rem; }
-label { margin-right: 0.75rem; }
+form { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; align-items: end; }
+input, button {
+  font: inherit;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid #8c959f;
+  border-radius: 6px;
+}
+input { width: 14rem; }
+button { background: #f3f4f6; color: inherit; cursor: pointer; }
 .error { color: #b42318; }
 .list { padding-left: 1.25rem; }
+.list button { margin-left: 0.5rem; padding: 0.1rem 0.5rem; }
 .hidden { display: none; }
-.list button { margin-left: 0.5rem; }
+
+@media (prefers-color-scheme: dark) {
+  body { background: #0d1117; color: #e6edf3; }
+  input, button { background: #161b22; color: inherit; border-color: #484f58; }
+  .error { color: #ff7b72; }
+}

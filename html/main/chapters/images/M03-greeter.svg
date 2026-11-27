@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 300" width="660" height="300" role="img" aria-labelledby="t d">
+  <title id="t">外側の関数が終わっても、変数は残る</title>
+  <desc id="d">makeGreeter("こんにちは") を呼んでいる間、makeGreeter の中に greeting の入れ物が作られ、返すアロー関数がそれを覚える。makeGreeter が終わった後も、hello が指す関数は greeting（こんにちは）を覚えている。bye が指す関数は、別の greeting（さようなら）を覚えている。</desc>
+  <style>
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 12px; }
+    .head { font-weight: 700; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+    .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .obj2 { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .line { fill: none; stroke: #2563eb; stroke-width: 1.8; }
+    .line2 { fill: none; stroke: #64748b; stroke-width: 1.8; }
+    .tip { fill: #2563eb; }
+    .tip2 { fill: #64748b; }
+    .frame { fill: none; stroke: #94a3b8; stroke-width: 1.2; stroke-dasharray: 5 4; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code { fill: #e5e7eb; }
+      .sub { fill: #9ca3af; }
+      .var { fill: #1e293b; stroke: #64748b; }
+      .obj { fill: #172554; stroke: #60a5fa; }
+      .obj2 { fill: #1e293b; stroke: #64748b; }
+      .line { stroke: #60a5fa; }
+      .line2 { stroke: #94a3b8; }
+      .tip { fill: #60a5fa; }
+      .tip2 { fill: #94a3b8; }
+      .frame { stroke: #64748b; }
+    }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip2" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+  <text class="txt head" x="20" y="24">① makeGreeter("こんにちは") を呼んでいる間</text>
+  <rect class="frame" x="186" y="38" width="466" height="62" rx="8"/>
+  <text class="txt sub" x="20" y="74">makeGreeter の中</text>
+  <rect class="obj2" x="200" y="50" width="226" height="38" rx="8"/>
+  <text class="code" x="214" y="74">(name) =&gt; `${greeting}、…`</text>
+  <rect class="obj" x="460" y="50" width="180" height="38" rx="8"/>
+  <text class="code" x="550" y="74" text-anchor="middle">greeting: "こんにちは"</text>
+  <path class="line" d="M426,69 L456,69" marker-end="url(#a1)"/>
+
+  <text class="txt head" x="20" y="140">② makeGreeter が終わった後</text>
+  <rect class="var" x="20" y="158" width="120" height="36" rx="6"/>
+  <text class="code" x="80" y="181" text-anchor="middle">hello</text>
+  <rect class="obj2" x="200" y="157" width="226" height="38" rx="8"/>
+  <text class="code" x="214" y="181">(name) =&gt; `${greeting}、…`</text>
+  <rect class="obj" x="460" y="157" width="180" height="38" rx="8"/>
+  <text class="code" x="550" y="181" text-anchor="middle">greeting: "こんにちは"</text>
+  <path class="line2" d="M140,176 L196,176" marker-end="url(#a2)"/>
+  <path class="line" d="M426,176 L456,176" marker-end="url(#a1)"/>
+  <text class="txt sub" x="441" y="150" text-anchor="middle">覚えている</text>
+
+  <rect class="var" x="20" y="216" width="120" height="36" rx="6"/>
+  <text class="code" x="80" y="239" text-anchor="middle">bye</text>
+  <rect class="obj2" x="200" y="215" width="226" height="38" rx="8"/>
+  <text class="code" x="214" y="239">(name) =&gt; `${greeting}、…`</text>
+  <rect class="obj" x="460" y="215" width="180" height="38" rx="8"/>
+  <text class="code" x="550" y="239" text-anchor="middle">greeting: "さようなら"</text>
+  <path class="line2" d="M140,234 L196,234" marker-end="url(#a2)"/>
+  <path class="line" d="M426,234 L456,234" marker-end="url(#a1)"/>
+  <text class="txt sub" x="20" y="284">makeGreeter は終わったが、返した関数が覚えている greeting は残る。呼ぶたびに、別の greeting が作られる。</text>
+</svg>

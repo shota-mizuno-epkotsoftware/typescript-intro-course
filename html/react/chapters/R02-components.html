@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>React 編 第2章 コンポーネントと props | TypeScript 入門</title>
+  <script>
+    // 保存した表示モード（ライト・ダーク）を、画面を描く前に反映する
+    try {
+      var theme = localStorage.getItem("tsl:theme");
+      if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+    } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="../../assets/style.css?v=mwydc4yf">
+  <script src="../../assets/app.js?v=mwydc4yf" defer></script>
+  <script src="../../assets/viz.js?v=mwydc4yf" defer></script>
+  <script src="../../assets/app-map.js?v=mwydc4yf" defer></script>
+</head>
+<body data-page-key="react/chapters/R02-components">
+  <header class="topbar">
+    <button class="menu-button" type="button" aria-controls="sidebar" aria-expanded="false">目次</button>
+    <a class="site-title" href="../../index.html">TypeScript 入門</a>
+    <div class="theme-switch" role="group" aria-label="表示モード">
+      <button type="button" data-theme-choice="light" aria-label="ライト表示" title="ライト表示">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+        </svg>
+      </button>
+      <button type="button" data-theme-choice="dark" aria-label="ダーク表示" title="ダーク表示">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <nav aria-label="章の一覧"><ul><li><a href="../../index.html">はじめに</a></li><li class="nav-group" role="separator"></li><li><a href="../../overview.html">学ぶ技術の関係</a></li><li class="nav-group">基礎編</li><li><a href="../../basics/chapters/B00-setup.html">第0章 準備</a></li><li><a href="../../basics/chapters/B01-values.html">第1章 値と計算</a></li><li><a href="../../basics/chapters/B02-variables.html">第2章 変数</a></li><li><a href="../../basics/chapters/B03-errors.html">第3章 エラーを読む</a></li><li><a href="../../basics/chapters/B04-conditions.html">第4章 条件分岐</a></li><li><a href="../../basics/chapters/B05-arrays-loops.html">第5章 配列と繰り返し</a></li><li><a href="../../basics/chapters/B06-functions.html">第6章 関数</a></li><li><a href="../../basics/chapters/B07-combining.html">第7章 関数を組み合わせる</a></li><li><a href="../../basics/chapters/B08-objects.html">第8章 オブジェクト</a></li><li><a href="../../basics/chapters/B09-array-methods.html">第9章 配列のメソッド</a></li><li><a href="../../basics/chapters/B10-dom.html">第10章 画面を動かす</a></li><li><a href="../../basics/chapters/B11-final.html">第11章 まとめの演習</a></li><li class="nav-group">本編</li><li><a href="../../main/chapters/M00-setup.html">第0章 環境構築</a></li><li><a href="../../main/chapters/M01-syntax-table.html">第1章 基本文法の対応表</a></li><li><a href="../../main/chapters/M02-types.html">第2章 型の基本</a></li><li><a href="../../main/chapters/M03-functions.html">第3章 関数とコールバック</a></li><li><a href="../../main/chapters/M04-objects.html">第4章 オブジェクトと配列</a></li><li><a href="../../main/chapters/M05-data-types.html">第5章 データの型を書く</a></li><li><a href="../../main/chapters/M06-narrowing.html">第6章 null と型の絞り込み</a></li><li><a href="../../main/chapters/M07-array-methods.html">第7章 配列メソッド</a></li><li><a href="../../main/chapters/M08-modules.html">第8章 モジュールと型を読む</a></li><li><a href="../../main/chapters/M09-async.html">第9章 非同期</a></li><li><a href="../../main/chapters/M10-dom.html">第10章 ブラウザとDOM、イベント</a></li><li><a href="../../main/chapters/M11-next-steps.html">第11章 データの保存と通信</a></li><li class="nav-group">実践編</li><li><a href="../../practice/chapters/P00-digest.html">要点と改修（1 ページ）</a></li><li><details class="nav-fold"><summary>詳細版（7 章）</summary><ul><li><a href="../../practice/chapters/P01-overview.html">第1章 全体像と、画面が表示されるまで</a></li><li><a href="../../practice/chapters/P02-types.html">第2章 データの型</a></li><li><a href="../../practice/chapters/P03-form.html">第3章 フォームの入力と検証</a></li><li><a href="../../practice/chapters/P04-events.html">第4章 イベントから再描画まで</a></li><li><a href="../../practice/chapters/P05-summary.html">第5章 集計とテスト</a></li><li><a href="../../practice/chapters/P06-external.html">第6章 外から来るデータ</a></li><li><a href="../../practice/chapters/P07-changes.html">第7章 変更を読む・総合</a></li></ul></details></li><li class="nav-group">React 編</li><li><a href="R00-digest.html">要点と改修（1 ページ）</a></li><li><details class="nav-fold" open><summary>詳細版（7 章）</summary><ul><li><a href="R01-overview.html">第1章 全体像と JSX の入口</a></li><li><a href="R02-components.html" aria-current="page">第2章 コンポーネントと props</a></li><li><a href="R03-state.html">第3章 状態と再描画</a></li><li><a href="R04-form.html">第4章 イベントとフォーム</a></li><li><a href="R05-flow.html">第5章 データの流れと集計</a></li><li><a href="R06-effects.html">第6章 副作用</a></li><li><a href="R07-changes.html">第7章 変更を読む・総合</a></li></ul></details></li><li class="nav-group" role="separator"></li><li><a href="../../troubleshooting.html">つまずき集</a></li><li><a href="../../tools.html">ツール一覧</a></li><li><a href="../../references.html">参考資料との対応</a></li></ul></nav>
+    </aside>
+    <main class="content">
+      <article>
+        <h1>React 編 第2章 コンポーネントと props</h1>
+<section class="chapter-summary" aria-label="この章で学ぶこと"><p class="summary-title">この章で学ぶこと</p><ul>
+<li>大文字で始まるタグが何をしているかと、タグに書いた属性の行き先</li>
+<li>配列を画面に並べる書き方と、<code>key</code> の役目</li>
+<li>条件で表示を変える書き方と、思いがけないものが表示される場合</li>
+</ul></section>
+<details class="toc" open><summary>このページの内容</summary><nav aria-label="このページの内容"><ul><li><a href="#21-読む範囲">2.1 読む範囲</a></li><li><a href="#22-コンポーネントはjsx-を返す関数">2.2 コンポーネントは、JSX を返す関数</a></li><li><a href="#問題-1型エラーを読む">問題 1：型エラーを読む</a></li><li><a href="#23-配列は-map-で並べkey-を付ける">2.3 配列は map で並べ、key を付ける</a></li><li><a href="#問題-2警告を読む">問題 2：警告を読む</a></li><li><a href="#24-条件で表示を変える">2.4 条件で表示を変える</a></li><li><a href="#問題-3支出があるときだけ見出しを出す">問題 3：支出があるときだけ見出しを出す</a></li><li><a href="#問題-4props-をたどる">問題 4：props をたどる</a></li><li><a href="#改修大きな支出を目立たせる">改修：大きな支出を目立たせる</a></li><li><a href="#チェックリスト">チェックリスト</a></li><li><a href="#詳しく学ぶ">詳しく学ぶ</a></li></ul></nav></details>
+<h2 id="21-読む範囲">2.1 読む範囲</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ファイル</th>
+<th>読む場所</th>
+<th>DOM 版の対応</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>react/app/src/App.tsx</code></td>
+<td>コンポーネントを並べている所（81〜108行目の <code>return</code>）</td>
+<td><code>practice/app/src/render.ts</code> の <code>render</code></td>
+</tr>
+<tr>
+<td><code>react/app/src/components/EntryList.tsx</code></td>
+<td>全体</td>
+<td><code>render.ts</code> の <code>renderList</code>（99〜102行目）</td>
+</tr>
+<tr>
+<td><code>react/app/src/components/EntryItem.tsx</code></td>
+<td>全体</td>
+<td><code>render.ts</code> の <code>createEntryItem</code></td>
+</tr>
+<tr>
+<td><code>react/app/src/components/EntryForm.tsx</code></td>
+<td>種別による表示の切り替え（86〜102行目）</td>
+<td><code>render.ts</code> の <code>renderForm</code>（42〜43行目）</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>EntryItem.tsx</code> の 18 行目の <code>onClick</code> は、第4章で読みます。この章では、「ボタンが押されると、<code>{ }</code> の中の関数が動く」とだけ読みます。</p>
+<p>画面で試すときは、この章の改修用フォルダを起動します。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> dev</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> R02</span></span></code></pre>
+<h2 id="22-コンポーネントはjsx-を返す関数">2.2 コンポーネントは、JSX を返す関数</h2>
+<p>コンポーネントは、JSX を返す関数です（第1章の 1.3）。JSX の中に大文字で始まるタグを書くと、React がその名前の関数を呼び、返ってきた JSX をその場所に入れます。</p>
+<p><code>react/app/src/App.tsx</code>（103〜106行目）</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 102"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">section</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> className</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"panel"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">h2</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>明細&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">h2</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        &#x3C;</span><span style="color:#005CC5;--shiki-dark:#79B8FF">EntryList</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> entries</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{visibleEntries} </span><span style="color:#6F42C1;--shiki-dark:#B392F0">onRemove</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{handleRemove} /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">section</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre>
+<p><code>react/app/src/components/EntryList.tsx</code>（5〜11行目）</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 4"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryListProps</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  entries</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Entry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[];</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">  onRemove</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#E36209;--shiki-dark:#FFAB70">id</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#005CC5;--shiki-dark:#79B8FF"> void</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryList</span><span style="color:#24292E;--shiki-dark:#E1E4E8">({ </span><span style="color:#E36209;--shiki-dark:#FFAB70">entries</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">onRemove</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryListProps</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span></span></code></pre>
+<ul>
+<li>タグに書いた属性は、1 つのオブジェクトにまとまって、関数の引数に渡ります。このオブジェクトを <strong>props</strong> と呼びます。105 行目では、<code>EntryList</code> に、<code>entries</code> と <code>onRemove</code> の 2 つのプロパティを持つオブジェクトが渡ります。</li>
+<li>受け取る側は、引数の props から <code>entries</code> と <code>onRemove</code> を分割代入（本編第4章）で取り出しています。この例では、props の型を <code>type</code> で書いています。</li>
+<li>小文字で始まるタグ（<code>&lt;section&gt;</code>・<code>&lt;h2&gt;</code>）は、HTML の要素です。大文字で始まるタグは、自分で書いたコンポーネントです。コンポーネントの名前は、必ず大文字で始めます。</li>
+<li>props の名前は、自分で決めます。<code>onRemove</code> は、<code>EntryList</code> の作者が決めた名前で、HTML の決まった属性ではありません。値には、関数も渡せます。</li>
+<li>props は書き換えません。受け取った値を使って、JSX を作るだけにします（書き換えても再描画は起きず、画面と値がずれます。同じ種類の不具合を、第3章の 3.5 で読みます）。</li>
+</ul>
+<blockquote class="note">
+<p><strong>DOM 版では</strong>
+画面の部分ごとに、<code>renderList(entries, elements)</code> のような関数を作り、<code>render</code> から呼んでいました。React 版では、関数を自分では呼ばず、タグの形で書きます。</p>
+</blockquote>
+<section class="question"><h2 id="問題-1型エラーを読む"><span class="question-kind">問題</span> <span class="question-number">1</span><span class="question-title">型エラーを読む</span></h2>
+<p>改修用フォルダの <code>src/components/EntryList.tsx</code> の 15 行目から、<code>onRemove={onRemove}</code> を消します。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">          &#x3C;</span><span style="color:#005CC5;--shiki-dark:#79B8FF">EntryItem</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> key</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{entry.id} </span><span style="color:#6F42C1;--shiki-dark:#B392F0">entry</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{entry} /></span></span></code></pre>
+<p><code>key</code> は、2.3 で読む React 用の特別な名前です。</p>
+<p>型チェックを実行すると、次のエラーが出ます。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> typecheck</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> R02</span></span></code></pre>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>react/exercises/R02-components/src/components/EntryList.tsx(15,12): error TS2741: Property 'onRemove' is missing in type '{ key: string; entry: Entry; }' but required in type 'EntryItemProps'.</span></span></code></pre>
+<ol>
+<li>エラーの <code>'{ key: string; entry: Entry; }'</code> は、何の型ですか。</li>
+<li><code>'EntryItemProps'</code> は、どのファイルに書いてありますか。足りないと言われているのは、どのプロパティですか。</li>
+<li>このエラーを直さずに画面を動かすと、「削除」を押したときに何が起きると思いますか。</li>
+</ol>
+<details>
+<summary>答えと解説</summary>
+<ol>
+<li><strong>15 行目のタグに書いた属性をまとめたオブジェクトの型</strong>。<code>key</code> と <code>entry</code> が載っています。<code>key</code> は React が受け取るので、<code>EntryItem</code> の props には入りません（2.3 で読みます）。</li>
+<li><strong><code>EntryItem.tsx</code>（4〜7行目）。足りないのは <code>onRemove</code></strong>。<code>EntryItemProps</code> は <code>entry</code> と <code>onRemove</code> の 2 つを必要としていますが、渡しているのは <code>entry</code> だけです。</li>
+<li><strong>Console に <code>TypeError: onRemove is not a function</code> が出て、明細は消えません。</strong> <code>EntryItem</code> の中の <code>onRemove</code> が <code>undefined</code> で、関数として呼べません。型チェックは、画面を動かす前にこの間違いを見つけています。
+<ul>
+<li>画面は、真っ白にはなりません。エラーが起きたのは、画面を作る途中ではなく、ボタンを押したときの処理の中です。</li>
+</ul>
+</li>
+</ol>
+<p><code>EntryItem.tsx</code> は、props の型を <code>interface</code> で書いています（本編第5章の 5.7）。<code>type</code> で書いても意味は同じです。</p>
+<p><code>react/app/src/components/EntryItem.tsx</code>（4〜9行目）</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 3"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">interface</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryItemProps</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  entry</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Entry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">  onRemove</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#E36209;--shiki-dark:#FFAB70">id</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#005CC5;--shiki-dark:#79B8FF"> void</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryItem</span><span style="color:#24292E;--shiki-dark:#E1E4E8">({ </span><span style="color:#E36209;--shiki-dark:#FFAB70">entry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">onRemove</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryItemProps</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span></span></code></pre>
+</details></section>
+
+<h2 id="23-配列は-map-で並べkey-を付ける">2.3 配列は <code>map</code> で並べ、<code>key</code> を付ける</h2>
+<p>配列を画面に並べるには、<code>map</code> で、配列の値 1 つを JSX 1 つに変えます。<code>{ }</code> の中に JSX の配列を入れると、React が順に並べて表示します。</p>
+<p>DOM 版では、<code>map</code> で要素の配列を作り、<code>replaceChildren</code> で一覧の中身を入れ替えていました。</p>
+<p><code>practice/app/src/render.ts</code>（99〜102行目）</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 98"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> renderList</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">entries</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Entry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[], </span><span style="color:#E36209;--shiki-dark:#FFAB70">elements</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Elements</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> void</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  elements.entryList.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">replaceChildren</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#D73A49;--shiki-dark:#F97583">...</span><span style="color:#6F42C1;--shiki-dark:#B392F0">sortByDate</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(entries).</span><span style="color:#6F42C1;--shiki-dark:#B392F0">map</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(createEntryItem));</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  elements.emptyMessage.classList.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">toggle</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"hidden"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, entries.</span><span style="color:#005CC5;--shiki-dark:#79B8FF">length</span><span style="color:#D73A49;--shiki-dark:#F97583"> ></span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+<p><code>react/app/src/components/EntryList.tsx</code>（10〜21行目）</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 9"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryList</span><span style="color:#24292E;--shiki-dark:#E1E4E8">({ </span><span style="color:#E36209;--shiki-dark:#FFAB70">entries</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">onRemove</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryListProps</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">ul</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> className</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"entries"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        {</span><span style="color:#6F42C1;--shiki-dark:#B392F0">sortByDate</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(entries).</span><span style="color:#6F42C1;--shiki-dark:#B392F0">map</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">entry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">          &#x3C;</span><span style="color:#005CC5;--shiki-dark:#79B8FF">EntryItem</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> key</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{entry.id} </span><span style="color:#6F42C1;--shiki-dark:#B392F0">entry</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{entry} </span><span style="color:#6F42C1;--shiki-dark:#B392F0">onRemove</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{onRemove} /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        ))}</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">ul</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      {entries.</span><span style="color:#005CC5;--shiki-dark:#79B8FF">length</span><span style="color:#D73A49;--shiki-dark:#F97583"> ===</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 0</span><span style="color:#D73A49;--shiki-dark:#F97583"> &#x26;&#x26;</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">p</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> className</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"status"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>明細はまだありません。&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">p</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>}</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+<p><strong><code>map</code> で並べる要素には、<code>key</code> を付けます。</strong> <code>key</code> は、React が行を見分けるための印です。</p>
+<ul>
+<li>明細が追加・削除されたとき、React は <code>key</code> を手がかりに、前の一覧と新しい一覧のどの行が同じ明細の行かを調べます。</li>
+<li><code>key</code> には、一覧の中でほかの行と重ならず、変わらない値を渡します。明細では <code>entry.id</code> です。</li>
+<li><code>key</code> は、React が使う特別な名前です。<code>key</code> は React が受け取り、props には入りません。そのため、props の型（<code>EntryItemProps</code>）には <code>key</code> を書きません。</li>
+</ul>
+<section class="question"><h2 id="問題-2警告を読む"><span class="question-kind">問題</span> <span class="question-number">2</span><span class="question-title">警告を読む</span></h2>
+<p>改修用フォルダの <code>src/components/EntryList.tsx</code> の 15 行目から、<code>key={entry.id}</code> を消したとします。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">          &#x3C;</span><span style="color:#005CC5;--shiki-dark:#79B8FF">EntryItem</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> entry</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{entry} </span><span style="color:#6F42C1;--shiki-dark:#B392F0">onRemove</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{onRemove} /></span></span></code></pre>
+<p>明細が 1 件以上あると、Console に、赤い字で次の警告が出ます。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>Each child in a list should have a unique "key" prop.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Check the render method of `EntryList`. See https://react.dev/link/warning-keys for more information.</span></span></code></pre>
+<ol>
+<li>警告は、どのコンポーネントを調べるように言っていますか。</li>
+<li>型チェック（<code>npm run typecheck R02</code>）は、エラーを出すと思いますか。</li>
+<li>一覧は、表示されると思いますか。</li>
+</ol>
+<p>予測を書いたら、15 行目から <code>key={entry.id}</code> を消して試します。画面で一覧を、開発者ツールの Console で警告を見ます。<code>npm run typecheck R02</code> も実行します。</p>
+<details>
+<summary>答えと解説</summary>
+<ol>
+<li><strong><code>EntryList</code></strong>。2 行目の <code>Check the render method of</code> の後ろに、<code>map</code> を書いているコンポーネント（並べる側）の名前が出ます。1 行目は、「並べる要素には、それぞれ重ならない <code>key</code> が要る」という意味です。</li>
+<li><strong>出しません。</strong> <code>key</code> は props に入りません（2.3）。<code>EntryItemProps</code> が求める <code>entry</code> と <code>onRemove</code> はそろっています。</li>
+<li><strong>表示されます。</strong> 追加や削除も動きます。ただし、<code>key</code> がないと、React は行を順番（何番目か）で見分けます。そのため、行の削除や並べ替えのときに、画面の表示がずれる不具合の原因になります（第7章で読みます）。</li>
+</ol>
+</details></section>
+
+<h2 id="24-条件で表示を変える">2.4 条件で表示を変える</h2>
+<p>条件で表示を変えるには、<code>{ }</code> の中に、三項演算子か <code>&amp;&amp;</code> を書きます。</p>
+<ul>
+<li><code>条件 ? A : B</code> は、条件が <code>true</code> なら A を、<code>false</code> なら B を表示します。</li>
+<li><code>条件 &amp;&amp; A</code> は、条件が <code>true</code> のときだけ A を表示します。</li>
+<li><strong><code>true</code>・<code>false</code>・<code>null</code>・<code>undefined</code> は、画面に何も表示されません。</strong></li>
+<li>数は、<code>0</code> も含めて、そのまま表示されます。</li>
+</ul>
+<p><code>EntryList.tsx</code> の 18 行目は、明細が 0 件のときだけ <code>&lt;p&gt;</code> を表示します。0 件でないときは、式の値が <code>false</code> なので、何も表示されません。</p>
+<p>DOM 版では、要素を HTML に置いておき、<code>hidden</code> のクラスを付け外しして隠していました（2.3 の <code>render.ts</code> の 101 行目）。React 版では、表示しない要素は、画面に作りません。</p>
+<section class="question"><h2 id="問題-3支出があるときだけ見出しを出す"><span class="question-kind">問題</span> <span class="question-number">3</span><span class="question-title">支出があるときだけ見出しを出す</span></h2>
+<p>集計の「分類ごとの支出」の見出しは、支出が 1 件もないときにも表示されます。そこで、支出があるときだけ見出しを出そうとして、改修用フォルダの <code>src/components/Summary.tsx</code> の 22 行目を、次のように書き換えました。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      {</span><span style="color:#6F42C1;--shiki-dark:#B392F0">totalsByCategory</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(entries).</span><span style="color:#005CC5;--shiki-dark:#79B8FF">length</span><span style="color:#D73A49;--shiki-dark:#F97583"> &#x26;&#x26;</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">h3</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>分類ごとの支出&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">h3</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>}</span></span></code></pre>
+<p><code>A &amp;&amp; B</code> の値は、A が <code>false</code> として扱われる値（<code>false</code>・<code>0</code>・<code>&quot;&quot;</code> など）なら、A そのものです。そうでなければ、B です。</p>
+<ol>
+<li>支出が 1 件以上あるとき、この行は何を表示しますか。</li>
+<li>支出が 1 件もないとき、この行は何を表示しますか。</li>
+<li>ねらいどおりに動くようにするには、どう直しますか。</li>
+</ol>
+<p>予測を書いたら、<code>Summary.tsx</code> の 22 行目を上のコードに書き換えて試します。支出があるときと 1 件もないときで、見出しの所に何が表示されるかを画面で見ます。</p>
+<ul>
+<li>支出が 1 件もなければ、先に 1 件追加し、「集計」の月を「すべて」にします。</li>
+<li>「集計」の種別（入力フォームの種別ではありません）を「すべて」にすると支出がある状態、「収入」にすると支出が 1 件もない状態になります。</li>
+</ul>
+<details>
+<summary>答えと解説</summary>
+<ol>
+<li><strong>見出し「分類ごとの支出」</strong>。配列の長さは 1 以上なので、式の値は <code>&lt;h3&gt;</code> です。</li>
+<li><strong><code>0</code></strong>。配列の長さは <code>0</code> で、<code>false</code> として扱われるので、式の値は <code>0</code> そのものです。React は数の <code>0</code> をそのまま表示します。</li>
+<li><strong>左側を、<code>true</code> か <code>false</code> になる式にします</strong>。<code>{totalsByCategory(entries).length &gt; 0 &amp;&amp; &lt;h3&gt;分類ごとの支出&lt;/h3&gt;}</code> と書けば、支出がないときの式の値は <code>false</code> で、何も表示されません。</li>
+</ol>
+</details></section>
+
+<section class="question"><h2 id="問題-4props-をたどる"><span class="question-kind">問題</span> <span class="question-number">4</span><span class="question-title">props をたどる</span></h2>
+<p>エディタの「参照へ移動」（名前の上で <code>Shift</code> + <code>F12</code>。実践編 第2章）を使うと、たどりやすくなります。<code>EntryItem.tsx</code> の 9 行目の <code>EntryItem</code> の上で使うと、<code>&lt;EntryItem … /&gt;</code> と書いた場所が開きます。そこで <code>onRemove={…}</code> の右辺を読み、その名前の出どころを同じようにたどります。</p>
+<p><code>EntryItem.tsx</code> の「削除」ボタンは、押されると <code>onRemove(entry.id)</code> を呼びます（18 行目）。</p>
+<p>「削除」を押すと、どのファイルの何という関数に、何が渡りますか。<code>EntryList</code> がすることも含めて、コードをたどって答えてください。</p>
+<details>
+<summary>答えと解説</summary>
+<p><strong><code>App.tsx</code> の <code>handleRemove</code>（75〜77行目）に、明細の ID が渡ります。</strong> <code>App.tsx</code> の 105 行目で <code>EntryList</code> に渡した <code>handleRemove</code> を、<code>EntryList</code> は 15 行目でそのまま <code>EntryItem</code> に渡しています。<code>EntryList</code> 自身は呼びません。</p>
+</details></section>
+
+<hr>
+<section class="exercise"><h2 id="改修大きな支出を目立たせる">改修：大きな支出を目立たせる</h2>
+<p>10,000 円以上の支出の行に、<code>large</code> というクラスを付けます。<code>large</code> の付いた行は、背景が薄い灰色になり、金額が太字になります。CSS は、改修用フォルダの <code>style.css</code> に用意してあります。実践編 第4章と同じ改修です。</p>
+<p><strong>進め方</strong></p>
+<ol class="phase-strip" aria-label="進め方の段階"><li>大きな支出かを調べる関数を書く<span class="range">手順 1</span></li><li>画面につなぐ<span class="range">手順 2〜4</span></li><li>仕上げる<span class="range">手順 5〜6</span></li></ol>
+<h4 class="phase-head">大きな支出かを調べる関数を書く<span class="range">手順 1</span></h4>
+<ol class="steps">
+<li class="step" data-no="1">
+<p class="step-do"><code>react/exercises/R02-components/src/format.ts</code> の、一番下の <code>isLargeExpense</code> の <code>throw</code> の行を書き換える</p>
+<ul class="step-notes">
+<li class="step-note">10,000 円以上の支出なら <code>true</code>、それ以外（10,000 円未満の支出と、収入）なら <code>false</code> を返します</li>
+<li class="step-note">支出は、<code>entry.kind === &quot;expense&quot;</code> の明細です</li>
+</ul>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> test</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> R02</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span><code>isLargeExpense</code> の 3 行に <code>✔</code> が付く（<code>EntryItem</code> の 1 行は <code>✖</code> のまま。「失敗の内容」にも、同じ名前がもう一度出ます）</span></li>
+</ul>
+</li>
+</ol>
+<h4 class="phase-head">画面につなぐ<span class="range">手順 2〜4</span></h4>
+<ol start="2" class="steps">
+<li class="step" data-no="2">
+<p class="step-do">画面を起動したままにする（止めていたら、次を実行する）</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> dev</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> R02</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>家計簿の画面が表示される</span></li>
+</ul>
+</li>
+<li class="step" data-no="3">
+<p class="step-do"><code>src/components/EntryItem.tsx</code> の <code>&lt;li&gt;</code> に、条件で <code>large</code> のクラスを付ける</p>
+<ul class="step-notes">
+<li class="step-note">画面に 10,000 円以上の支出がなければ、先に 1 件追加しておきます</li>
+<li class="step-note"><code>className</code> の値は三項演算子で書きます。<code>isLargeExpense(entry)</code> が <code>true</code> なら <code>&quot;large&quot;</code>、それ以外は <code>undefined</code> を渡します（<code>undefined</code> なら <code>class</code> の属性そのものが付きません）</li>
+<li class="step-note">ほかのファイルの関数は、先頭の <code>import</code> に名前を足すと使えます</li>
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>10,000 円以上の支出の行は、背景が薄い灰色になり、金額が太字になる</span></li>
+</ul>
+</li>
+<li class="step" data-no="4">
+<p class="step-do">画面で次を 1 つずつ試す</p>
+<ul class="step-notes">
+<li class="task"><input type="checkbox"> 10,000 円未満の支出と、収入の行は、これまでどおりに表示される</li>
+<li class="task"><input type="checkbox"> 開発者ツールの Elements で、10,000 円以上の支出の <code>&lt;li&gt;</code> に <code>class=&quot;large&quot;</code> が付いている</li>
+</ul>
+</li>
+</ol>
+<h4 class="phase-head">仕上げる<span class="range">手順 5〜6</span></h4>
+<ol start="5" class="steps">
+<li class="step" data-no="5">
+<p class="step-do">画面を <code>Ctrl</code> + <code>C</code> で止め、型チェックとテストを実行する</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> check</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> R02</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>「型チェック: OK」「テスト: OK」</span></li>
+</ul>
+</li>
+<li class="step" data-no="6">
+<p class="step-do">自分の変更を差分で読む</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">git</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> diff</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> react/exercises/R02-components</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>差分に出るのは <code>format.ts</code> と <code>EntryItem.tsx</code> の 2 つだけ</span></li>
+</ul>
+</li>
+</ol>
+<p><strong>テストで確かめるもの</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>呼び出し・表示するもの</th>
+<th>返す値・画面の HTML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isLargeExpense</code>（10,000 円の支出）</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>isLargeExpense</code>（9,999 円の支出）</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>isLargeExpense</code>（200,000 円の収入）</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>10,000 円の支出の <code>EntryItem</code></td>
+<td><code>&lt;li class=&quot;large&quot;&gt;</code> で始まる</td>
+</tr>
+<tr>
+<td>9,999 円の支出と、収入の <code>EntryItem</code></td>
+<td><code>large</code> を含まない</td>
+</tr>
+</tbody>
+</table></div>
+<details>
+<summary>ヒント 1：どこを見ればよいか</summary>
+<ul>
+<li>条件でクラスを変えている例：<code>Summary.tsx</code> の 20 行目</li>
+<li>クラスを付ける場所：<code>EntryItem.tsx</code> の 11 行目の <code>&lt;li&gt;</code></li>
+</ul>
+</details>
+<details>
+<summary>ヒント 2：書き出し</summary>
+<ul>
+<li><code>isLargeExpense</code>：<code>return entry.kind === &quot;expense&quot; &amp;&amp; entry.amount &gt;= 10000;</code></li>
+<li><code>EntryItem.tsx</code>：<code>&lt;li&gt;</code> を <code>&lt;li className={isLargeExpense(entry) ? &quot;large&quot; : undefined}&gt;</code> に変え、<code>import { ..., isLargeExpense } from &quot;../format.ts&quot;;</code> に名前を足します。</li>
+</ul>
+</details>
+<details>
+<summary>テストや画面がうまくいかないとき</summary>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>表示</th>
+<th>よくある原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>テスト「収入なら金額にかかわらず false を返す」で <code>true !== false</code></td>
+<td>種別を調べていません。支出のときだけ <code>true</code> にします</td>
+</tr>
+<tr>
+<td>テスト「10,000 円以上の支出なら true を返す」で <code>false !== true</code></td>
+<td>10,000 円ちょうどを <code>false</code> にしています。<code>&gt;</code> ではなく <code>&gt;=</code> を使います</td>
+</tr>
+<tr>
+<td>型チェックで <code>Cannot find name 'isLargeExpense'.</code></td>
+<td><code>EntryItem.tsx</code> で <code>isLargeExpense</code> を <code>import</code> していません</td>
+</tr>
+<tr>
+<td>型チェックで <code>Type 'boolean' is not assignable to type 'string'.</code></td>
+<td><code>className={isLargeExpense(entry)}</code> と、結果をそのまま渡しています。三項演算子で、クラスの名前の文字列にします</td>
+</tr>
+<tr>
+<td>型チェックの 1 行目に <code>Type '&quot;large&quot; | false' is not assignable to type 'string | undefined'.</code></td>
+<td><code>className={isLargeExpense(entry) &amp;&amp; &quot;large&quot;}</code> と書いています。条件が <code>false</code> のとき、<code>className</code> に <code>false</code> が渡ります。三項演算子で、<code>&quot;large&quot;</code> か <code>undefined</code> にします</td>
+</tr>
+<tr>
+<td><code>EntryList</code> のテストで <code>+ '&lt;li class=&quot;&quot;&gt;'</code> と <code>- '&lt;li&gt;'</code>（<code>App</code> のテストは <code>undefined !== 4</code>）</td>
+<td>クラスを付けないときに、空の文字列 <code>&quot;&quot;</code> を渡しています。<code>undefined</code> を渡します</td>
+</tr>
+<tr>
+<td>テスト「10,000 円未満の支出と収入の行に large のクラスを付けない」が <code>✖</code>。<code>EntryList</code> のテストで <code>+ '&lt;li class=&quot;large&quot;&gt;'</code></td>
+<td><code>className=&quot;large&quot;</code> と、条件なしで付けています</td>
+</tr>
+<tr>
+<td><code>isLargeExpense</code> のテストは合格するが、「10,000 円以上の支出の行に large のクラスを付ける」が <code>✖</code></td>
+<td><code>&lt;li&gt;</code> ではなく、中の <code>&lt;span&gt;</code> にクラスを付けています。Elements で、<code>large</code> がどの要素に付いているかを見ます</td>
+</tr>
+</tbody>
+</table></div>
+<p>表示の読み方は、<a href="../../troubleshooting.html">つまずき集</a> にあります。</p>
+</details>
+<details class="solution"><summary>解答例を見る</summary><p class="solution-file"><code>react/solutions/R02-components/src/format.ts</code></p><pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">import</span><span style="color:#D73A49;--shiki-dark:#F97583"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { Entry } </span><span style="color:#D73A49;--shiki-dark:#F97583">from</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "./types.ts"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> formatYen</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">amount</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> `${</span><span style="color:#24292E;--shiki-dark:#E1E4E8">amount</span><span style="color:#032F62;--shiki-dark:#9ECBFF">.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">toLocaleString</span><span style="color:#032F62;--shiki-dark:#9ECBFF">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ja-JP"</span><span style="color:#032F62;--shiki-dark:#9ECBFF">)</span><span style="color:#032F62;--shiki-dark:#9ECBFF">}円`</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> formatSignedYen</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">entry</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Entry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> sign</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> entry.kind </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "income"</span><span style="color:#D73A49;--shiki-dark:#F97583"> ?</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "+"</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "-"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> `${</span><span style="color:#24292E;--shiki-dark:#E1E4E8">sign</span><span style="color:#032F62;--shiki-dark:#9ECBFF">}${</span><span style="color:#6F42C1;--shiki-dark:#B392F0">formatYen</span><span style="color:#032F62;--shiki-dark:#9ECBFF">(</span><span style="color:#24292E;--shiki-dark:#E1E4E8">entry</span><span style="color:#032F62;--shiki-dark:#9ECBFF">.</span><span style="color:#24292E;--shiki-dark:#E1E4E8">amount</span><span style="color:#032F62;--shiki-dark:#9ECBFF">)</span><span style="color:#032F62;--shiki-dark:#9ECBFF">}`</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> entryLabel</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">entry</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Entry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (entry.kind </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "income"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> entry.source;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> entry.category;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> formatMonth</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">month</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#005CC5;--shiki-dark:#79B8FF">year</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">monthNumber</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> month.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">split</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"-"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> `${</span><span style="color:#24292E;--shiki-dark:#E1E4E8">year</span><span style="color:#032F62;--shiki-dark:#9ECBFF">}年${</span><span style="color:#6F42C1;--shiki-dark:#B392F0">Number</span><span style="color:#032F62;--shiki-dark:#9ECBFF">(</span><span style="color:#24292E;--shiki-dark:#E1E4E8">monthNumber</span><span style="color:#032F62;--shiki-dark:#9ECBFF">)</span><span style="color:#032F62;--shiki-dark:#9ECBFF">}月`</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">// React 編 第2章 改修: 10,000 円以上の支出なら true を返す</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> isLargeExpense</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">entry</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Entry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> boolean</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> entry.kind </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "expense"</span><span style="color:#D73A49;--shiki-dark:#F97583"> &#x26;&#x26;</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> entry.amount </span><span style="color:#D73A49;--shiki-dark:#F97583">>=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 10000</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre><p class="solution-file"><code>react/solutions/R02-components/src/components/EntryItem.tsx</code></p><pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">import</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { entryLabel, formatSignedYen, isLargeExpense } </span><span style="color:#D73A49;--shiki-dark:#F97583">from</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "../format.ts"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">import</span><span style="color:#D73A49;--shiki-dark:#F97583"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { Entry } </span><span style="color:#D73A49;--shiki-dark:#F97583">from</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "../types.ts"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">interface</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryItemProps</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  entry</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Entry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">  onRemove</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#E36209;--shiki-dark:#FFAB70">id</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#005CC5;--shiki-dark:#79B8FF"> void</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryItem</span><span style="color:#24292E;--shiki-dark:#E1E4E8">({ </span><span style="color:#E36209;--shiki-dark:#FFAB70">entry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">onRemove</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryItemProps</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    &#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">li className</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span><span style="color:#6F42C1;--shiki-dark:#B392F0">isLargeExpense</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">entry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) ? "large" : undefined}</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">      &#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">span className</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"date"</span><span style="color:#D73A49;--shiki-dark:#F97583">></span><span style="color:#24292E;--shiki-dark:#E1E4E8">{entry.date}</span><span style="color:#D73A49;--shiki-dark:#F97583">&#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">span</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">        &#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">span className</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"label"</span><span style="color:#D73A49;--shiki-dark:#F97583">></span><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span><span style="color:#6F42C1;--shiki-dark:#B392F0">entryLabel</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">entry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)}</span><span style="color:#D73A49;--shiki-dark:#F97583">&#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">span</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        {</span><span style="color:#E36209;--shiki-dark:#FFAB70">entry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">.</span><span style="color:#E36209;--shiki-dark:#FFAB70">memo</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> !== </span><span style="color:#E36209;--shiki-dark:#FFAB70">undefined</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> &#x26;&#x26; &#x3C;</span><span style="color:#E36209;--shiki-dark:#FFAB70">span</span><span style="color:#E36209;--shiki-dark:#FFAB70"> className</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"memo"</span><span style="color:#D73A49;--shiki-dark:#F97583">></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {entry.memo}</span><span style="color:#D73A49;--shiki-dark:#F97583">&#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">span</span><span style="color:#D73A49;--shiki-dark:#F97583">></span><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">      &#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">span</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">      &#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">span className</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span><span style="color:#032F62;--shiki-dark:#9ECBFF">`amount amount-${</span><span style="color:#24292E;--shiki-dark:#E1E4E8">entry</span><span style="color:#032F62;--shiki-dark:#9ECBFF">.</span><span style="color:#24292E;--shiki-dark:#E1E4E8">kind</span><span style="color:#032F62;--shiki-dark:#9ECBFF">}`</span><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span><span style="color:#D73A49;--shiki-dark:#F97583">></span><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span><span style="color:#6F42C1;--shiki-dark:#B392F0">formatSignedYen</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">entry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)}</span><span style="color:#D73A49;--shiki-dark:#F97583">&#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">span</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">      &#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">button className</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"remove"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> onClick</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{() => </span><span style="color:#6F42C1;--shiki-dark:#B392F0">onRemove</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(entry.id)}</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">        削除</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">      &#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">button</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    &#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">li</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre></details>
+</section>
+<hr>
+<h2 id="チェックリスト">チェックリスト</h2>
+<ul>
+<li class="task"><input type="checkbox"> <code>&lt;EntryList entries={…} onRemove={…} /&gt;</code> と書いたとき、<code>EntryList</code> の関数に何が渡るかを説明できる</li>
+<li class="task"><input type="checkbox"> <code>key</code> を付けなくても型エラーにならないのに、付ける必要がある理由を説明できる</li>
+<li class="task"><input type="checkbox"> <code>{配列.length &amp;&amp; &lt;タグ&gt;}</code> と書くと、<code>0</code> が表示されることがある理由を説明できる</li>
+</ul>
+<h2 id="詳しく学ぶ">詳しく学ぶ</h2>
+<ul>
+<li>React 公式ドキュメント：<a href="https://ja.react.dev/learn/your-first-component" target="_blank" rel="noopener">初めてのコンポーネント</a>、<a href="https://ja.react.dev/learn/passing-props-to-a-component" target="_blank" rel="noopener">コンポーネントに props を渡す</a>、<a href="https://ja.react.dev/learn/conditional-rendering" target="_blank" rel="noopener">条件付きレンダー</a>、<a href="https://ja.react.dev/learn/rendering-lists" target="_blank" rel="noopener">リストのレンダー</a>、<a href="https://ja.react.dev/learn/typescript" target="_blank" rel="noopener">TypeScript の使用</a></li>
+</ul>
+
+      </article>
+      <nav class="prev-next"><a class="prev" href="R01-overview.html"><small>前へ</small>React 編 第1章 全体像と JSX の入口</a><a class="next" href="R03-state.html"><small>次へ</small>React 編 第3章 状態と再描画</a></nav>
+    </main>
+  </div>
+</body>
+</html>

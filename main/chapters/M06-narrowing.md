@@ -33,12 +33,25 @@ console.log(memoLength({ name: "ペン", memo: "黒" }));    // → 1
 
 | 値 | 出てくる場面 |
 | --- | --- |
-| `undefined` | 指定されていない。省略したプロパティや引数、配列の範囲外（第2章の `process.argv[2]`） |
+| `undefined` | 指定されていない。省略したプロパティ、配列の範囲外（第2章の `process.argv[2]`） |
 | `null` | 「ない」ことを明示する。関数が「ない」を表す値として返すとき（演習の `parseAmount`） |
 
 どちらが来るかは、多くの場合、型に書いてあります（`string | undefined` など）。エディタでカーソルを合わせて調べます。
 
-配列の範囲外と、`Record<string, number>` のまだないキー（第5章 5.5）は、型に `undefined` が出ません。そのときも `=== undefined` で調べてから使います。
+配列の範囲外と `Record<string, number>` のまだないキー（第5章 5.5）は、値が `undefined` でも型に出ません。型チェックは調べ忘れを指摘しないので、自分で `=== undefined` で調べてから使います。
+
+```ts
+const stock: Record<string, number> = { ペン: 25 };
+const count = stock["消しゴム"]; // 型は number だが、値は undefined
+
+// 調べずに使うと
+console.log(count + 1); // → NaN
+
+// 調べてから使う
+if (count === undefined) {
+  console.log("記録がありません"); // → 記録がありません
+}
+```
 
 > **`null` と `undefined` のどちらを使うか**
 > 言語やライブラリが返す値は、そのまま扱います。自分の関数が「無効」を返すとき、この教材は実践編のアプリに合わせて `null` を使います。サバイバルTypeScript は、こだわりがなければ `undefined` を使うことを勧めています。どちらにそろえるかは、プロジェクトで決めます。
@@ -317,7 +330,7 @@ console.log(input.length);
    npm run typecheck M06 problem-03
    ```
 
-2. それぞれのエラーが何を言っているかを、自分の言葉でファイル内のコメント欄に書く
+2. それぞれのエラーが何を言っているかを、自分の言葉に言い換えて、ファイル内のコメント欄に書く
 3. `as` と `!` を使わずにコードを直す
    - `shout` は、`text` が `null` のとき `""` を返すようにします
 4. もう一度同じコマンドを実行する
@@ -372,18 +385,18 @@ if (typeof input === "string") {
    ```sh
    npm test M06
    ```
-   - **こうなれば OK**：テストの表示で、`formatEntry` で始まる行がすべて `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `formatEntry` で始まる行がすべて `✔` になる
 
 #### 外から来た値を調べる関数を書く
 
 2. `parseAmount` の `throw` の行を書き換える
    - `typeof value !== "string"` なら `null` を返します。この後の `value` は `string` に絞り込まれます
    - `Number(value)` の結果を変数に入れます
-   - `Number.isNaN(結果)` が `true` なら `null`、そうでなければ結果を返します（`NaN` は自分自身とも等しくないので、`=== NaN` では調べられません）
+   - `Number.isNaN(結果)` が `true` なら `null`、そうでなければ結果を返します（第2章 2.6）
    ```sh
    npm test M06
    ```
-   - **こうなれば OK**：テストの表示で、`parseAmount` で始まる行がすべて `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `parseAmount` で始まる行がすべて `✔` になる
 
 #### 仕上げる
 
@@ -429,7 +442,7 @@ if (typeof input === "string") {
 | 型チェックで `This condition will always return 'false'.` | `値 === NaN` と書いています。`Number.isNaN(値)` で調べます |
 | `0 !== null` | `typeof` で調べずに `Number()` に渡しています。`Number(null)` は `0` です |
 | 型チェックで `Property 'source' does not exist on type 'Entry'.` | `kind` を調べる前に `entry.source` を使っています。支出には `source` がありません |
-| 型チェックで `Property 'source' does not exist on type '{ kind: "expense"; ... }'.` | 支出の側で `entry.source` を使っています。収入の行をコピーしたときに起きやすい間違いです |
+| 型チェックで `Property 'source' does not exist on type '{ kind: "expense"; amount: number; category: string; }'.` | 支出の側で `entry.source` を使っています。収入の行をコピーしたときに起きやすい間違いです |
 
 </details>
 

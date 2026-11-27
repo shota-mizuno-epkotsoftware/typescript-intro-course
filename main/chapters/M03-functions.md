@@ -84,14 +84,17 @@ const triple = (n: number): number => {
 // エラー: A function whose declared type is neither 'undefined', 'void', nor 'any' must return a value.
 ```
 
-エラーの番号は TS2355 です。エラー文の `void` は、「何も返さない」ことを表す型です。`any` は、第2章の型チェックをしない型です。
+エラーの番号は TS2355 です。エラー文の `void` は、「何も返さない」ことを表す型です。`any` は、第2章 2.5 で出た、型チェックをしない型です。
 
 ## 3.3 関数を値として渡す（コールバック）
 
 関数は、数値や文字列と同じように値として扱えます。別の関数に渡す関数を、**コールバック**と呼びます。
 
 ```ts
-function applyToAll(values: number[], convert: (n: number) => number): number[] {
+function applyToAll(
+  values: number[],
+  convert: (n: number) => number,
+): number[] {
   const result: number[] = [];
   for (const value of values) {
     result.push(convert(value));
@@ -106,7 +109,7 @@ console.log(applyToAll([1, 2, 3], (n) => n * 10)); // → [ 10, 20, 30 ]
 
 - `number[]` は「数値の配列」の型です。空の配列 `[]` は見ただけでは何の配列か分からないので、`result` には型を書きます。
 - `(n: number) => number` は「数値を 1 つ受け取り、数値を返す関数」の型です。引数の名前（`n`）は、型としては意味を持ちません。
-- この例では、引数 `convert` の `:` の後ろが関数の型で、その `=>` の右は戻り値の型です。アロー関数（3.1 の `(a: number, b: number): number => a - b`）では、`=>` の右は処理です。
+- `=>` の右は、関数の型では戻り値の型、アロー関数（3.1 の `(a: number, b: number): number => a - b`）では処理です。この例では、引数 `convert` の `:` の後ろが関数の型です。
 - 渡す側のアロー関数 `(n) => n * 10` には、型を書いていません。`convert` の型から、`n` は `number` だと推論されます。
 
 配列のメソッド `forEach` も、コールバックを受け取ります。
@@ -139,11 +142,13 @@ console.log(hello("Alice")); // → こんにちは、Alice
 console.log(bye("Alice"));   // → さようなら、Alice
 ```
 
+![makeGreeter("こんにちは") を呼んでいる間、makeGreeter の中に greeting の入れ物が作られ、返すアロー関数がそれを覚える。makeGreeter が終わった後も、hello が指す関数は greeting（こんにちは）を覚えている。bye が指す関数は、別の greeting（さようなら）を覚えている。](images/M03-greeter.svg "図3-1 外側の関数が終わっても、変数は残る")
+
 - `makeGreeter` を呼ぶたびに、新しい `greeting` が用意されます。`hello` と `bye` は、それぞれ別の `greeting` を覚えています。
 - 内側の関数は、覚えている変数を読み書きできます。書き換えた値は、次に呼んだときも残っています。
 
 > **PHPでは**
-> PHP の `function 名前()` で宣言した関数の中からは、外の変数をそのままは使えません。TypeScript の関数は、外の変数をそのまま使え、関数を返した後もその値を覚えています。
+> PHP の `function 名前()` で宣言した関数の中からは、外の変数をそのままは使えません。TypeScript の関数は、外の変数をそのまま使え、関数を返した後もその変数を覚えています。
 
 ## 問題 2：2 つのカウンター
 
@@ -180,7 +185,7 @@ console.log(counterB()); // ②
 - ①：`counterA` は、覚えている `count` を 2 回増やした後なので、3 回目の呼び出しで `3` です。
 - ②：`counterB` は `makeCounter()` をもう一度呼んで作った関数です。別の `count` を覚えているので、`1` です。
 
-![counterA と counterB は、どちらも makeCounter が返したアロー関数を指している。counterA の関数は count が 3 の入れ物を覚え、counterB の関数は count が 1 の別の入れ物を覚えている。](images/M03-closure.svg "図3-1 関数ごとに別の count を覚えている")
+![counterA と counterB は、どちらも makeCounter が返したアロー関数を指している。counterA の関数は count が 3 の入れ物を覚え、counterB の関数は count が 1 の別の入れ物を覚えている。](images/M03-closure.svg "図3-2 関数ごとに別の count を覚えている")
 
 </details>
 
@@ -202,7 +207,7 @@ console.log(counterB()); // ②
    ```sh
    npm test M03
    ```
-   - **こうなれば OK**：テストの表示で、`countIf` で始まる行がすべて `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `countIf` で始まる行がすべて `✔` になる
 
 #### 関数を返す関数を書く
 
@@ -212,7 +217,7 @@ console.log(counterB()); // ②
    ```sh
    npm test M03
    ```
-   - **こうなれば OK**：テストの表示で、`makeMultiplier` で始まる行がすべて `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `makeMultiplier` で始まる行がすべて `✔` になる
 
 #### 仕上げる
 
@@ -253,7 +258,7 @@ console.log(counterB()); // ②
 | 表示 | よくある原因 |
 | --- | --- |
 | `3 !== 2` | `countIf` が、条件を確かめずに全部数えています |
-| `undefined !== 2`（型チェックで `A function whose declared type is neither 'undefined', 'void', nor 'any' must return a value.`） | `countIf` の最後に `return count;` を書いていません |
+| `undefined !== 2` と `undefined !== 0`（型チェックで `A function whose declared type is neither 'undefined', 'void', nor 'any' must return a value.`） | `countIf` の最後に `return count;` を書いていません |
 | `undefined !== 12` と `undefined !== 10`（同時に「makeMultiplier が返した関数を、countIf の条件の中で使える」も `0 !== 2` で失敗する） | 返したアロー関数が、何も返していません。`{}` を書いたなら、中に `return` が必要です（3.1） |
 | 型チェックで `Type '(n: number) => void' is not assignable to type '(n: number) => number'.` | 上と同じ原因です |
 | 「`makeMultiplier` は呼ぶたびに別の関数を返す」だけが失敗する（`15 !== 10`） | 返す関数の中で、`factor` ではなく `3` を直接書いています。受け取った `factor` を使います |

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 205" width="640" height="205" role="img" aria-labelledby="t d">
-  <title id="t">counter.ts は1回だけ実行され、count は1つ</title>
+  <title id="t">counter.ts は 1 回だけ実行され、count は 1 つ</title>
   <desc id="d">problem-01.ts と start.ts の両方が counter.ts を import している。counter.ts の console.log は 1 回だけ実行され、count は 1 つだけ。両方のファイルが同じ count を使い、最後は 2 になる。</desc>
   <style>
     .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }

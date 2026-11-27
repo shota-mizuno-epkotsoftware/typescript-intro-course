@@ -1,0 +1,193 @@
+{
+  "file": "basics/exercises/B07-combining/problem-02.js",
+  "label": "1行ずつ見る",
+  "code": "const price = 100;\nlet count = 0;\n\nfunction show(price) {\n  price = price + 50;\n  console.log(price); // ①\n}\n\nfunction addOne() {\n  count = count + 1;\n}\n\nshow(300);\nconsole.log(price); // ②\naddOne();\naddOne();\nconsole.log(count); // ③",
+  "panels": [
+    {
+      "id": "outer",
+      "label": "関数の外の変数"
+    },
+    {
+      "id": "inner",
+      "label": "今いる関数の中の変数"
+    },
+    {
+      "id": "console",
+      "label": "ターミナルの表示"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "phase": "外の変数を宣言する",
+      "note": "関数の外で、price に 100、count に 0 を入れます。",
+      "outer": [
+        "price：100",
+        "count：0"
+      ],
+      "inner": [],
+      "console": []
+    },
+    {
+      "lines": [
+        4,
+        11
+      ],
+      "phase": "関数を作る",
+      "note": "show と addOne の 2 つの関数を作ります。まだ呼ばれません。",
+      "outer": [
+        "price：100",
+        "count：0"
+      ],
+      "inner": [],
+      "console": []
+    },
+    {
+      "lines": [
+        13
+      ],
+      "phase": "show を呼ぶ",
+      "note": "show(300) を呼びます。引数の price に 300 が入ります。外の price とは別の変数です。",
+      "outer": [
+        "price：100",
+        "count：0"
+      ],
+      "inner": [
+        "show の price：300"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        5
+      ],
+      "phase": "show の中：入れ直す",
+      "note": "show の中の price は、引数の price です。300 + 50 の 350 に入れ直します。外の price は 100 のままです。",
+      "outer": [
+        "price：100",
+        "count：0"
+      ],
+      "inner": [
+        "show の price：350"
+      ],
+      "console": []
+    },
+    {
+      "lines": [
+        6
+      ],
+      "phase": "show の中：表示する（①）",
+      "note": "引数の price の 350 を表示します。",
+      "outer": [
+        "price：100",
+        "count：0"
+      ],
+      "inner": [
+        "show の price：350"
+      ],
+      "console": [
+        "350"
+      ]
+    },
+    {
+      "lines": [
+        14
+      ],
+      "phase": "外で表示する（②）",
+      "note": "show が終わり、引数の price はなくなります。ここの price は外の price なので、100 を表示します。",
+      "outer": [
+        "price：100",
+        "count：0"
+      ],
+      "inner": [],
+      "console": [
+        "350",
+        "100"
+      ]
+    },
+    {
+      "lines": [
+        15
+      ],
+      "phase": "addOne を呼ぶ（1 回目）",
+      "note": "addOne() を呼びます。addOne には引数がなく、中で宣言する変数もありません。",
+      "outer": [
+        "price：100",
+        "count：0"
+      ],
+      "inner": [],
+      "console": [
+        "350",
+        "100"
+      ]
+    },
+    {
+      "lines": [
+        10
+      ],
+      "phase": "addOne の中：入れ直す",
+      "note": "addOne の中に count の宣言がないので、外の count を使います。0 + 1 の 1 に入れ直します。",
+      "outer": [
+        "price：100",
+        "count：1"
+      ],
+      "inner": [],
+      "console": [
+        "350",
+        "100"
+      ]
+    },
+    {
+      "lines": [
+        16
+      ],
+      "phase": "addOne を呼ぶ（2 回目）",
+      "note": "もう一度 addOne() を呼びます。",
+      "outer": [
+        "price：100",
+        "count：1"
+      ],
+      "inner": [],
+      "console": [
+        "350",
+        "100"
+      ]
+    },
+    {
+      "lines": [
+        10
+      ],
+      "phase": "addOne の中：入れ直す",
+      "note": "外の count を、1 + 1 の 2 に入れ直します。",
+      "outer": [
+        "price：100",
+        "count：2"
+      ],
+      "inner": [],
+      "console": [
+        "350",
+        "100"
+      ]
+    },
+    {
+      "lines": [
+        17
+      ],
+      "phase": "外で表示する（③）",
+      "note": "外の count の 2 を表示します。",
+      "outer": [
+        "price：100",
+        "count：2"
+      ],
+      "inner": [],
+      "console": [
+        "350",
+        "100",
+        "2"
+      ]
+    }
+  ]
+}

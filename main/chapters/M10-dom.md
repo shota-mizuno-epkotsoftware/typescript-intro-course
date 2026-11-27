@@ -44,8 +44,6 @@ npm run dev M10
 
 ![ブラウザの窓の左に「演習: 家計簿」のページがあり、見出しの「家計簿」、名前の入力欄、金額の入力欄、「追加」のボタンが並んでいる。右に開発者ツールが開いていて、Console のタブを選んでいる。コンソールには、赤い背景の行に「Uncaught Error: TODO: ここを実装してください」と出ていて、その下に at sumAmounts から始まる呼び出しの順が続く。行の右端には、practice-01.ts:21 とファイル名と行番号が出ている。](images/M10-console.svg "図10-1 開発者ツールのコンソール")
 
-コンソールの赤い行はエラーです。右端のファイル名を押すと、エラーの起きた行が開きます。図10-1 は、演習の関数を書く前に「第10章 演習: 家計簿」を開いたときの画面です。
-
 ## 10.3 要素を取得して書き換える
 
 `document.querySelector("セレクタ")` で、画面の要素を取得します。セレクタは、CSS で要素を指定するときと同じ書き方です。
@@ -78,7 +76,7 @@ const ageInput = document.querySelector("#age") as HTMLInputElement;
 console.log(typeof ageInput.value); // 画面: 20 と入力してあっても、コンソールに string と表示される
 ```
 
-`as` は型チェックに言い切るだけで、実行時には何も確かめません。要素がなければ、変数には `null` が入ったままです。`null` のプロパティを読むと、その行を実行したときにエラーになります。
+`as` は問題 1 のコードを読むための書き方で、10.6 で別の書き方に替えます。`as` は実行時には何も確かめず、型チェックに言い切るだけです。要素がなければ、変数には `null` が入ったままです。`null` のプロパティを読むと、その行を実行したときにエラーになります。
 
 ## 10.5 イベントを登録する
 
@@ -136,7 +134,7 @@ console.log(count);
 2. `800300円` です。`Number()` の括弧の中が先に計算されます。`priceInput.value` は文字列 `"800"` なので、`"800" + 300` は連結で `"800300"` です（第2章）。送料を足すには `Number(priceInput.value) + 300` と書きます。
 3. 出ます。ボタンを押したときです。`priceInput` には黙って `null` が入り、コールバックの中で `value` を読んだときに初めてエラーになります。結果の欄は変わりません。
 
-問い 3 のエラーは次の表示です。
+問い 3 のエラーは、Chrome では次の表示です。
 
 ```
 Uncaught TypeError: Cannot read properties of null (reading 'value')
@@ -158,29 +156,22 @@ if (priceInput instanceof HTMLInputElement) {
 }
 ```
 
-`null` を除いただけでは `Element` のままで、`value` を持ちません。`value` を持つのは、`Element` に機能を足した `HTMLInputElement` です。
+要素の型は入れ子で、内側の型ほど使えるものが増えます。`null` を除いただけの `Element` は、`value` を持ちません。
+
+![要素の型を入れ子の枠で描いた図。いちばん外側は EventTarget で、event.target の型。addEventListener を使える。その内側は Element で、querySelector("#price") のように id で取得したときの型。textContent が増える。その内側は HTMLElement で、HTML の要素ならどれでも当てはまる。いちばん内側にタグごとの型が並ぶ。HTMLInputElement は input 要素の型で、querySelector("input") のようにタグ名で取得したときの型。value が増える。ほかに、button 要素の HTMLButtonElement、form 要素の HTMLFormElement があり、ほかのタグにもそれぞれの型がある。＋ には、この章で使うものだけを書いた。event.target と querySelector の実際の型には、どれも | null が付く。](images/M10-element-types.svg "図10-2 要素の型は入れ子で、内側ほど使えるものが増える")
+
+`querySelector("input")` のようにタグ名で取得すると、`null` を除くだけで `value` を使えます。
 
 `instanceof` の注意点は、次の 2 つです。
 
 - `HTMLInputElement` は、ブラウザが用意しているクラスでもあるので、実行時に確かめられます。`type` で書いた型は実行時に消えるので使えません。
 - `null` なら `false` になるので、同じ条件で `null` も除けます。
 
-要素の種類ごとの型は次のとおりです。
-
-| 要素 | 型 |
-| --- | --- |
-| `<input>` | `HTMLInputElement` |
-| `<button>` | `HTMLButtonElement` |
-| `<form>` | `HTMLFormElement` |
-| `<ul>` `<li>` `<p>` など | `HTMLUListElement` `HTMLLIElement` `HTMLParagraphElement` など（`textContent` だけ使うなら `Element` のままでよい） |
-
-`querySelector("input")` のようにタグ名で取得すると、型は最初から `HTMLInputElement | null` です。この場合は `null` を除くだけで `value` を使えます。
-
 ## 10.7 イベントが起きた要素を受け取る
 
 イベントのコールバックは、イベントの情報を引数 `event` で受け取れます。`event.target` は、イベントが起きた要素です。
 
-`event.target` の型は `EventTarget | null` です。`EventTarget` は `value` を持たないので、`instanceof` で入力欄かどうかを確かめてから読みます。下の `"input"` は、入力欄の文字が変わるたびに起きるイベントです。
+`event.target` の型は、図10-2 のいちばん外側の `EventTarget | null` です。`value` を持たないので、`instanceof` で入力欄かどうかを確かめてから読みます。下の `"input"` は、入力欄の文字が変わるたびに起きるイベントです。
 
 ```ts
 const input = document.querySelector("#price");
@@ -221,7 +212,7 @@ if (message instanceof HTMLParagraphElement) {
    npm run typecheck M10 problem-02
    ```
 
-2. それぞれのエラーが何を言っているかを、自分の言葉でファイル内のコメント欄に書く
+2. それぞれのエラーが何を言っているかを、自分の言葉に言い換えて、ファイル内のコメント欄に書く
 3. `as` を使わずに、エラーが消えるようにコードを直す
 4. もう一度同じコマンドを実行する
    - **こうなれば OK**：「型チェック: OK」と表示される
@@ -294,7 +285,7 @@ if (list !== null) {
 
 入力欄とボタンは `<form>` で囲み、次の道具を使います。
 
-- `"submit"` イベント：フォームの中のボタンや、入力欄で `Enter` キーを押したときに起きる
+- `"submit"` イベント：フォームの中の `<button>` を押したときと、入力欄で `Enter` キーを押したときに起きる
 - `event.preventDefault()`：ページの読み込み直しを止める。`"submit"` の処理の最初に呼ぶ
 - `form.reset()`：入力欄を最初の状態に戻す
 
@@ -304,7 +295,9 @@ if (list !== null) {
 2. イベントが起きたら、状態を新しくする（第4章の「元を変えずに新しく作る」）
 3. `render` 関数で、状態から画面を作り直す
 
-演習の `practice-01-view.ts` は、この形で書かれています。次のコードは、その抜き出しです。`parseExpense` は演習で書く関数で、入力が正しければ `Expense`（`name` と `amount` を持つオブジェクト）を、間違っていればメッセージの文字列を返します。
+演習の `practice-01-view.ts` は、この形で書かれています。次のコードは、その抜き出しです。コメントの番号は、上の 1〜3 と図10-4 の番号です。`form` や `errorText` は、図10-3 の要素を入れた変数です。`parseExpense` は演習で書く関数で、入力が正しければ `Expense`（`name` と `amount` を持つオブジェクト）を、間違っていればメッセージの文字列を返します。
+
+![ブラウザで「第10章 演習: 家計簿」を開いた画面。上から、見出しの「家計簿」、名前と金額の入力欄と「追加」のボタンが並ぶフォーム、赤い文字のメッセージ「金額は 1 以上の整数で入力してください」、「昼食: 800円」「電車: 200円」の 2 行の一覧、「合計 1,000円」が並ぶ。フォームの id は expense-form で変数は form、名前の入力欄の id は name で変数は nameInput、金額の入力欄の id は amount で変数は amountInput、メッセージの id は error で変数は errorText、一覧の id は list で変数は list、合計の id は total で変数は totalText。](images/M10-screen-ids.svg "図10-3 家計簿の画面と、要素の id・変数")
 
 ```ts
 let expenses: Expense[] = []; // 1. 状態
@@ -325,16 +318,7 @@ form.addEventListener("submit", (event) => {
 });
 ```
 
-![状態は 1 か所の変数 expenses に持つ。追加ボタンを押すとイベントが起きる。イベントの処理で状態 expenses を書き換えて新しくし、render が状態 expenses を読んで一覧と合計を作り直す。画面を見て次の操作をすると、またイベントが起きる。](images/M10-render-loop.svg "図10-2 状態を変えて、画面を作り直す")
-
-`parseExpense` のように入力欄の数を検査するときは、`Number()` で数値にしてから調べます（第2章 2.6）。整数かどうかは `Number.isInteger(値)` で調べ、`NaN` や小数では `false` です。空の入力は `Number("")` で `0` になるので、範囲も合わせて調べます。
-
-```ts
-console.log(Number.isInteger(Number("20")));  // → true
-console.log(Number.isInteger(Number("2.5"))); // → false
-console.log(Number.isInteger(Number("abc"))); // → false
-console.log(Number(""));                      // → 0
-```
+![状態は 1 か所の変数 expenses に持つ。追加ボタンを押すとイベントが起きる。イベントの処理で状態 expenses を書き換えて新しくし、render が状態 expenses を読んで一覧と合計を作り直す。画面を見て次の操作をすると、またイベントが起きる。](images/M10-render-loop.svg "図10-4 状態を変えて、画面を作り直す")
 
 ## 問題 3：追加ボタンと一覧
 
@@ -394,7 +378,7 @@ addButton?.addEventListener("click", () => {
    ```sh
    npm test M10
    ```
-   - **こうなれば OK**：テストの表示で、`sumAmounts` で始まる行が `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `sumAmounts` で始まる行が `✔` になる
 
 #### 入力を検査する関数を書く
 
@@ -407,19 +391,24 @@ addButton?.addEventListener("click", () => {
    ```
    - **こうなれば OK**：テストの表示で、`parseExpense は名前が空ならメッセージを返す` の行が `✔` になる
 3. 残した `throw` の行を、金額の検査と戻り値に書き換える
-   - 10.9 のとおり、`Number(amountText)` で数値にしてから、`Number.isInteger` で整数かを調べます
-   - 整数でないか、`1` より小さいときは、`"金額は 1 以上の整数で入力してください"` を返します
+   - `Number(amountText)` で数値にしてから、`Number.isInteger(値)` で整数かを調べます。`NaN` や小数では `false` です
+   ```ts
+   console.log(Number.isInteger(Number("20")));  // → true
+   console.log(Number.isInteger(Number("2.5"))); // → false
+   console.log(Number.isInteger(Number("abc"))); // → false
+   console.log(Number(""));                      // → 0
+   ```
+   - 整数でないか、`1` より小さいときは、`"金額は 1 以上の整数で入力してください"` を返します（空の入力は `Number("")` で `0` です）
    - 正しいときは、`name` に手順 2 の空白を除いた文字列、`amount` に数値を入れたオブジェクトを返します
    ```sh
    npm test M10
    ```
-   - **こうなれば OK**：テストの表示で、`parseExpense` で始まる行がすべて `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `parseExpense` で始まる行がすべて `✔` になる
 
 #### 画面につなぐ
 
 4. `main/exercises/M10-dom/practice-01-view.ts` の、`render` 関数の TODO を書く
-   - 10.8「要素を作って追加する」の例と同じ形です。配列は `expenses`、一覧は `list` を使います
-   - 1 行の文字は `formatLine(expense)` で作ります
+   - 10.8「要素を作って追加する」の例と同じ形です。配列は `expenses`、一覧は `list`（図10-3）を使い、1 行の文字は `formatLine(expense)` で作ります
    - ファイルの先頭の `if (...) { throw ... }` は書き換えません。この `if` より後では、`list` などの要素をそのまま使えます
    - 画面を止めていたら、次のコマンドでもう一度起動します
    ```sh
@@ -427,7 +416,7 @@ addButton?.addEventListener("click", () => {
    ```
    - **こうなれば OK**：起動中の画面の一覧から「第10章 演習: 家計簿」を開き、「昼食」と「800」を入力して「追加」を押すと、一覧に「昼食: 800円」が出る
 5. 同じ画面で、続けて次を試す
-   - [ ] 「電車」と「200」を追加すると、一覧が「昼食」「電車」の 2 行になり、「合計 1,000円」と表示される
+   - [ ] 「電車」と「200」を追加すると、一覧が「昼食」「電車」の 2 行になり（「昼食」は 1 行だけ）、「合計 1,000円」と表示される
    - [ ] 名前を空にしたり、金額に文字を入れたりすると、メッセージが表示される
 
 #### 仕上げる
@@ -453,7 +442,7 @@ addButton?.addEventListener("click", () => {
 <summary>ヒント 1：どこを見ればよいか</summary>
 
 - `sumAmounts`：第7章 7.4 の `reduce`
-- `parseExpense`：10.9 の `Number()` と `Number.isInteger`、第9章の `trim()`
+- `parseExpense`：手順 3 の `Number.isInteger`、第9章の `trim()`
 - `render`：10.8「要素を作って追加する」
 
 </details>

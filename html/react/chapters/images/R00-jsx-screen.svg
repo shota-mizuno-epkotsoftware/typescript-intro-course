@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 890 290" width="890" height="290" role="img" aria-labelledby="t d">
+  <title id="t">JSX と、画面に表示されるもの</title>
+  <desc id="d">左に Summary.tsx の JSX、右に画面の集計の区画。{formatYen(totalOf(entries, "income"))} の所に「200,000円」が入る。className={balance &lt; 0 ? "negative" : "positive"} で、収支の「198,000円」の色が決まる。totalsByCategory(entries).map(…) の &lt;li&gt; が、「交通費: 1,200円」「食費: 800円」の 2 行になる。</desc>
+  <style>
+    .pg { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 12.8px; fill: #1f2328; }
+    .h1 { font-size: 20.5px; font-weight: 700; }
+    .h2 { font-size: 14px; font-weight: 700; }
+    .h3 { font-size: 12.2px; font-weight: 700; fill: #59636e; }
+    .lbl { font-size: 10.9px; fill: #59636e; }
+    .ctl { font-size: 10.9px; }
+    .small { font-size: 11.5px; }
+    .muted { fill: #59636e; }
+    .inc { fill: #1a7f37; }
+    .exp { fill: #b42318; }
+    .panel { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .ctrl { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .btn { fill: #f6f7f9; stroke: #d8dee4; stroke-width: 0.8; }
+    .rule { fill: none; stroke: #d8dee4; stroke-width: 0.8; }
+    .chev { fill: none; stroke: #1f2328; stroke-width: 1; }
+    .check { fill: #0b63ce; }
+    .tick { fill: none; stroke: #ffffff; stroke-width: 1.6; }
+    .hl { fill: #dbeafe; }
+    .con { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+    .con-bar { fill: #eef1f4; }
+    .con-err { fill: #fdecea; }
+    .con-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 10.5px; fill: #1f2328; }
+    .con-red { fill: #b42318; }
+    .con-ui { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 10.5px; fill: #5f6368; }
+    .con-on { fill: #0b57d0; font-weight: 700; }
+    .codebox { fill: #f6f8fa; stroke: #d8dee4; stroke-width: 0.8; }
+    .code { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; fill: #1f2328; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 1.5; }
+    .mark-b { fill: none; stroke: #2563eb; stroke-width: 1.5; }
+    .lead { fill: none; stroke: #ea580c; stroke-width: 1; }
+    .tag { fill: none; stroke: #ea580c; stroke-width: 1.2; }
+    .tag-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; font-weight: 700; fill: #c2410c; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 12px; fill: #1f2937; }
+    .cap { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; font-weight: 700; fill: #1f2937; }
+    .flow { fill: none; stroke: #6b7280; stroke-width: 1.4; }
+    .flow-head { fill: #6b7280; }
+    @media (prefers-color-scheme: dark) {
+      .mark, .lead, .tag { stroke: #fb923c; }
+      .mark-b { stroke: #60a5fa; }
+      .tag-txt { fill: #fb923c; }
+      .note, .cap { fill: #e5e7eb; }
+      .flow { stroke: #9ca3af; }
+      .flow-head { fill: #9ca3af; }
+    }
+  </style>
+  <rect class="codebox" x="10" y="10" width="470" height="268" rx="6"/>
+  <text class="code" x="24" y="34" xml:space="preserve">&lt;dt&gt;収入&lt;/dt&gt;</text>
+  <text class="code" x="24" y="52" xml:space="preserve">&lt;dd&gt;{formatYen(totalOf(entries, "income"))}&lt;/dd&gt;</text>
+  <text class="code" x="24" y="70" xml:space="preserve">  …</text>
+  <text class="code" x="24" y="88" xml:space="preserve">&lt;dd className={balance &lt; 0 ? "negative" : "positive"}&gt;</text>
+  <text class="code" x="24" y="106" xml:space="preserve">  {formatYen(balance)}</text>
+  <text class="code" x="24" y="124" xml:space="preserve">&lt;/dd&gt;</text>
+  <text class="code" x="24" y="142" xml:space="preserve">&lt;h3&gt;分類ごとの支出&lt;/h3&gt;</text>
+  <text class="code" x="24" y="160" xml:space="preserve">&lt;ul className="plain-list"&gt;</text>
+  <text class="code" x="24" y="178" xml:space="preserve">  {totalsByCategory(entries).map(({ category, total }) =&gt; (</text>
+  <text class="code" x="24" y="196" xml:space="preserve">    &lt;li key={category}&gt;</text>
+  <text class="code" x="24" y="214" xml:space="preserve">      {category}: {formatYen(total)}</text>
+  <text class="code" x="24" y="232" xml:space="preserve">    &lt;/li&gt;</text>
+  <text class="code" x="24" y="250" xml:space="preserve">  ))}</text>
+  <text class="code" x="24" y="268" xml:space="preserve">&lt;/ul&gt;</text>
+  <rect class="panel" x="600" y="10" width="280" height="200" rx="6"/>
+  <text class="pg muted" x="620" y="48">収入</text>
+  <text class="pg" x="684" y="48">200,000円</text>
+  <text class="pg muted" x="620" y="73">支出</text>
+  <text class="pg" x="684" y="73">2,000円</text>
+  <text class="pg muted" x="620" y="98">収支</text>
+  <text class="pg inc" x="684" y="98">198,000円</text>
+  <text class="pg h3" x="620" y="140">分類ごとの支出</text>
+  <text class="pg" x="620" y="163">交通費: 1,200円</text>
+  <text class="pg" x="620" y="185">食費: 800円</text>
+  <rect class="mark" x="48" y="39" width="262" height="18" rx="3"/>
+  <rect class="mark" x="614" y="34" width="142" height="20" rx="3"/>
+  <path class="lead" d="M310,48 C440,48 520,44 614,44"/>
+  <rect class="mark" x="48" y="75" width="344" height="36" rx="3"/>
+  <rect class="mark" x="614" y="84" width="142" height="20" rx="3"/>
+  <path class="lead" d="M392,93 C470,93 540,94 614,94"/>
+  <rect class="mark" x="46" y="183" width="250" height="58" rx="3"/>
+  <rect class="mark" x="616" y="149" width="130" height="44" rx="3"/>
+  <path class="lead" d="M296,212 C440,212 520,171 616,171"/>
+</svg>

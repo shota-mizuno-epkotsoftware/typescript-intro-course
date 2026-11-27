@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 420" width="450" height="420" role="img" aria-labelledby="t d">
+  <title id="t">開発者ツールで localStorage を見る場所</title>
+  <desc id="d">Chrome の開発者ツールの一部を切り出した図。上のタブの並びで Application のタブを選んでいる（①）。左の木の Storage の見出しの下に Local storage があり、その下の http://localhost:5173 の行を選んでいる（②）。右の Key と Value の表に、Key が ts-lecture:memos の行があり（③）、Value にはメモの JSON の文字列の頭（[{"id":"f1ca2c11-… の形）が見える。</desc>
+  <!-- 寸法と配置は practice/chapters/images/P01-local-storage.svg と同じ（開発者ツールの一部を実物の大きさで切り出す。幅 420、タブの列 27、行 22、文字 12）。
+       キーと値は、解答例を当てはめた版で「牛乳」「卵」を追加し、localStorage を読んで確かめた。id は crypto.randomUUID() の結果なので、動かすたびに変わる -->
+  <style>
+    .dt { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 12px; fill: #1f1f1f; }
+    .gray { fill: #5f6368; }
+    .sec { font-size: 11px; font-weight: 700; fill: #5f6368; }
+    .mono { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; fill: #1f1f1f; }
+    .frame { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+    .dev { fill: #f8f9fa; }
+    .edge { fill: none; stroke: #dadce0; stroke-width: 1; }
+    .icon { fill: none; stroke: #5f6368; stroke-width: 1.2; }
+    .filter { fill: #ffffff; stroke: #dadce0; stroke-width: 1; }
+    .sel { fill: #d3e3fd; }
+    .blue { fill: #1a73e8; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 2; }
+    .badge { fill: #ea580c; }
+    .badge-num { font-family: -apple-system, "Segoe UI", sans-serif; font-size: 11px; font-weight: 700; fill: #ffffff; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; fill: #1f2937; }
+    .note-acc { fill: #c2410c; font-weight: 700; }
+    @media (prefers-color-scheme: dark) {
+      .mark { stroke: #fb923c; }
+      .badge { fill: #f97316; }
+      .note { fill: #e5e7eb; }
+      .note-acc { fill: #fb923c; }
+    }
+  </style>
+  <defs>
+    <clipPath id="value-col"><rect x="311" y="103" width="118" height="22"/></clipPath>
+  </defs>
+
+  <!-- 開発者ツールの枠 -->
+  <rect class="frame" x="10.5" y="30.5" width="419" height="290"/>
+
+  <!-- タブの列（高さ 27） -->
+  <rect class="dev" x="11" y="31" width="418" height="26"/>
+  <path class="edge" d="M11,57.5 H429"/>
+  <rect class="icon" x="19" y="38" width="11" height="11" rx="1"/><path class="icon" d="M25,44 L31,50"/>
+  <rect class="icon" x="40" y="37" width="8" height="13" rx="1.5"/>
+  <text class="dt gray" x="60" y="48.5">Elements</text>
+  <text class="dt gray" x="122" y="48.5">Console</text>
+  <text class="dt gray" x="180" y="48.5">Sources</text>
+  <text class="dt" x="240" y="48.5">Application</text>
+  <rect class="blue" x="236" y="55" width="74" height="2"/>
+  <text class="dt gray" x="320" y="48.5">≫</text>
+  <circle class="icon" cx="388" cy="44" r="4.5"/><circle class="icon" cx="388" cy="44" r="1.5"/>
+  <text class="dt gray" x="408" y="48.5">⋮</text>
+
+  <!-- 左の木（幅 180） -->
+  <path class="edge" d="M190.5,58 V320"/>
+  <text class="dt sec" x="18" y="75">Application</text>
+  <rect class="icon" x="22" y="85" width="9" height="11" rx="1"/>
+  <text class="dt" x="38" y="95">Manifest</text>
+  <circle class="icon" cx="26.5" cy="112.5" r="4.5"/>
+  <text class="dt" x="38" y="117">Service workers</text>
+  <path class="icon" d="M22,131 V139 A4.5,2 0 0 0 31,139 V131 A4.5,2 0 0 0 22,131 A4.5,2 0 0 0 31,131"/>
+  <text class="dt" x="38" y="139">Storage</text>
+  <text class="dt sec" x="18" y="165">Storage</text>
+  <text class="dt gray" x="14" y="187">▾</text>
+  <rect class="icon" x="24" y="177" width="11" height="11" rx="1"/><path class="icon" d="M24,182.5 H35 M29.5,177 V188"/>
+  <text class="dt" x="41" y="187">Local storage</text>
+  <rect class="sel" x="11" y="194" width="179" height="22"/>
+  <circle class="icon" cx="42.5" cy="205" r="4.5"/><path class="icon" d="M38,205 H47 M42.5,200.5 C40,203 40,207 42.5,209.5 M42.5,200.5 C45,203 45,207 42.5,209.5"/>
+  <text class="dt" x="53" y="209">http://localhost:5173</text>
+  <text class="dt gray" x="14" y="231">▸</text>
+  <rect class="icon" x="24" y="221" width="11" height="11" rx="1"/><path class="icon" d="M24,226.5 H35 M29.5,221 V232"/>
+  <text class="dt" x="41" y="231">Session storage</text>
+  <path class="icon" d="M24,243 V251 A4.5,2 0 0 0 33,251 V243 A4.5,2 0 0 0 24,243 A4.5,2 0 0 0 33,243"/>
+  <text class="dt" x="41" y="253">IndexedDB</text>
+  <text class="dt gray" x="14" y="275">▸</text>
+  <circle class="icon" cx="29.5" cy="270.5" r="5"/>
+  <text class="dt" x="41" y="275">Cookies</text>
+  <text class="dt" x="41" y="297">Private state tokens</text>
+
+  <!-- 右：Key と Value の表 -->
+  <path class="icon" d="M205,68 A5,5 0 1 0 206,74 M205,64 V68 H201"/>
+  <rect class="filter" x="216" y="62" width="120" height="18" rx="2"/>
+  <text class="dt gray" x="222" y="75">Filter</text>
+  <circle class="icon" cx="352" cy="71" r="5"/><path class="icon" d="M348.5,74.5 L355.5,67.5"/>
+  <path class="icon" d="M368,67 L376,75 M376,67 L368,75"/>
+  <path class="edge" d="M191,84.5 H429"/>
+  <rect class="dev" x="191" y="85" width="238" height="18"/>
+  <text class="dt" x="197" y="98">Key</text>
+  <text class="dt" x="315" y="98">Value</text>
+  <path class="edge" d="M191,103.5 H429"/>
+  <rect class="sel" x="191" y="104" width="238" height="21"/>
+  <text class="dt" x="197" y="118.5">ts-lecture:memos</text>
+  <text class="mono" x="315" y="118.5" clip-path="url(#value-col)">[{"id":"f1ca2c11-efcf-49f2-a7</text>
+  <path class="edge" d="M309.5,85 V320"/>
+
+  <!-- 印 -->
+  <rect class="mark" x="234" y="33" width="80" height="24" rx="3"/>
+  <circle class="badge" cx="274" cy="18" r="8"/><text class="badge-num" x="274" y="22" text-anchor="middle">1</text>
+  <path class="mark" d="M274,26 V33"/>
+  <rect class="mark" x="33" y="194" width="157" height="22" rx="3"/>
+  <circle class="badge" cx="22" cy="205" r="8"/><text class="badge-num" x="22" y="209" text-anchor="middle">2</text>
+  <rect class="mark" x="192" y="104" width="236" height="22" rx="3"/>
+  <circle class="badge" cx="418" cy="138" r="8"/><text class="badge-num" x="418" y="142" text-anchor="middle">3</text>
+  <path class="mark" d="M418,126 V130"/>
+
+  <!-- 下の説明 -->
+  <text class="note" x="10" y="348"><tspan class="note-acc">①</tspan> Application のタブ（見当たらなければ ≫ から選ぶ）</text>
+  <text class="note" x="10" y="372"><tspan class="note-acc">②</tspan> Local storage の下の、ページのアドレス</text>
+  <text class="note" x="10" y="396"><tspan class="note-acc">③</tspan> ts-lecture:memos の行。Value が、JSON の文字列にしたメモ</text>
+</svg>

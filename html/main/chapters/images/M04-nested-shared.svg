@@ -55,8 +55,8 @@
 
   <path class="line2" d="M120,62 L166,62" marker-end="url(#a2)"/>
   <path class="line2" d="M120,188 L166,188" marker-end="url(#a2)"/>
-  <path class="line" d="M286,74 C380,74 420,112 466,118" marker-end="url(#a1)"/>
-  <path class="line" d="M286,200 C380,200 420,138 466,132" marker-end="url(#a1)"/>
+  <path class="line" d="M286,74 H406 C440,74 432,118 466,118" marker-end="url(#a1)"/>
+  <path class="line" d="M286,200 H406 C440,200 432,132 466,132" marker-end="url(#a1)"/>
 
   <text class="txt sub" x="300" y="136">同じ 1 つを指す</text>
 </svg>

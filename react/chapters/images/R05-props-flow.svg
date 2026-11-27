@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 414" width="840" height="414" role="img" aria-labelledby="t d">
+  <title id="t">親から子へは値、子から親へは関数の呼び出し</title>
+  <desc id="d">上に App があり、state として明細・絞り込みの条件・分類の一覧・フォームの種別・入力エラーを持つ。visibleEntries は絞り込んだ後の明細。その下に 4 つの子がある。EntryForm は state.formKind・state.categories・state.formErrors を受け取り、onKindChange・onAdd・onErrors を呼ぶ。EntryForm は、入力途中の値を自分の state に持つ。FilterBar は state.entries と state.filter を受け取り、onFilterChange を呼ぶ。onFilterChange は App の handleFilterChange。Summary は visibleEntries を受け取る。EntryList は visibleEntries と onRemove を受け取り、onRemove を EntryItem へそのまま渡す。EntryList の下に EntryItem があり、entry と onRemove を受け取り、「削除」を押すと onRemove を呼ぶ。下向きの矢印は props で渡す値、上向きの矢印は子が呼ぶ props の関数。</desc>
+  <style>
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 11.5px; }
+    .head { font-weight: 700; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+    .small { font-size: 11.5px; }
+    .var { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; }
+    .obj { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.5; }
+    .line2 { fill: none; stroke: #64748b; stroke-width: 1.8; }
+    .tip2 { fill: #64748b; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code { fill: #e5e7eb; }
+      .sub { fill: #9ca3af; }
+      .var { fill: #1e293b; stroke: #64748b; }
+      .obj { fill: #172554; stroke: #60a5fa; }
+      .line2 { stroke: #94a3b8; }
+      .tip2 { fill: #94a3b8; }
+    }
+  </style>
+  <defs>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="tip2" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <!-- App -->
+  <rect class="var" x="16" y="16" width="808" height="108" rx="10"/>
+  <text class="code head" x="30" y="40">App</text>
+  <rect class="obj" x="30" y="52" width="500" height="36" rx="8"/>
+  <text class="code head" x="44" y="75">state</text>
+  <text class="txt" x="94" y="75">明細・絞り込みの条件・分類の一覧・フォームの種別・入力エラー</text>
+  <text class="code small" x="548" y="68">visibleEntries</text>
+  <text class="txt sub" x="548" y="86">絞り込んだ後の明細</text>
+  <text class="code small" x="410" y="112" text-anchor="middle">handleFilterChange</text>
+
+  <!-- EntryForm -->
+  <path class="line2" d="M32,126 L32,230" marker-end="url(#a2)"/>
+  <text class="code small" x="40" y="164">state.formKind</text>
+  <text class="code small" x="40" y="180">state.categories</text>
+  <text class="code small" x="40" y="196">state.formErrors</text>
+  <path class="line2" d="M170,232 L170,128" marker-end="url(#a2)"/>
+  <text class="code small" x="178" y="164">onKindChange</text>
+  <text class="code small" x="178" y="180">onAdd</text>
+  <text class="code small" x="178" y="196">onErrors</text>
+  <rect class="obj" x="16" y="234" width="246" height="52" rx="8"/>
+  <text class="code head" x="139" y="255" text-anchor="middle">EntryForm</text>
+  <text class="txt sub" x="139" y="274" text-anchor="middle">state：入力途中の値</text>
+
+  <!-- FilterBar -->
+  <path class="line2" d="M294,126 L294,230" marker-end="url(#a2)"/>
+  <text class="code small" x="302" y="164">state.entries</text>
+  <text class="code small" x="302" y="180">state.filter</text>
+  <path class="line2" d="M410,232 L410,128" marker-end="url(#a2)"/>
+  <text class="code small" x="418" y="164">onFilterChange</text>
+  <rect class="var" x="278" y="234" width="230" height="52" rx="8"/>
+  <text class="code head" x="393" y="255" text-anchor="middle">FilterBar</text>
+  <text class="txt sub" x="393" y="274" text-anchor="middle">月・種別の選択欄</text>
+
+  <!-- Summary -->
+  <path class="line2" d="M540,126 L540,230" marker-end="url(#a2)"/>
+  <text class="code small" x="548" y="164">visibleEntries</text>
+  <rect class="var" x="524" y="234" width="120" height="52" rx="8"/>
+  <text class="code head" x="584" y="255" text-anchor="middle">Summary</text>
+  <text class="txt sub" x="584" y="274" text-anchor="middle">収入・支出・収支</text>
+
+  <!-- EntryList -->
+  <path class="line2" d="M676,126 L676,230" marker-end="url(#a2)"/>
+  <text class="code small" x="684" y="164">visibleEntries</text>
+  <path class="line2" d="M800,232 L800,128" marker-end="url(#a2)"/>
+  <text class="code small" x="792" y="190" text-anchor="end">onRemove</text>
+  <text class="txt sub" x="792" y="206" text-anchor="end">EntryItem が呼ぶ</text>
+  <rect class="var" x="660" y="234" width="164" height="52" rx="8"/>
+  <text class="code head" x="742" y="255" text-anchor="middle">EntryList</text>
+  <text class="txt sub" x="742" y="274" text-anchor="middle">明細の一覧</text>
+
+  <!-- EntryItem -->
+  <path class="line2" d="M676,288 L676,348" marker-end="url(#a2)"/>
+  <text class="code small" x="684" y="316">entry</text>
+  <path class="line2" d="M800,350 L800,290" marker-end="url(#a2)"/>
+  <text class="code small" x="792" y="332" text-anchor="end">onRemove</text>
+  <rect class="var" x="660" y="352" width="164" height="46" rx="8"/>
+  <text class="code head" x="742" y="372" text-anchor="middle">EntryItem</text>
+  <text class="txt sub" x="742" y="389" text-anchor="middle">明細の 1 行</text>
+
+  <!-- 凡例 -->
+  <path class="line2" d="M24,326 L24,358" marker-end="url(#a2)"/>
+  <text class="txt sub" x="34" y="347">props で渡す値（親から子へ）</text>
+  <path class="line2" d="M24,398 L24,370" marker-end="url(#a2)"/>
+  <text class="txt sub" x="34" y="389">子が呼ぶ props の関数（子から親へ知らせる）</text>
+</svg>

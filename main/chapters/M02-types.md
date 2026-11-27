@@ -84,7 +84,7 @@ total = 300;
 console.log(total); // → 300
 ```
 
-VS Code で変数名にマウスカーソルを合わせると、推論された型が表示されます。上の `count` なら `let count: number` です。`const price = 1200` のように `const` で作ると、`const price: 1200` と値そのものが表示されます（第5章）。
+VS Code で変数名にマウスカーソルを合わせると、推論された型が表示されます。上の `count` なら `let count: number` です。
 
 > **PHPでは**
 > PHP では引数に種類を書かないことが多いですが、TypeScript では書きます。書く場所は、名前の後ろです（`n: number`）。
@@ -105,7 +105,7 @@ console.log(`Hello, ${name}`);      // → Hello, Alice
 console.log(`来年は ${20 + 1} 歳`); // → 来年は 21 歳
 ```
 
-第0章では `"100" * 2` が `200` になりました。`*` `-` `/` は文字列を数値に変換して計算しますが、`+` は連結になります。
+第0章では `"100" * 2` が `200` になりました。`*` `-` `/` は文字列を数値に変換して計算しますが、`+` は連結になります。文字列に `*` を直接書くと型エラーになりますが、`+` の連結は型エラーになりません。
 
 ## 問題 1：文字列と数値を組み合わせる
 
@@ -142,11 +142,11 @@ console.log(`合計: ${count * price}円`); // ③
 
 ## 2.5 型は実行時に消える
 
-`node` は型注釈を消してから実行します（第0章）。そのため、型チェックをすり抜けた値は、書いた型に変換されず、元の値のまま次の処理に渡ります。
+`node` は型注釈を消してから実行します（第0章）。そのため、型チェックをすり抜けた値は、元の値のまま次の処理に渡ります。書いた型には変換されません。
 
 **JSON** は、`{"name": "Bob", "age": 20}` のようにキーと値の組を文字で書き表すデータ形式です。値は `"` で囲むと文字列、囲まない `20` は数値です。
 
-型チェックをすり抜ける代表が `JSON.parse(文字列)` です。JSON の文字列を読み込んでデータにする関数で、戻り値は **`any`** 型です。`any` は型チェックをしない特別な型です。
+型チェックをすり抜ける代表が `JSON.parse(文字列)` です。JSON の文字列を読み込んでデータにする関数で、戻り値は **`any`** 型です。`any` は型チェックをしない特別な型で、型の間違いを見つけられなくなるので、この教材では自分では使いません。
 
 ```ts
 const user = JSON.parse('{"name": "Bob", "age": "20"}'); // user は any 型
@@ -156,9 +156,9 @@ console.log(user.name);  // → Bob
 console.log(typeof age); // → string
 ```
 
-`age` は `number` 型と書いてありますが、中身は文字列のままです。型チェックが調べるのは**コードだけ**で、実行中に届いた値の中身は調べません。
+型チェックが調べるのは**コードだけ**で、実行中に届いた値の中身は調べません。
 
-`any` は型の間違いを見つけられなくなるので、この教材では自分では使いません。
+![user、user.age、age の 3 つを横に並べ、上の段に型チェックが見る型、下の段に実行時の値を書いた図。上の段は、user が any、user.age も any、age は書いたとおりの number。any は調べないので、number 型の age に入れてもエラーにならない。下の段は、user が name に "Bob"、age に "20" を持つデータ、user.age が文字列の "20"、age も文字列の "20" のまま。型は number でも、実行時の typeof age は string。](images/M02-type-vs-value.svg "図2-1 型チェックが見る型と、実行時の値")
 
 テスト（`npm test`）も `node` で動くので、型注釈を消してから実行します。戻り値の型注釈だけを間違えても、返す値が合っていれば、テストは `✔` になります。
 
@@ -213,12 +213,22 @@ console.log(Number(arg) + 1);
 | `node main/exercises/M02-types/argv.ts abc` | `string` / `abc1` / `NaN` |
 | `node main/exercises/M02-types/argv.ts`（引数なし） | `undefined` / `NaN` / `NaN` |
 
-- `Number()` は、数値にできない文字列を `NaN`（数値ではないことを表す特別な数値）に変換します。`NaN` かどうかは `Number.isNaN(値)` で調べます。
+- `Number()` は、数値にできない文字列を `NaN`（数値ではないことを表す特別な数値）に変換します。
 - 引数なしのとき、`arg` は `undefined` です。`undefined` に数を足すと `NaN` になります。
 - 引数なしでも、エディタでの `arg` の型は `string` と表示されます。TypeScript は、配列のその番号に要素があるかまでは調べません。確かめてから使う書き方は第6章で扱います。
 
 > **PHPでは**
 > `process.argv` は `$argv` にあたります。
+
+`NaN` かどうかは `Number.isNaN(値)` で調べます。`NaN` は自分自身とも等しくないので、`値 === NaN` では調べられません（型エラーになります）。`Number("")` は、`NaN` ではなく `0` です（空の入力の調べ方は第10章）。
+
+```ts
+const n = Number("abc");
+
+console.log(n);               // → NaN
+console.log(Number.isNaN(n)); // → true
+console.log(Number(""));      // → 0
+```
 
 ---
 
@@ -248,23 +258,11 @@ console.log(total);
    npm run typecheck M02 problem-03
    ```
 
-2. それぞれのエラーが何を言っているかを、自分の言葉でファイル内のコメント欄に書く
+   - 行番号は、ファイルの先頭のコメントの分だけ、本文のコードとずれます（第0章の問題 1 と同じ）
+2. それぞれのエラーが何を言っているかを、自分の言葉に言い換えて、ファイル内のコメント欄に書く
 3. エラーが消えるようにコードを直す
 4. もう一度同じコマンドを実行する
    - **こうなれば OK**：「型チェック: OK」と表示される
-
-<details>
-<summary>表示されるエラー</summary>
-
-行番号は、ファイルの先頭のコメントの分だけ、本文のコードとずれます（第0章の問題 1 と同じ）。
-
-```
-main/exercises/M02-types/problem-03.ts(11,1): error TS2322: Type 'number' is not assignable to type 'string'.
-main/exercises/M02-types/problem-03.ts(17,20): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-main/exercises/M02-types/problem-03.ts(20,13): error TS2454: Variable 'total' is used before being assigned.
-```
-
-</details>
 
 <details>
 <summary>言い換えの例と修正例</summary>
@@ -296,7 +294,7 @@ console.log(total);
 ```
 
 > **PHPでは**
-> PHP では、同じ変数に文字列も数値も入れられます。TypeScript では、最初に入れた値と違う種類の値を入れると、実行前にエラーになります。
+> PHP では、同じ変数に文字列も数値も入れられます。TypeScript では、`message` は `string` と推論されたので、数値を入れると型チェックでエラーになります（`node` での実行は止まりません）。
 
 </details>
 
@@ -313,19 +311,19 @@ console.log(total);
    ```sh
    npm test M02
    ```
-   - **こうなれば OK**：テストの表示で、`parsePrice` で始まる行が `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `parsePrice` で始まる行が `✔` になる
 2. `addShipping` の `throw` の行を書き換える
    - 受け取った `price` に `500` を足して返します
    ```sh
    npm test M02
    ```
-   - **こうなれば OK**：テストの表示で、`addShipping` で始まる行がすべて `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `addShipping` で始まる行がすべて `✔` になる
 3. `formatTotal` の `throw` の行を書き換える
    - `parsePrice` で数値にしてから `addShipping` に渡し、テンプレートリテラルで `円` を付けます
    ```sh
    npm test M02
    ```
-   - **こうなれば OK**：テストの表示で、`formatTotal` で始まる行がすべて `✔` になる
+   - **こうなれば OK**：テストの表示で、テスト名が `formatTotal` で始まる行がすべて `✔` になる
 
 #### 型だけを間違えて、テストと型チェックを比べる
 
@@ -334,7 +332,7 @@ console.log(total);
    ```sh
    npm test M02
    ```
-   - **こうなれば OK**：エディタの `parsePrice` の `return` の行に赤い波線が出るが、テストはすべての行が `✔` のまま
+   - **こうなれば OK**：エディタの `parsePrice` の `return` の行と `formatTotal` の中に赤い波線が出るが、テストはすべての行が `✔` のまま
 5. `practice-01.ts` だけを型チェックする
    - `parsePrice` の `return` の行に `Type 'number' is not assignable to type 'string'.`、`formatTotal` の中に `Argument of type 'string' is not assignable to parameter of type 'number'.` が出ます
    ```sh
@@ -357,6 +355,7 @@ console.log(total);
 | --- | --- |
 | `parsePrice("1000")` | `1000` |
 | `addShipping(1000)` | `1500` |
+| `addShipping(0)` | `500` |
 | `formatTotal("1000")` | `"1500円"` |
 | `formatTotal("0")` | `"500円"` |
 

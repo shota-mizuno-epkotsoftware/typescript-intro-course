@@ -29,7 +29,7 @@ console.log(`合計: ${totl}円`);
 
 ReferenceError: totl is not defined
     at file:///（省略）/basics/exercises/B03-errors/try.js:2:20
-（この下にも、at で始まる行が続きます）
+（この下にも、at で始まる行と、Node.js の版を示す行が続きます）
 ```
 
 | 順番 | 読む所 | この例 | 分かること |
@@ -49,7 +49,7 @@ ReferenceError: totl is not defined
 | 種類 | 意味 | よくある原因 |
 | --- | --- | --- |
 | `SyntaxError` | 書き方の決まりに合わない | `"` や `)` の書き忘れ、全角の記号 |
-| `ReferenceError` | その名前のものを、その時点では使えない | つづりの間違い、宣言した行より上で使った |
+| `ReferenceError` | その名前を、その行では使えない | つづりの間違い、宣言した行より上で使った |
 | `TypeError` | 値の使い方が合わない | `console.lg(...)`、`const` の変数への代入 |
 
 `console.lg is not a function` は `TypeError` です。`console` はありますが、その中に `lg` という命令がありません。`console.log` のつづりを間違えると出ます。

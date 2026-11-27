@@ -58,16 +58,15 @@
   <text class="txt" x="550" y="58" text-anchor="middle">11 行目</text>
   <text class="txt sub" x="550" y="78" text-anchor="middle">コンソールに C</text>
 
-  <path class="line2" d="M600,88 L600,146" marker-end="url(#a2)"/>
-  <text class="txt sub" x="590" y="114" text-anchor="end">その後、ボタンを</text>
-  <text class="txt sub" x="590" y="132" text-anchor="end">押すたびに</text>
+  <line class="rule" x1="20" y1="112" x2="640" y2="112"/>
+  <text class="txt sub" x="20" y="138">その後、ボタンを押したとき（押すたびに 1 回）</text>
 
-  <path class="reg" d="M330,88 L330,176 L376,176" marker-end="url(#a3)"/>
-  <text class="txt sub" x="340" y="166">登録</text>
+  <path class="reg" d="M330,88 L330,176 L304,176" marker-end="url(#a3)"/>
+  <text class="txt sub" x="340" y="180">登録</text>
 
-  <rect class="obj" x="380" y="150" width="260" height="52" rx="6"/>
-  <text class="txt" x="510" y="172" text-anchor="middle">7〜9 行目：登録した関数の中</text>
-  <text class="txt sub" x="510" y="192" text-anchor="middle">コンソールに B、画面の文字が変わる</text>
+  <rect class="obj" x="20" y="150" width="280" height="52" rx="6"/>
+  <text class="txt" x="160" y="172" text-anchor="middle">7〜9 行目：登録した関数の中</text>
+  <text class="txt sub" x="160" y="192" text-anchor="middle">コンソールに B、画面の文字が変わる</text>
 
   <text class="txt sub" x="20" y="230">登録した関数の中は、ボタンが押されるまで実行されない。</text>
 </svg>

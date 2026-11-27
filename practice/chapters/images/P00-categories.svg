@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 790 304" width="790" height="304" role="img" aria-labelledby="t d">
+  <title id="t">分類の選択欄の選択肢</title>
+  <desc id="d">分類の選択欄を開いた所を、直す前と直した後で並べた図。直す前は、食費、交通費、100、日用品、空白、空白、娯楽、食費、その他の 9 つが並び、100 と 2 つの空白と 2 つ目の食費に印が付いている。直した後は、食費、交通費、日用品、娯楽、その他の 5 つ。</desc>
+  <style>
+    .pg { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 12.8px; fill: #1f2328; }
+    .h1 { font-size: 20.5px; font-weight: 700; }
+    .h2 { font-size: 14px; font-weight: 700; }
+    .h3 { font-size: 12.2px; font-weight: 700; fill: #59636e; }
+    .lbl { font-size: 10.9px; fill: #59636e; }
+    .ctl { font-size: 10.9px; }
+    .small { font-size: 11.5px; }
+    .muted { fill: #59636e; }
+    .inc { fill: #1a7f37; }
+    .exp { fill: #b42318; }
+    .panel { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .ctrl { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .btn { fill: #f6f7f9; stroke: #d8dee4; stroke-width: 0.8; }
+    .rule { fill: none; stroke: #d8dee4; stroke-width: 0.8; }
+    .chev { fill: none; stroke: #1f2328; stroke-width: 1; }
+    .check { fill: #0b63ce; }
+    .tick { fill: none; stroke: #ffffff; stroke-width: 1.6; }
+    .hl { fill: #dbeafe; }
+    .con { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+    .con-bar { fill: #eef1f4; }
+    .con-err { fill: #fdecea; }
+    .con-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 10.5px; fill: #1f2328; }
+    .con-red { fill: #b42318; }
+    .con-ui { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 10.5px; fill: #5f6368; }
+    .con-on { fill: #0b57d0; font-weight: 700; }
+    .codebox { fill: #f6f8fa; stroke: #d8dee4; stroke-width: 0.8; }
+    .code { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; fill: #1f2328; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 1.5; }
+    .mark-b { fill: none; stroke: #2563eb; stroke-width: 1.5; }
+    .lead { fill: none; stroke: #ea580c; stroke-width: 1; }
+    .tag { fill: none; stroke: #ea580c; stroke-width: 1.2; }
+    .tag-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; font-weight: 700; fill: #c2410c; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 12px; fill: #1f2937; }
+    .cap { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; font-weight: 700; fill: #1f2937; }
+    .flow { fill: none; stroke: #6b7280; stroke-width: 1.4; }
+    .flow-head { fill: #6b7280; }
+    @media (prefers-color-scheme: dark) {
+      .mark, .lead, .tag { stroke: #fb923c; }
+      .mark-b { stroke: #60a5fa; }
+      .tag-txt { fill: #fb923c; }
+      .note, .cap { fill: #e5e7eb; }
+      .flow { stroke: #9ca3af; }
+      .flow-head { fill: #9ca3af; }
+    }
+  </style>
+  <text class="cap" x="10" y="22">直す前</text>
+  <text class="cap" x="420" y="22">直した後</text>
+  <rect class="panel" x="2" y="30" width="140" height="268" rx="6"/>
+  <rect class="panel" x="412" y="30" width="140" height="184" rx="6"/>
+  <text class="pg lbl" x="12" y="55">分類</text>
+  <rect class="ctrl" x="12" y="60" width="96" height="28" rx="4.8"/>
+  <text class="pg ctl" x="18" y="78">食費</text>
+  <path class="chev" d="M93,72 L96.5,75.5 L100,72"/>
+  <rect class="ctrl" x="12" y="92" width="120" height="197" rx="4.8"/>
+  <rect class="hl" x="15" y="95" width="114" height="21" rx="3"/>
+  <text class="pg ctl" x="22" y="111">食費</text>
+  <text class="pg ctl" x="22" y="132">交通費</text>
+  <text class="pg ctl" x="22" y="153">100</text>
+  <rect class="mark" x="16" y="138.5" width="112" height="19" rx="3"/>
+  <text class="pg ctl" x="22" y="174">日用品</text>
+  <text class="pg ctl" x="22" y="195"></text>
+  <rect class="mark" x="16" y="180.5" width="112" height="19" rx="3"/>
+  <text class="pg ctl" x="22" y="216"></text>
+  <rect class="mark" x="16" y="201.5" width="112" height="19" rx="3"/>
+  <text class="pg ctl" x="22" y="237">娯楽</text>
+  <text class="pg ctl" x="22" y="258">食費</text>
+  <rect class="mark" x="16" y="243.5" width="112" height="19" rx="3"/>
+  <text class="pg ctl" x="22" y="279">その他</text>
+  <text class="pg lbl" x="422" y="55">分類</text>
+  <rect class="ctrl" x="422" y="60" width="96" height="28" rx="4.8"/>
+  <text class="pg ctl" x="428" y="78">食費</text>
+  <path class="chev" d="M503,72 L506.5,75.5 L510,72"/>
+  <rect class="ctrl" x="422" y="92" width="120" height="113" rx="4.8"/>
+  <rect class="hl" x="425" y="95" width="114" height="21" rx="3"/>
+  <text class="pg ctl" x="432" y="111">食費</text>
+  <text class="pg ctl" x="432" y="132">交通費</text>
+  <text class="pg ctl" x="432" y="153">日用品</text>
+  <text class="pg ctl" x="432" y="174">娯楽</text>
+  <text class="pg ctl" x="432" y="195">その他</text>
+  <path class="lead" d="M128,147 H170"/>
+  <text class="note" x="176" y="151">数の 100</text>
+  <path class="lead" d="M128,189 H170"/>
+  <path class="lead" d="M128,210 H170"/>
+  <text class="note" x="176" y="204">空白の選択肢が 2 つ</text>
+  <path class="lead" d="M128,252 H170"/>
+  <text class="note" x="176" y="256">2 つ目の「食費」</text>
+  <path class="flow" d="M330,150 L400,150"/>
+  <path class="flow-head" d="M400,150 L393.7,153.0 L393.7,147.0 Z"/>
+</svg>

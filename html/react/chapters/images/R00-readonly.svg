@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 790 272" width="790" height="272" role="img" aria-labelledby="t d">
+  <title id="t">onChange のない入力欄と、Console の警告</title>
+  <desc id="d">上は「明細を追加する」の区画。金額の欄は、500 と打っても空のまま。下は開発者ツールの Console で、赤い行に You provided a `value` prop to a form field without an `onChange` handler. という警告が出ている。</desc>
+  <style>
+    .pg { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 12.8px; fill: #1f2328; }
+    .h1 { font-size: 20.5px; font-weight: 700; }
+    .h2 { font-size: 14px; font-weight: 700; }
+    .h3 { font-size: 12.2px; font-weight: 700; fill: #59636e; }
+    .lbl { font-size: 10.9px; fill: #59636e; }
+    .ctl { font-size: 10.9px; }
+    .small { font-size: 11.5px; }
+    .muted { fill: #59636e; }
+    .inc { fill: #1a7f37; }
+    .exp { fill: #b42318; }
+    .panel { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .ctrl { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .btn { fill: #f6f7f9; stroke: #d8dee4; stroke-width: 0.8; }
+    .rule { fill: none; stroke: #d8dee4; stroke-width: 0.8; }
+    .chev { fill: none; stroke: #1f2328; stroke-width: 1; }
+    .check { fill: #0b63ce; }
+    .tick { fill: none; stroke: #ffffff; stroke-width: 1.6; }
+    .hl { fill: #dbeafe; }
+    .con { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+    .con-bar { fill: #eef1f4; }
+    .con-err { fill: #fdecea; }
+    .con-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 10.5px; fill: #1f2328; }
+    .con-red { fill: #b42318; }
+    .con-ui { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 10.5px; fill: #5f6368; }
+    .con-on { fill: #0b57d0; font-weight: 700; }
+    .codebox { fill: #f6f8fa; stroke: #d8dee4; stroke-width: 0.8; }
+    .code { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; fill: #1f2328; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 1.5; }
+    .mark-b { fill: none; stroke: #2563eb; stroke-width: 1.5; }
+    .lead { fill: none; stroke: #ea580c; stroke-width: 1; }
+    .tag { fill: none; stroke: #ea580c; stroke-width: 1.2; }
+    .tag-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; font-weight: 700; fill: #c2410c; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 12px; fill: #1f2937; }
+    .cap { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; font-weight: 700; fill: #1f2937; }
+    .flow { fill: none; stroke: #6b7280; stroke-width: 1.4; }
+    .flow-head { fill: #6b7280; }
+    @media (prefers-color-scheme: dark) {
+      .mark, .lead, .tag { stroke: #fb923c; }
+      .mark-b { stroke: #60a5fa; }
+      .tag-txt { fill: #fb923c; }
+      .note, .cap { fill: #e5e7eb; }
+      .flow { stroke: #9ca3af; }
+      .flow-head { fill: #9ca3af; }
+    }
+  </style>
+  <rect class="panel" x="10" y="10" width="537" height="166" rx="6"/>
+  <text class="pg h2" x="26.5" y="40">明細を追加する</text>
+  <text class="pg lbl" x="26.5" y="69">種別</text>
+  <rect class="ctrl" x="26.5" y="74" width="48" height="28" rx="4.8"/>
+  <text class="pg ctl" x="32.5" y="92">支出</text>
+  <path class="chev" d="M59.5,86 L63.0,89.5 L66.5,86"/>
+  <text class="pg lbl" x="87.5" y="69">日付</text>
+  <rect class="ctrl" x="87.5" y="74" width="112" height="28" rx="4.8"/>
+  <text class="pg ctl" x="93.5" y="92">2026/11/05</text>
+  <text class="pg lbl" x="212.5" y="69">金額</text>
+  <rect class="ctrl" x="212.5" y="74" width="136" height="28" rx="4.8"/>
+  <text class="pg lbl" x="361.5" y="69">分類</text>
+  <rect class="ctrl" x="361.5" y="74" width="64" height="28" rx="4.8"/>
+  <text class="pg ctl" x="367.5" y="92">食費</text>
+  <path class="chev" d="M410.5,86 L414.0,89.5 L417.5,86"/>
+  <text class="pg lbl" x="26.5" y="121">メモ</text>
+  <rect class="ctrl" x="26.5" y="126" width="136" height="28" rx="4.8"/>
+  <rect class="btn" x="175.5" y="123" width="36" height="31" rx="4.8"/>
+  <text class="pg" x="193.5" y="143" text-anchor="middle">追加</text>
+  <rect class="mark" x="209.5" y="71" width="142" height="34" rx="3"/>
+  <path class="lead" d="M282.5,71 V40 H600"/>
+  <text class="note" x="606" y="44">500 と打っても、空のまま</text>
+  <rect class="con" x="10" y="192" width="770" height="52" rx="5"/>
+  <path class="con-bar" d="M15,192.5 H775 A4.5,4.5 0 0 1 779.5,197 V216 H10.5 V197 A4.5,4.5 0 0 1 15,192.5 Z"/>
+  <text class="con-ui" x="22" y="208">Elements</text>
+  <text class="con-ui con-on" x="80" y="208">Console</text>
+  <text class="con-ui" x="134" y="208">Network</text>
+  <rect class="con-err" x="11" y="218" width="768" height="20"/>
+  <text class="con-txt con-red" x="22" y="232">⊗ You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. …</text>
+</svg>

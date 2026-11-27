@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>React 編 第4章 イベントとフォーム | TypeScript 入門</title>
+  <script>
+    // 保存した表示モード（ライト・ダーク）を、画面を描く前に反映する
+    try {
+      var theme = localStorage.getItem("tsl:theme");
+      if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+    } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="../../assets/style.css?v=mwydc4yf">
+  <script src="../../assets/app.js?v=mwydc4yf" defer></script>
+  <script src="../../assets/viz.js?v=mwydc4yf" defer></script>
+  <script src="../../assets/app-map.js?v=mwydc4yf" defer></script>
+</head>
+<body data-page-key="react/chapters/R04-form">
+  <header class="topbar">
+    <button class="menu-button" type="button" aria-controls="sidebar" aria-expanded="false">目次</button>
+    <a class="site-title" href="../../index.html">TypeScript 入門</a>
+    <div class="theme-switch" role="group" aria-label="表示モード">
+      <button type="button" data-theme-choice="light" aria-label="ライト表示" title="ライト表示">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+        </svg>
+      </button>
+      <button type="button" data-theme-choice="dark" aria-label="ダーク表示" title="ダーク表示">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <nav aria-label="章の一覧"><ul><li><a href="../../index.html">はじめに</a></li><li class="nav-group" role="separator"></li><li><a href="../../overview.html">学ぶ技術の関係</a></li><li class="nav-group">基礎編</li><li><a href="../../basics/chapters/B00-setup.html">第0章 準備</a></li><li><a href="../../basics/chapters/B01-values.html">第1章 値と計算</a></li><li><a href="../../basics/chapters/B02-variables.html">第2章 変数</a></li><li><a href="../../basics/chapters/B03-errors.html">第3章 エラーを読む</a></li><li><a href="../../basics/chapters/B04-conditions.html">第4章 条件分岐</a></li><li><a href="../../basics/chapters/B05-arrays-loops.html">第5章 配列と繰り返し</a></li><li><a href="../../basics/chapters/B06-functions.html">第6章 関数</a></li><li><a href="../../basics/chapters/B07-combining.html">第7章 関数を組み合わせる</a></li><li><a href="../../basics/chapters/B08-objects.html">第8章 オブジェクト</a></li><li><a href="../../basics/chapters/B09-array-methods.html">第9章 配列のメソッド</a></li><li><a href="../../basics/chapters/B10-dom.html">第10章 画面を動かす</a></li><li><a href="../../basics/chapters/B11-final.html">第11章 まとめの演習</a></li><li class="nav-group">本編</li><li><a href="../../main/chapters/M00-setup.html">第0章 環境構築</a></li><li><a href="../../main/chapters/M01-syntax-table.html">第1章 基本文法の対応表</a></li><li><a href="../../main/chapters/M02-types.html">第2章 型の基本</a></li><li><a href="../../main/chapters/M03-functions.html">第3章 関数とコールバック</a></li><li><a href="../../main/chapters/M04-objects.html">第4章 オブジェクトと配列</a></li><li><a href="../../main/chapters/M05-data-types.html">第5章 データの型を書く</a></li><li><a href="../../main/chapters/M06-narrowing.html">第6章 null と型の絞り込み</a></li><li><a href="../../main/chapters/M07-array-methods.html">第7章 配列メソッド</a></li><li><a href="../../main/chapters/M08-modules.html">第8章 モジュールと型を読む</a></li><li><a href="../../main/chapters/M09-async.html">第9章 非同期</a></li><li><a href="../../main/chapters/M10-dom.html">第10章 ブラウザとDOM、イベント</a></li><li><a href="../../main/chapters/M11-next-steps.html">第11章 データの保存と通信</a></li><li class="nav-group">実践編</li><li><a href="../../practice/chapters/P00-digest.html">要点と改修（1 ページ）</a></li><li><details class="nav-fold"><summary>詳細版（7 章）</summary><ul><li><a href="../../practice/chapters/P01-overview.html">第1章 全体像と、画面が表示されるまで</a></li><li><a href="../../practice/chapters/P02-types.html">第2章 データの型</a></li><li><a href="../../practice/chapters/P03-form.html">第3章 フォームの入力と検証</a></li><li><a href="../../practice/chapters/P04-events.html">第4章 イベントから再描画まで</a></li><li><a href="../../practice/chapters/P05-summary.html">第5章 集計とテスト</a></li><li><a href="../../practice/chapters/P06-external.html">第6章 外から来るデータ</a></li><li><a href="../../practice/chapters/P07-changes.html">第7章 変更を読む・総合</a></li></ul></details></li><li class="nav-group">React 編</li><li><a href="R00-digest.html">要点と改修（1 ページ）</a></li><li><details class="nav-fold" open><summary>詳細版（7 章）</summary><ul><li><a href="R01-overview.html">第1章 全体像と JSX の入口</a></li><li><a href="R02-components.html">第2章 コンポーネントと props</a></li><li><a href="R03-state.html">第3章 状態と再描画</a></li><li><a href="R04-form.html" aria-current="page">第4章 イベントとフォーム</a></li><li><a href="R05-flow.html">第5章 データの流れと集計</a></li><li><a href="R06-effects.html">第6章 副作用</a></li><li><a href="R07-changes.html">第7章 変更を読む・総合</a></li></ul></details></li><li class="nav-group" role="separator"></li><li><a href="../../troubleshooting.html">つまずき集</a></li><li><a href="../../tools.html">ツール一覧</a></li><li><a href="../../references.html">参考資料との対応</a></li></ul></nav>
+    </aside>
+    <main class="content">
+      <article>
+        <h1>React 編 第4章 イベントとフォーム</h1>
+<section class="chapter-summary" aria-label="この章で学ぶこと"><p class="summary-title">この章で学ぶこと</p><ul>
+<li>ボタンや入力欄のイベントに、何を渡すか</li>
+<li>入力欄に打った文字を、React 版では誰が持っているか</li>
+<li>イベントの型の読み方と、「追加」を押してから明細ができるまで</li>
+</ul></section>
+<details class="toc" open><summary>このページの内容</summary><nav aria-label="このページの内容"><ul><li><a href="#41-読む範囲">4.1 読む範囲</a></li><li><a href="#42-イベントには関数を渡す">4.2 イベントには、関数を渡す</a></li><li><a href="#問題-1型エラーを読む">問題 1：型エラーを読む</a></li><li><a href="#問題-2onchange-を消した入力欄">問題 2：onChange を消した入力欄</a></li><li><a href="#43-入力欄の値はstate-が持つ">4.3 入力欄の値は、state が持つ</a></li><li><a href="#44-イベントの型">4.4 イベントの型</a></li><li><a href="#問題-3金額を数で持つ">問題 3：金額を数で持つ</a></li><li><a href="#45-追加を押してから明細ができるまで">4.5 「追加」を押してから、明細ができるまで</a></li><li><a href="#問題-4dom-版の送信と並べる">問題 4：DOM 版の送信と並べる</a></li><li><a href="#改修フォームに固定費のチェック欄を足す">改修：フォームに「固定費」のチェック欄を足す</a></li><li><a href="#チェックリスト">チェックリスト</a></li><li><a href="#詳しく学ぶ">詳しく学ぶ</a></li></ul></nav></details>
+<h2 id="41-読む範囲">4.1 読む範囲</h2>
+<p>完成版の <code>react/app/src/components/EntryItem.tsx</code> の「削除」ボタン、<code>EntryForm.tsx</code> の全体（DOM 版の <code>index.html</code> のフォームと <code>main.ts</code> の <code>submit</code>）、<code>validate.ts</code> の <code>parseEntryForm</code> を読みます。</p>
+<h2 id="42-イベントには関数を渡す">4.2 イベントには、関数を渡す</h2>
+<p>JSX では、<code>onClick</code> や <code>onSubmit</code> に、<strong>呼んだ結果ではなく関数そのもの</strong>を渡します。React は、イベントが起きたときにその関数を呼びます。</p>
+<p>DOM 版では、「削除」ボタンに <code>data-id</code> を付け、一覧の全体に <code>click</code> の処理を 1 つ登録していました（実践編 第4章の問題 1）。</p>
+<p><code>practice/app/src/main.ts</code>（81〜89行目）</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 80"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">elements.entryList.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">addEventListener</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"click"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, (</span><span style="color:#E36209;--shiki-dark:#FFAB70">event</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#D73A49;--shiki-dark:#F97583">!</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(event.target </span><span style="color:#D73A49;--shiki-dark:#F97583">instanceof</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> HTMLButtonElement</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)) {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    return</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> id</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> event.target.dataset.id;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (id </span><span style="color:#D73A49;--shiki-dark:#F97583">!==</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> undefined</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    update</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">removeEntry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(state, id));</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">});</span></span></code></pre>
+<p>React 版では、ボタン 1 つずつに関数を渡します。</p>
+<p><code>react/app/src/components/EntryItem.tsx</code>（18〜20行目）</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 17"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> className</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"remove"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> onClick</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{() </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#6F42C1;--shiki-dark:#B392F0"> onRemove</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(entry.id)}></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        削除</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre>
+<ul>
+<li>JSX の <code>{ }</code> の中の式は、コンポーネントの関数が呼ばれたとき（表示するとき）に計算されます。</li>
+<li>引数を渡したいときは、アロー関数で包みます。<code>() =&gt; onRemove(entry.id)</code> は、「クリックされたら <code>onRemove(entry.id)</code> を呼ぶ関数」です。</li>
+<li>アロー関数は、その行の <code>entry</code> を覚えています（本編第3章）。どの明細のボタンかを <code>data-id</code> で伝える必要がありません。</li>
+<li>React が渡すイベントをそのまま受け取る関数は、アロー関数で包まずに、関数の名前だけを書きます（<code>EntryForm.tsx</code> の 65 行目の <code>onSubmit={handleSubmit}</code>）。送信のとき、React がイベントを引数にして <code>handleSubmit</code> を呼びます。</li>
+</ul>
+<section class="question"><h2 id="問題-1型エラーを読む"><span class="question-kind">問題</span> <span class="question-number">1</span><span class="question-title">型エラーを読む</span></h2>
+<p>この問題では画面を使いません。画面を起動していたら、先に <code>Ctrl</code> + <code>C</code> で止めてから書き換えます（画面は止めずに進める第1章の決まりと違う理由は、2 の答えにあります）。型チェックの表示だけを読みます。</p>
+<p>改修用フォルダの <code>src/components/EntryItem.tsx</code> の 18 行目を、アロー関数で包まない形に書き換えます。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> className</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"remove"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> onClick</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span><span style="color:#6F42C1;--shiki-dark:#B392F0">onRemove</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(entry.id)}></span></span></code></pre>
+<p>型チェックを実行すると、次のエラーが出ます。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> typecheck</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> R04</span></span></code></pre>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>react/exercises/R04-form/src/components/EntryItem.tsx(18,34): error TS2322: Type 'void' is not assignable to type 'MouseEventHandler&#x3C;HTMLButtonElement> | undefined'.</span></span></code></pre>
+<ul>
+<li><code>onRemove</code> の型は <code>(id: string) =&gt; void</code> です（同じファイルの 6 行目）。</li>
+<li><code>MouseEventHandler&lt;HTMLButtonElement&gt;</code> は、ボタンのクリックを処理する関数の型です（クリックのイベント <code>MouseEvent&lt;HTMLButtonElement&gt;</code> を受け取る関数）。</li>
+</ul>
+<ol>
+<li>エラーの <code>'void'</code> は、どの式の型ですか。</li>
+<li>このまま画面を表示すると、<code>onRemove(entry.id)</code> はいつ呼ばれますか。</li>
+</ol>
+<details>
+<summary>答えと解説</summary>
+<ol>
+<li><strong><code>onRemove(entry.id)</code></strong>。<code>onRemove</code> を呼んだ結果です。<code>onRemove</code> は何も返さないので、型は <code>void</code> です。<code>onClick</code> に渡せるのは関数（か <code>undefined</code>）なので、型が合いません。</li>
+<li><strong><code>EntryItem</code> が呼ばれたとき</strong>。<code>{ }</code> の中の式は、JSX を作るときに計算されます。ボタンを押す前に、表示しただけで、全部の明細の <code>onRemove</code> が呼ばれます。画面を開くと、明細が全部消え、保存からも消えます。そのため、この問題では画面を止めました。</li>
+</ol>
+</details></section>
+
+<section class="question"><h2 id="問題-2onchange-を消した入力欄"><span class="question-kind">問題</span> <span class="question-number">2</span><span class="question-title"><code>onChange</code> を消した入力欄</span></h2>
+<p>HTML の <code>&lt;input value=&quot;…&quot;&gt;</code> を思い出して、説明の前に予測します。金額の欄は、次のように書いてあります。<code>amount</code> は、<code>EntryForm</code> の state です。</p>
+<p><code>react/app/src/components/EntryForm.tsx</code>（27行目）</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 26"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#005CC5;--shiki-dark:#79B8FF">amount</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">setAmount</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> useState</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span></code></pre>
+<p><code>react/app/src/components/EntryForm.tsx</code>（77〜85行目）</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 76"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">          金額</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">          &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">            inputMode</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"numeric"</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">            autoComplete</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"off"</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">            value</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{amount}</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">            onChange</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{(</span><span style="color:#E36209;--shiki-dark:#FFAB70">event</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#6F42C1;--shiki-dark:#B392F0"> setAmount</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(event.target.value)}</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">          /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre>
+<p>問題 1 で書き換えた <code>EntryItem.tsx</code> の 18 行目を元の <code>onClick={() =&gt; onRemove(entry.id)}</code> に戻し、改修用フォルダの <code>EntryForm.tsx</code> から 83 行目（<code>onChange</code> の行）を消します。</p>
+<ol>
+<li>画面で、金額の欄に <code>500</code> と打つと、欄には何が表示されますか。</li>
+<li>日付を入れ、金額の欄に <code>500</code> と打ってから「追加」を押すと、明細は追加されますか。</li>
+</ol>
+<p>予測を書いたら、<code>npm run dev R04</code> で画面を起動し、Console を開いてから金額の欄で試します。</p>
+<details>
+<summary>答えと解説</summary>
+<ol>
+<li><strong>何も表示されません。</strong> 打っても、欄は空のままです。</li>
+<li><strong>追加されません。</strong> 「金額は 1 以上の整数で入力してください」と表示されます。<code>amount</code> が <code>&quot;&quot;</code> のままなので、<code>parseEntryForm</code> には空の文字列が渡ります。</li>
+</ol>
+<p><code>value={amount}</code> は、最初の値ではありません。「この欄には、いつも <code>amount</code> の値を表示してください」という注文です。<code>value</code> を書いた入力欄では、React は打つたびに欄の文字を <code>value</code> と比べ、違えば <code>value</code> に戻します。第1章の 1.5 の働き（前の JSX との違いだけを画面に反映する）とは別の働きです。<code>amount</code> は <code>&quot;&quot;</code> のまま変わらないので、打った文字は消えて <code>&quot;&quot;</code> に戻ります。</p>
+<p>Console には、赤い字で次の表示が出ています。<code>without an onChange handler</code> は「<code>onChange</code> がない」、<code>read-only field</code> は「書き換えられない欄」という意味です。<code>defaultValue</code> は、最初の値だけを決める書き方です（この講座では使いません）。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.</span></span></code></pre>
+<blockquote class="note">
+<p><strong>HTML では</strong>
+<code>&lt;input value=&quot;500&quot;&gt;</code> の <code>value</code> は、最初に表示する値です。その後は、打った文字を入力欄が自分で持ちます。DOM 版は、この値を「追加」のときに <code>elements.amount.value</code> で読んでいました。</p>
+</blockquote>
+<p>答えを読んだら、消した 83 行目（<code>onChange={(event) =&gt; setAmount(event.target.value)}</code>）を元に戻し、金額の欄に文字を打てることを見ておきます。</p>
+</details></section>
+
+<h2 id="43-入力欄の値はstate-が持つ">4.3 入力欄の値は、state が持つ</h2>
+<p>表示する値を state で決める入力欄を、<strong>制御された入力欄</strong>と呼びます。<code>value</code> にその state を渡し、<code>onChange</code> で入力に合わせて state を更新します。この 2 つは、必ず組で書きます。</p>
+<ol>
+<li>文字を打つと、<code>onChange</code> に渡した関数が呼ばれます。打った後の値は、<code>event.target.value</code> で読めます。</li>
+<li>その値で、state を更新します（<code>setAmount</code>）。</li>
+<li><code>EntryForm</code> がもう一度呼ばれ（第3章）、新しい <code>amount</code> が <code>value</code> に入り、欄に表示されます。</li>
+</ol>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>入力欄</th>
+<th>表示を決める属性</th>
+<th><code>onChange</code> で読む値</th>
+<th>state の型（最初の値）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文字の入力欄</td>
+<td><code>value</code></td>
+<td><code>event.target.value</code></td>
+<td><code>string</code>（<code>useState(&quot;&quot;)</code>）</td>
+</tr>
+<tr>
+<td>チェックボックス</td>
+<td><code>checked</code></td>
+<td><code>event.target.checked</code>（<code>true</code> か <code>false</code>。<code>value</code> はチェックの有無で変わらないので使わない）</td>
+<td><code>boolean</code>（<code>useState(false)</code>）</td>
+</tr>
+</tbody>
+</table></div>
+<p>入力途中の値は、<code>EntryForm</code> の state です（<code>EntryForm.tsx</code> の 26〜30 行目。第3章の 3.6）。<code>App</code> の state（<code>AppState</code>）には入れていません。</p>
+<h2 id="44-イベントの型">4.4 イベントの型</h2>
+<p>イベントの処理に名前を付けて関数にするときは、引数のイベントに型を書きます。</p>
+<p><code>react/app/src/components/EntryForm.tsx</code>（36〜41行目）</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 35"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> handleKindChange</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">event</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> ChangeEvent</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">HTMLSelectElement</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> void</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> value</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> event.target.value;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (value </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "income"</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> value </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "expense"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">      onKindChange</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(value);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span></code></pre>
+<ul>
+<li><code>ChangeEvent&lt;HTMLSelectElement&gt;</code> は、「選択欄の <code>onChange</code> のイベント」の型です。<code>&lt; &gt;</code> の中は、<code>onChange</code> を書いた要素の型です（本編第8章の 8.3）。</li>
+<li><code>ChangeEvent</code> では、<code>event.target</code> もその要素の型になるので、<code>event.target.value</code> を、<code>instanceof</code> で調べずに読めます。</li>
+<li>送信のイベントは <code>SubmitEvent&lt;HTMLFormElement&gt;</code> です（43 行目）。イベントの型は、<code>react</code> から <code>import type</code> で読み込みます（2 行目）。</li>
+<li>JSX の中に直接書いたアロー関数（<code>onChange={(event) =&gt; setAmount(event.target.value)}</code>）は、渡す先から <code>event</code> の型が決まるので、型を書きません。</li>
+</ul>
+<section class="question"><h2 id="問題-3金額を数で持つ"><span class="question-kind">問題</span> <span class="question-number">3</span><span class="question-title">金額を数で持つ</span></h2>
+<p>金額は数なので、state も数で持とうとして、改修用フォルダの <code>EntryForm.tsx</code> の 27 行目を次のように書き換えました。</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#005CC5;--shiki-dark:#79B8FF">amount</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">setAmount</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> useState</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span></code></pre>
+<p>型チェックを実行すると、エラーが 3 つ出ます。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> typecheck</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> R04</span></span></code></pre>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>react/exercises/R04-form/src/components/EntryForm.tsx(47,21): error TS2322: Type 'number' is not assignable to type 'string'.</span></span>
+<span class="line"><span>react/exercises/R04-form/src/components/EntryForm.tsx(56,15): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SetStateAction&#x3C;number>'.</span></span>
+<span class="line"><span>react/exercises/R04-form/src/components/EntryForm.tsx(83,44): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SetStateAction&#x3C;number>'.</span></span></code></pre>
+<ul>
+<li><code>SetStateAction&lt;number&gt;</code> は、「<code>number</code> の state を更新する関数に渡せるもの」の型です。</li>
+<li><code>Number(&quot;&quot;)</code> は <code>0</code> です（本編第10章の 10.9）。</li>
+</ul>
+<ol>
+<li>83 行目のエラーで、<code>'string'</code> と言われているのは、どの式ですか。</li>
+<li>エラーを消すために次の 3 か所を直した状態で、画面の金額の欄に <code>500</code> と打ってから全部消すと、欄には何が表示されますか。
+<ul>
+<li>83 行目：<code>setAmount(Number(event.target.value))</code></li>
+<li>56 行目：<code>setAmount(0)</code></li>
+<li>47 行目：<code>amount,</code> を <code>amount: String(amount),</code> に</li>
+</ul>
+</li>
+<li>型エラーを出さずに、金額の欄を空にもできるようにするには、どう直しますか。</li>
+</ol>
+<details>
+<summary>答えと解説</summary>
+<ol>
+<li><strong><code>event.target.value</code></strong>。入力欄の値は、数を打っても文字列です。<code>number</code> の state には入れられません。</li>
+<li><strong><code>0</code></strong>。全部消したときの <code>event.target.value</code> は <code>&quot;&quot;</code> で、<code>Number(&quot;&quot;)</code> は <code>0</code> です。state が <code>0</code> になり、欄に <code>0</code> と表示されます。欄を空にできません。</li>
+<li><strong>2 の書き換えも含めて、全部を元に戻します</strong>（<code>git restore</code>）。27 行目は <code>useState(&quot;&quot;)</code> です。入力途中の値は、打ったとおりの文字列で持ちます。</li>
+</ol>
+<p>文字列を数に変えて正しい金額かを調べるのは、「追加」を押したときの <code>parseEntryForm</code> の役目です（実践編 第3章）。</p>
+</details></section>
+
+<h2 id="45-追加を押してから明細ができるまで">4.5 「追加」を押してから、明細ができるまで</h2>
+<p>送信の処理は、<code>&lt;form&gt;</code> の <code>onSubmit</code> に渡します（<code>EntryForm.tsx</code> の 65 行目）。フォームの中のボタンを押すと、<code>submit</code> のイベントが起きます。これは DOM 版と同じです。</p>
+<p><code>react/app/src/components/EntryForm.tsx</code>（43〜61行目）</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 42"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> handleSubmit</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">event</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> SubmitEvent</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">HTMLFormElement</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> void</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    event.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">preventDefault</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> result</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> parseEntryForm</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      { kind, date, amount, category: selectedCategory, source, memo },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      crypto.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">randomUUID</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    );</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#D73A49;--shiki-dark:#F97583">!</span><span style="color:#24292E;--shiki-dark:#E1E4E8">result.ok) {</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">      onErrors</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(result.errors);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">      return</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    setDate</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    setAmount</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    setCategory</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    setSource</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    setMemo</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    onAdd</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(result.entry);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span></code></pre>
+<ul>
+<li><code>kind</code>・<code>onErrors</code>・<code>onAdd</code> は、<code>App</code> から props で受け取ったものです。種別と入力エラーは <code>App</code> の state にあり、<code>EntryForm</code> は、関数を呼んで <code>App</code> に知らせます（第5章で読みます）。</li>
+</ul>
+<section class="question"><h2 id="問題-4dom-版の送信と並べる"><span class="question-kind">問題</span> <span class="question-number">4</span><span class="question-title">DOM 版の送信と並べる</span></h2>
+<p><code>practice/app/src/main.ts</code>（40〜61行目）</p>
+<pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 39"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">elements.form.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">addEventListener</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"submit"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, (</span><span style="color:#E36209;--shiki-dark:#FFAB70">event</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  event.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">preventDefault</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> result</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> parseEntryForm</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      kind: elements.kind.value,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      date: elements.date.value,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      amount: elements.amount.value,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      category: elements.category.value,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      source: elements.source.value,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      memo: elements.memo.value,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    crypto.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">randomUUID</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#D73A49;--shiki-dark:#F97583">!</span><span style="color:#24292E;--shiki-dark:#E1E4E8">result.ok) {</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    update</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">setFormErrors</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(state, result.errors));</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    return</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  elements.form.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">reset</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">  update</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">addEntry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(state, result.entry));</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">});</span></span></code></pre>
+<p>4.5 の <code>handleSubmit</code> と見比べて、DOM 版の次の行が、React 版ではどうなっているかを答えてください。</p>
+<ol>
+<li><code>date: elements.date.value,</code>（46 行目）</li>
+<li><code>elements.form.reset();</code>（59 行目）</li>
+<li><code>update(addEntry(state, result.entry));</code>（60 行目）</li>
+<li>改修用フォルダの <code>src/components/EntryForm.tsx</code> の <code>setDate(&quot;&quot;);</code>（55 行目）のすぐ下に <code>console.log(date);</code> を書き、日付に <code>2026-11-05</code>、金額に <code>500</code> を入れて「追加」を押すと、Console に何が出ますか。種別は「支出」で、分類が表示されています。日付を空に戻した直後の <code>date</code> の値を考える問いです。</li>
+</ol>
+<details>
+<summary>答えと解説</summary>
+<ol>
+<li><strong>state の <code>date</code> を、そのまま渡しています</strong>（47 行目）。打つたびに state に入れてあるので、入力欄から読む必要がありません。</li>
+<li><strong>5 つの state を、空の文字列に更新しています</strong>（55〜59 行目）。入力欄は state の値を表示しているので、文字の欄は空になります。分類の欄は、先頭の分類の表示に戻ります（理由は第5章で読みます）。フォームの種別は変わりません。</li>
+<li><strong><code>onAdd(result.entry)</code> を呼んでいます</strong>（60 行目）。<code>onAdd</code> の正体は、<code>App</code> の <code>handleAdd</code> です（第2章の問題 4 と同じたどり方）。<code>handleAdd</code> が、<code>addEntry</code> で新しい state を作ります。</li>
+<li><strong><code>2026-11-05</code></strong>。<code>setDate(&quot;&quot;)</code> を呼んでも、その回の <code>date</code> は変わりません（第3章の 3.3）。欄が空になるのは、<code>EntryForm</code> がもう一度呼ばれたときです。</li>
+</ol>
+</details></section>
+
+<hr>
+<section class="exercise"><h2 id="改修フォームに固定費のチェック欄を足す">改修：フォームに「固定費」のチェック欄を足す</h2>
+<p>支出の明細に、固定費（家賃や定期券など、毎月決まって出ていくお金）かどうかを入力できるようにします。チェックを入れて追加した支出は、一覧に「交通費（固定費）」のように表示されます。</p>
+<p>改修用フォルダでは、型・検証・保存・表示の側（<code>types.ts</code>・<code>validate.ts</code>・<code>storage.ts</code>・<code>format.ts</code>）に、固定費の項目 <code>fixed</code> を足してあります。実践編 第2章の改修を終えた状態です。足りないのは、フォームのチェック欄です。今は、<code>EntryForm.tsx</code> の 47 行目で、いつも <code>fixed: false</code> を渡しています。</p>
+<p><strong>進め方</strong></p>
+<ol class="phase-strip" aria-label="進め方の段階"><li>チェック欄を表示する<span class="range">手順 1〜3</span></li><li>明細に反映する<span class="range">手順 4〜6</span></li><li>仕上げる<span class="range">手順 7〜8</span></li></ol>
+<h4 class="phase-head">チェック欄を表示する<span class="range">手順 1〜3</span></h4>
+<ol class="steps">
+<li class="step" data-no="1">
+<p class="step-do">画面を起動したままにする（止めていたら、次を実行する）</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> dev</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> R04</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>家計簿の画面が表示される</span></li>
+</ul>
+</li>
+<li class="step" data-no="2">
+<p class="step-do"><code>react/exercises/R04-form/src/components/EntryForm.tsx</code> に、固定費の state と、チェック欄を足す</p>
+<ul class="step-notes">
+<li class="step-note">state は、<code>useState</code> の並びの最後に足します。最初の値は <code>false</code> です</li>
+<li class="step-note">チェック欄は <code>&lt;input type=&quot;checkbox&quot; checked={state} onChange={…} /&gt;</code> の形にし、<code>onChange</code> で <code>event.target.checked</code> を読みます（4.3）</li>
+<li class="step-note">チェック欄は <code>&lt;label&gt;</code> で囲み、<code>&lt;label&gt;</code> の中の最初に「固定費」と書きます。ほかの欄と同じ形です</li>
+<li class="step-note">置く場所は、メモの <code>&lt;label&gt;</code> のすぐ上です。分類と入金元を出し分けている三項演算子の、外側に足します</li>
+<li class="step-note">支出のときだけ表示します。<code>条件 &amp;&amp; (…)</code> の形を使います（第2章の 2.4）</li>
+</ul>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> test</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> R04</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>「テスト: OK」</span></li>
+</ul>
+</li>
+<li class="step" data-no="3">
+<p class="step-do">画面で、チェック欄を押す</p>
+<ul class="step-notes">
+<li class="step-note">チェックを入れたまま、フォームの種別を「収入」にし、「支出」に戻します</li>
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>押すたびにチェックが付いたり外れたりし、収入にすると欄が消え、支出に戻した後もチェックが付いている</span></li>
+</ul>
+</li>
+</ol>
+<h4 class="phase-head">明細に反映する<span class="range">手順 4〜6</span></h4>
+<ol start="4" class="steps">
+<li class="step" data-no="4">
+<p class="step-do"><code>handleSubmit</code> で、<code>parseEntryForm</code> に渡している <code>fixed: false</code> を、state の値に変える</p>
+<ul class="step-notes">
+<li class="step-note">同じ分類で、チェックを入れた支出と、チェックを外した支出を 1 件ずつ追加します</li>
+<li class="step-note">追加の後にチェックを外す処理は、まだありません（手順 5 で書きます）。2 件目の前に、自分でチェックを外します</li>
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>「（固定費）」が付くのは、チェックを入れた支出だけ</span></li>
+</ul>
+</li>
+<li class="step" data-no="5">
+<p class="step-do">追加の後、チェックを外した状態に戻す</p>
+<ul class="step-notes">
+<li class="step-note">ほかの欄を空に戻している所に、1 行足します</li>
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>チェックを入れて追加すると、追加の後、チェックが外れている</span></li>
+</ul>
+</li>
+<li class="step" data-no="6">
+<p class="step-do">この章の画面を読み込み直す</p>
+<ul class="step-notes">
+<li class="task"><input type="checkbox"> 手順 4 で付いた「（固定費）」の表示が残っている</li>
+</ul>
+</li>
+</ol>
+<h4 class="phase-head">仕上げる<span class="range">手順 7〜8</span></h4>
+<ol start="7" class="steps">
+<li class="step" data-no="7">
+<p class="step-do">画面を <code>Ctrl</code> + <code>C</code> で止め、型チェックとテストを実行する</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> check</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> R04</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>「型チェック: OK」「テスト: OK」</span></li>
+</ul>
+</li>
+<li class="step" data-no="8">
+<p class="step-do">自分の変更を差分で読む</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">git</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> diff</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> react/exercises/R04-form</span></span></code></pre>
+<ul class="step-notes">
+<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span><code>EntryForm.tsx</code> の 1 つのファイルだけが表示され、変わった行が、固定費の state・チェック欄・送信のときに渡す値・送信の後に外す行だけ</span></li>
+</ul>
+</li>
+</ol>
+<p><strong>テストで確かめるもの</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>表示するもの</th>
+<th>画面の HTML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>種別が支出の <code>EntryForm</code></td>
+<td>分類の欄とメモの欄の間に、固定費の欄の <code>&lt;label&gt;固定費&lt;input type=&quot;checkbox&quot;/&gt;</code> と <code>&lt;/label&gt;</code> の 2 行がある</td>
+</tr>
+<tr>
+<td>種別が収入の <code>EntryForm</code></td>
+<td>「固定費」を含まない</td>
+</tr>
+</tbody>
+</table></div>
+<details>
+<summary>ヒント 1：どこを見ればよいか</summary>
+<ul>
+<li>state の並び：<code>EntryForm.tsx</code> の 26〜30 行目</li>
+<li>入力欄の形：メモの欄（103〜106行目）</li>
+<li>支出のときだけ表示する形：<code>EntryList.tsx</code> の 18 行目の <code>条件 &amp;&amp; &lt;タグ&gt;</code></li>
+<li>欄を空に戻している所：<code>handleSubmit</code> の 55〜59 行目</li>
+</ul>
+</details>
+<details>
+<summary>ヒント 2：書き出し</summary>
+<ul>
+<li>state：<code>const [fixed, setFixed] = useState(false);</code></li>
+<li>チェック欄：<code>&lt;input type=&quot;checkbox&quot; checked={fixed} onChange={(event) =&gt; setFixed(event.target.checked)} /&gt;</code></li>
+</ul>
+</details>
+<details>
+<summary>テストや画面がうまくいかないとき</summary>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>表示</th>
+<th>よくある原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>チェック欄を押しても、チェックが付かない。Console に <code>You provided a `checked` prop to a form field without an `onChange` handler.</code></td>
+<td><code>checked</code> だけを書いて、<code>onChange</code> を書いていません</td>
+</tr>
+<tr>
+<td>チェックが付くが、もう一度押しても外れない（テストは合格する）。型チェックで <code>Argument of type 'string' is not assignable to parameter of type 'SetStateAction&lt;boolean&gt;'.</code></td>
+<td><code>event.target.value</code> を渡しています。チェックボックスは <code>event.target.checked</code> を使います</td>
+</tr>
+<tr>
+<td>テストで、ファイルの名前の行（<code>EntryForm.test.ts</code> など）が <code>✖</code> になり、<code>'test failed'</code> とだけ出る。型チェックで <code>JSX expressions must have one parent element.</code></td>
+<td>三項演算子の <code>( )</code> の中に、<code>&lt;label&gt;</code> を 2 つ並べています。<code>( )</code> の中に書けるのは、1 つの要素です。チェック欄は、三項演算子の外側（メモの <code>&lt;label&gt;</code> の上）に足します</td>
+</tr>
+<tr>
+<td>テストで、<code>+</code> の行に <code>&lt;input type=&quot;checkbox&quot; value=&quot;false&quot;/&gt;</code> が出る。型チェックで <code>Type 'boolean' is not assignable to type 'string | number | readonly string[] | undefined'.</code></td>
+<td><code>value={fixed}</code> と書いています。チェックボックスは <code>checked={fixed}</code> です</td>
+</tr>
+<tr>
+<td>テスト「収入のとき、固定費のチェック欄を表示しない」が <code>✖</code></td>
+<td>条件を付けずに、チェック欄を足しています。支出のときだけ表示します</td>
+</tr>
+<tr>
+<td>テスト「分類の欄とメモの欄の間に、固定費のチェック欄を表示する」で、<code>+</code> の行と <code>-</code> の行に、同じ内容の行（メモの欄など）が出る</td>
+<td>チェック欄を置く場所が違い、欄の並ぶ順番がずれています。分類・入金元の欄の後、メモの欄の前に置きます</td>
+</tr>
+<tr>
+<td>テストは合格するが、チェックを入れて追加しても「（固定費）」が付かない</td>
+<td><code>handleSubmit</code> の <code>fixed: false</code> を、state の値に変えていません</td>
+</tr>
+</tbody>
+</table></div>
+<p>表示の読み方は、<a href="../../troubleshooting.html">つまずき集</a> にあります。</p>
+</details>
+<details class="solution"><summary>解答例を見る</summary><p class="solution-file"><code>react/solutions/R04-form/src/components/EntryForm.tsx</code></p><pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">import</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { useState } </span><span style="color:#D73A49;--shiki-dark:#F97583">from</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "react"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">import</span><span style="color:#D73A49;--shiki-dark:#F97583"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { ChangeEvent, SubmitEvent } </span><span style="color:#D73A49;--shiki-dark:#F97583">from</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "react"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">import</span><span style="color:#D73A49;--shiki-dark:#F97583"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { CategoriesState, Entry, EntryKind } </span><span style="color:#D73A49;--shiki-dark:#F97583">from</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "../types.ts"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">import</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> { parseEntryForm } </span><span style="color:#D73A49;--shiki-dark:#F97583">from</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "../validate.ts"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">type</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryFormProps</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  kind</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryKind</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  categories</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> CategoriesState</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">  errors</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[];</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">  onKindChange</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#E36209;--shiki-dark:#FFAB70">kind</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryKind</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#005CC5;--shiki-dark:#79B8FF"> void</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">  onAdd</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#E36209;--shiki-dark:#FFAB70">entry</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Entry</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#005CC5;--shiki-dark:#79B8FF"> void</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">  onErrors</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#E36209;--shiki-dark:#FFAB70">errors</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[]) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#005CC5;--shiki-dark:#79B8FF"> void</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> categoryStatusText</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">categories</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> CategoriesState</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (categories.status </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "loading"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    return</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "分類を読み込んでいます…"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (categories.status </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "error"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> categories.message;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> ""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#D73A49;--shiki-dark:#F97583"> function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryForm</span><span style="color:#24292E;--shiki-dark:#E1E4E8">({ </span><span style="color:#E36209;--shiki-dark:#FFAB70">kind</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">categories</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">errors</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">onKindChange</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">onAdd</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#E36209;--shiki-dark:#FFAB70">onErrors</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> EntryFormProps</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#005CC5;--shiki-dark:#79B8FF">date</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">setDate</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> useState</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#005CC5;--shiki-dark:#79B8FF">amount</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">setAmount</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> useState</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#005CC5;--shiki-dark:#79B8FF">category</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">setCategory</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> useState</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#005CC5;--shiki-dark:#79B8FF">source</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">setSource</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> useState</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#005CC5;--shiki-dark:#79B8FF">memo</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">setMemo</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> useState</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#005CC5;--shiki-dark:#79B8FF">fixed</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">setFixed</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> useState</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">false</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> categoryItems</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> categories.status </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "ready"</span><span style="color:#D73A49;--shiki-dark:#F97583"> ?</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> categories.items </span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [];</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">  // 分類の選択欄の value に渡す値</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> selectedCategory</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> category </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> ""</span><span style="color:#D73A49;--shiki-dark:#F97583"> ?</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (categoryItems[</span><span style="color:#005CC5;--shiki-dark:#79B8FF">0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] </span><span style="color:#D73A49;--shiki-dark:#F97583">??</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> ""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> category;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> handleKindChange</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">event</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> ChangeEvent</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">HTMLSelectElement</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> void</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> value</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> event.target.value;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (value </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "income"</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> value </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "expense"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">      onKindChange</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(value);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  function</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> handleSubmit</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">event</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> SubmitEvent</span><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">HTMLFormElement</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>)</span><span style="color:#D73A49;--shiki-dark:#F97583">:</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> void</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    event.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">preventDefault</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> result</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> parseEntryForm</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      { kind, date, amount, category: selectedCategory, source, memo, fixed },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      crypto.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">randomUUID</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    );</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="color:#D73A49;--shiki-dark:#F97583">!</span><span style="color:#24292E;--shiki-dark:#E1E4E8">result.ok) {</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">      onErrors</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(result.errors);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">      return</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    setDate</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    setAmount</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    setCategory</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    setSource</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    setMemo</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    setFixed</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">false</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    onAdd</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(result.entry);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">  return</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    &#x3C;></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">      &#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">form onSubmit</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{handleSubmit}</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        &#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">          種別</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">          &#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">select value</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{kind} onChange</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{handleKindChange}</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">            &#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">option value</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"expense"</span><span style="color:#D73A49;--shiki-dark:#F97583">></span><span style="color:#24292E;--shiki-dark:#E1E4E8">支出</span><span style="color:#D73A49;--shiki-dark:#F97583">&#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">option</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">            &#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">option value</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"income"</span><span style="color:#D73A49;--shiki-dark:#F97583">></span><span style="color:#24292E;--shiki-dark:#E1E4E8">収入</span><span style="color:#D73A49;--shiki-dark:#F97583">&#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">option</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">          &#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">select</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">        &#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">label</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        &#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">          日付</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">          &#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">input type</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"date"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> value</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{date} onChange</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{(event) => </span><span style="color:#6F42C1;--shiki-dark:#B392F0">setDate</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(event.target.value)} </span><span style="color:#D73A49;--shiki-dark:#F97583">/></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">        &#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">label</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        &#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">          金額</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">          &#x3C;</span><span style="color:#E36209;--shiki-dark:#FFAB70">input</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            inputMode</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"numeric"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            autoComplete</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"off"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            value</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{amount}</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            onChange</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{(event) => </span><span style="color:#6F42C1;--shiki-dark:#B392F0">setAmount</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(event.target.value)}</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">          /></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">        &#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">label</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        {</span><span style="color:#E36209;--shiki-dark:#FFAB70">kind</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> === "</span><span style="color:#E36209;--shiki-dark:#FFAB70">expense</span><span style="color:#24292E;--shiki-dark:#E1E4E8">" ? (</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">          &#x3C;</span><span style="color:#E36209;--shiki-dark:#FFAB70">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">            分類</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            &#x3C;</span><span style="color:#E36209;--shiki-dark:#FFAB70">select</span><span style="color:#E36209;--shiki-dark:#FFAB70"> value</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{selectedCategory} onChange</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{(event) => </span><span style="color:#6F42C1;--shiki-dark:#B392F0">setCategory</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(event.target.value)}</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">              {</span><span style="color:#E36209;--shiki-dark:#FFAB70">categoryItems</span><span style="color:#24292E;--shiki-dark:#E1E4E8">.</span><span style="color:#E36209;--shiki-dark:#FFAB70">map</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">item</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">                &#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">option key</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{item} value</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{item}</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">                  {</span><span style="color:#E36209;--shiki-dark:#FFAB70">item</span><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">                &#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">option</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">              ))}</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            &#x3C;/</span><span style="color:#E36209;--shiki-dark:#FFAB70">select</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">          &#x3C;/</span><span style="color:#E36209;--shiki-dark:#FFAB70">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        ) : (</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">          &#x3C;</span><span style="color:#E36209;--shiki-dark:#FFAB70">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">            入金元</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            &#x3C;</span><span style="color:#E36209;--shiki-dark:#FFAB70">input</span><span style="color:#E36209;--shiki-dark:#FFAB70"> autoComplete</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"off"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> value</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{source} onChange</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{(event) => </span><span style="color:#6F42C1;--shiki-dark:#B392F0">setSource</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(event.target.value)} </span><span style="color:#D73A49;--shiki-dark:#F97583">/></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">          &#x3C;/</span><span style="color:#E36209;--shiki-dark:#FFAB70">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        )}</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        {</span><span style="color:#E36209;--shiki-dark:#FFAB70">kind</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> === "</span><span style="color:#E36209;--shiki-dark:#FFAB70">expense</span><span style="color:#24292E;--shiki-dark:#E1E4E8">" &#x26;&#x26; (</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">          &#x3C;</span><span style="color:#E36209;--shiki-dark:#FFAB70">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">            固定費</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            &#x3C;</span><span style="color:#E36209;--shiki-dark:#FFAB70">input</span><span style="color:#E36209;--shiki-dark:#FFAB70"> type</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> checked</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{fixed} onChange</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{(event) => </span><span style="color:#6F42C1;--shiki-dark:#B392F0">setFixed</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(event.target.checked)} </span><span style="color:#D73A49;--shiki-dark:#F97583">/></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">          &#x3C;/</span><span style="color:#E36209;--shiki-dark:#FFAB70">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        )}</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        &#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">          メモ</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">          &#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">input autoComplete</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"off"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> value</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{memo} onChange</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{(event) => </span><span style="color:#6F42C1;--shiki-dark:#B392F0">setMemo</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(event.target.value)} </span><span style="color:#D73A49;--shiki-dark:#F97583">/></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">        &#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">label</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        &#x3C;</span><span style="color:#6F42C1;--shiki-dark:#B392F0">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>追加</span><span style="color:#D73A49;--shiki-dark:#F97583">&#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">button</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">      &#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">form</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">      &#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">p className</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{categories.status </span><span style="color:#D73A49;--shiki-dark:#F97583">===</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "error"</span><span style="color:#D73A49;--shiki-dark:#F97583"> ?</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "status error"</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "status"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        {</span><span style="color:#E36209;--shiki-dark:#FFAB70">categoryStatusText</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#E36209;--shiki-dark:#FFAB70">categories</span><span style="color:#24292E;--shiki-dark:#E1E4E8">)}</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">      &#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">p</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">      &#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">ul className</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"errors"</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        {</span><span style="color:#E36209;--shiki-dark:#FFAB70">errors</span><span style="color:#24292E;--shiki-dark:#E1E4E8">.</span><span style="color:#E36209;--shiki-dark:#FFAB70">map</span><span style="color:#24292E;--shiki-dark:#E1E4E8">((</span><span style="color:#E36209;--shiki-dark:#FFAB70">message</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) </span><span style="color:#D73A49;--shiki-dark:#F97583">=></span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">          &#x3C;</span><span style="color:#24292E;--shiki-dark:#E1E4E8">li key</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">{message}</span><span style="color:#D73A49;--shiki-dark:#F97583">></span><span style="color:#24292E;--shiki-dark:#E1E4E8">{message}</span><span style="color:#D73A49;--shiki-dark:#F97583">&#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">li</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        ))}</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">      &#x3C;/</span><span style="color:#24292E;--shiki-dark:#E1E4E8">ul</span><span style="color:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    &#x3C;/></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre></details>
+</section>
+<hr>
+<h2 id="チェックリスト">チェックリスト</h2>
+<ul>
+<li class="task"><input type="checkbox"> <code>value</code> だけを書いて <code>onChange</code> を書かないと、文字が打てなくなる理由を説明できる</li>
+<li class="task"><input type="checkbox"> 金額の欄の state を、数ではなく文字列で持っている理由を説明できる</li>
+<li class="task"><input type="checkbox"> <code>&lt;input type=&quot;checkbox&quot;&gt;</code> で、<code>value</code> と <code>event.target.value</code> を使わない理由を説明できる</li>
+</ul>
+<h2 id="詳しく学ぶ">詳しく学ぶ</h2>
+<ul>
+<li>React 公式ドキュメント：<a href="https://ja.react.dev/learn/responding-to-events" target="_blank" rel="noopener">イベントへの応答</a>、<a href="https://ja.react.dev/learn/reacting-to-input-with-state" target="_blank" rel="noopener">state を使って入力に反応する</a>、<a href="https://ja.react.dev/reference/react-dom/components/input" target="_blank" rel="noopener"><code>&lt;input&gt;</code></a></li>
+</ul>
+
+      </article>
+      <nav class="prev-next"><a class="prev" href="R03-state.html"><small>前へ</small>React 編 第3章 状態と再描画</a><a class="next" href="R05-flow.html"><small>次へ</small>React 編 第5章 データの流れと集計</a></nav>
+    </main>
+  </div>
+</body>
+</html>

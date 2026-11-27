@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 340" width="700" height="340" role="img" aria-labelledby="t d">
+  <title id="t">要素の型は入れ子で、内側ほど使えるものが増える</title>
+  <desc id="d">要素の型を、入れ子の枠で描いた図。いちばん外側は EventTarget で、event.target の型。addEventListener を使える。その内側は Element で、querySelector("#price") のように id で取得したときの型。textContent が増える。その内側は HTMLElement で、HTML の要素ならどれでも当てはまる。いちばん内側に、タグごとの型が並ぶ。HTMLInputElement は input 要素の型で、querySelector("input") のようにタグ名で取得したときの型。value が増える。ほかに、button 要素の HTMLButtonElement、form 要素の HTMLFormElement があり、ほかのタグにもそれぞれの型がある。＋ には、この章で使うものだけを書いた。event.target と querySelector の実際の型には、どれも | null が付く。</desc>
+  <style>
+    .txt { fill: #1f2937; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; }
+    .sub { fill: #4b5563; font-size: 12px; }
+    .code { fill: #1f2937; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; }
+    .small { font-size: 11.5px; }
+    .head { font-weight: 700; }
+    .outer { fill: #f8fafc; stroke: #64748b; stroke-width: 1.5; }
+    .box { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.5; }
+    .inner { fill: #dbeafe; stroke: #2563eb; stroke-width: 1.5; }
+    .add { fill: #1d4ed8; font-weight: 700; }
+    @media (prefers-color-scheme: dark) {
+      .txt, .code { fill: #e5e7eb; }
+      .sub { fill: #9ca3af; }
+      .outer { fill: #1e293b; stroke: #94a3b8; }
+      .box { fill: #0f172a; stroke: #64748b; }
+      .inner { fill: #1e3a8a; stroke: #60a5fa; }
+      .add { fill: #93c5fd; }
+    }
+  </style>
+
+  <!-- EventTarget -->
+  <rect class="outer" x="10" y="10" width="680" height="274" rx="10"/>
+  <text class="code head" x="26" y="34">EventTarget</text>
+  <text class="txt sub" x="116" y="34">（<tspan class="code small">event.target</tspan> の型）</text>
+  <text class="txt sub" x="674" y="34" text-anchor="end">使えるもの：<tspan class="code small">addEventListener</tspan></text>
+
+  <!-- Element -->
+  <rect class="outer" x="26" y="46" width="648" height="226" rx="10"/>
+  <text class="code head" x="42" y="70">Element</text>
+  <text class="txt sub" x="102" y="70">（<tspan class="code small">querySelector("#price")</tspan> の型）</text>
+  <text class="code add" x="658" y="70" text-anchor="end">＋ textContent</text>
+
+  <!-- HTMLElement -->
+  <rect class="outer" x="42" y="82" width="616" height="178" rx="10"/>
+  <text class="code head" x="58" y="106">HTMLElement</text>
+  <text class="txt sub" x="148" y="106">（HTML の要素ならどれでも）</text>
+
+  <!-- HTMLInputElement -->
+  <rect class="inner" x="58" y="120" width="250" height="126" rx="8"/>
+  <text class="code head" x="72" y="144">HTMLInputElement</text>
+  <text class="code" x="72" y="168">&lt;input&gt;</text>
+  <text class="txt sub" x="72" y="196">（<tspan class="code small">querySelector("input")</tspan> の型）</text>
+  <text class="code add" x="72" y="228">＋ value</text>
+
+  <!-- ほかのタグの型 -->
+  <rect class="box" x="322" y="120" width="158" height="57" rx="8"/>
+  <text class="code small head" x="332" y="143">HTMLButtonElement</text>
+  <text class="code small" x="332" y="163">&lt;button&gt;</text>
+
+  <rect class="box" x="490" y="120" width="158" height="57" rx="8"/>
+  <text class="code small head" x="500" y="143">HTMLFormElement</text>
+  <text class="code small" x="500" y="163">&lt;form&gt;</text>
+
+  <rect class="box" x="322" y="189" width="326" height="57" rx="8"/>
+  <text class="txt sub" x="485" y="212" text-anchor="middle">ほかのタグにも、それぞれの型がある</text>
+  <text class="txt sub" x="485" y="232" text-anchor="middle">（<tspan class="code small">&lt;select&gt;</tspan> なら <tspan class="code small">HTMLSelectElement</tspan>）</text>
+
+  <!-- 説明 -->
+  <text class="txt" x="10" y="308">内側の型は、外側の型で使えるものをすべて使える。<tspan class="code">＋</tspan> は、その型から増えるもの（この章で使うものだけを書いた）。</text>
+  <text class="txt sub" x="10" y="330"><tspan class="code small">event.target</tspan> と <tspan class="code small">querySelector</tspan> の実際の型には、どれも <tspan class="code small">| null</tspan> が付く（例 <tspan class="code small">Element | null</tspan>）。</text>
+</svg>

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 890 276" width="890" height="276" role="img" aria-labelledby="t d">
+  <title id="t">追加した明細が、読み込み直すと消える</title>
+  <desc id="d">左は、明細を 1 件追加した直後の明細の区画で、食費の 1 行がある。ページを読み込み直すと、直す前は「明細はまだありません。」に戻る。直した後は、食費の 1 行が残っている。</desc>
+  <style>
+    .pg { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 12.8px; fill: #1f2328; }
+    .h1 { font-size: 20.5px; font-weight: 700; }
+    .h2 { font-size: 14px; font-weight: 700; }
+    .h3 { font-size: 12.2px; font-weight: 700; fill: #59636e; }
+    .lbl { font-size: 10.9px; fill: #59636e; }
+    .ctl { font-size: 10.9px; }
+    .small { font-size: 11.5px; }
+    .muted { fill: #59636e; }
+    .inc { fill: #1a7f37; }
+    .exp { fill: #b42318; }
+    .panel { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .ctrl { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .btn { fill: #f6f7f9; stroke: #d8dee4; stroke-width: 0.8; }
+    .rule { fill: none; stroke: #d8dee4; stroke-width: 0.8; }
+    .chev { fill: none; stroke: #1f2328; stroke-width: 1; }
+    .check { fill: #0b63ce; }
+    .tick { fill: none; stroke: #ffffff; stroke-width: 1.6; }
+    .hl { fill: #dbeafe; }
+    .con { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+    .con-bar { fill: #eef1f4; }
+    .con-err { fill: #fdecea; }
+    .con-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 10.5px; fill: #1f2328; }
+    .con-red { fill: #b42318; }
+    .con-ui { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 10.5px; fill: #5f6368; }
+    .con-on { fill: #0b57d0; font-weight: 700; }
+    .codebox { fill: #f6f8fa; stroke: #d8dee4; stroke-width: 0.8; }
+    .code { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; fill: #1f2328; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 1.5; }
+    .mark-b { fill: none; stroke: #2563eb; stroke-width: 1.5; }
+    .lead { fill: none; stroke: #ea580c; stroke-width: 1; }
+    .tag { fill: none; stroke: #ea580c; stroke-width: 1.2; }
+    .tag-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; font-weight: 700; fill: #c2410c; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 12px; fill: #1f2937; }
+    .cap { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; font-weight: 700; fill: #1f2937; }
+    .flow { fill: none; stroke: #6b7280; stroke-width: 1.4; }
+    .flow-head { fill: #6b7280; }
+    @media (prefers-color-scheme: dark) {
+      .mark, .lead, .tag { stroke: #fb923c; }
+      .mark-b { stroke: #60a5fa; }
+      .tag-txt { fill: #fb923c; }
+      .note, .cap { fill: #e5e7eb; }
+      .flow { stroke: #9ca3af; }
+      .flow-head { fill: #9ca3af; }
+    }
+  </style>
+  <text class="cap" x="10" y="22">明細を 1 件追加した</text>
+  <text class="cap" x="500" y="22">直す前：読み込み直すと、消えている</text>
+  <text class="cap" x="500" y="150">直した後：読み込み直しても、残っている</text>
+  <rect class="panel" x="10" y="34" width="350" height="100.6" rx="6"/>
+  <text class="pg h2" x="26.5" y="64">明細</text>
+  <text class="pg" x="26.5" y="101.0">2026-11-15</text>
+  <text class="pg" x="119.5" y="101.0">食費<tspan class="ctl muted"> 昼食</tspan></text>
+  <text class="pg exp" x="297.5" y="101.0" text-anchor="end">-800円</text>
+  <rect class="btn" x="307.5" y="81.0" width="36" height="31" rx="4.8"/>
+  <text class="pg" x="325.5" y="101.0" text-anchor="middle">削除</text>
+  <path class="rule" d="M26.5,118.6 H343.5"/>
+  <rect class="panel" x="500" y="34" width="380" height="84" rx="6"/>
+  <text class="pg h2" x="516.5" y="64">明細</text>
+  <text class="pg muted" x="516.5" y="96">明細はまだありません。</text>
+  <rect class="panel" x="500" y="162" width="380" height="100.6" rx="6"/>
+  <text class="pg h2" x="516.5" y="192">明細</text>
+  <text class="pg" x="516.5" y="229.0">2026-11-15</text>
+  <text class="pg" x="609.5" y="229.0">食費<tspan class="ctl muted"> 昼食</tspan></text>
+  <text class="pg exp" x="817.5" y="229.0" text-anchor="end">-800円</text>
+  <rect class="btn" x="827.5" y="209.0" width="36" height="31" rx="4.8"/>
+  <text class="pg" x="845.5" y="229.0" text-anchor="middle">削除</text>
+  <path class="rule" d="M516.5,246.6 H863.5"/>
+  <path class="flow" d="M370,80 L490,76"/>
+  <path class="flow-head" d="M490,76 L483.8,79.3 L483.6,73.2 Z"/>
+  <path class="flow" d="M370,104 L490,210"/>
+  <path class="flow-head" d="M490,210 L483.3,208.1 L487.3,203.5 Z"/>
+  <text class="note" x="430" y="62" text-anchor="middle">読み込み直す</text>
+</svg>

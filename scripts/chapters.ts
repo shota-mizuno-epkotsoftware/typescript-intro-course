@@ -15,6 +15,17 @@ export const courses = [
 // 実践編で読むアプリの完成版（npm run dev app / npm run check app などで使う）
 export const practiceApp = join("practice", "app");
 
+// React 編で読むアプリの完成版（npm run dev rapp / npm run check rapp / npm run lint rapp）
+export const reactApp = join("react", "app");
+
+// 実践編と React 編で、同じ内容にしておくファイル（react-design.md の基本方針 3「ロジックはそのまま使い回す」）
+export const sharedAppFiles = [
+  "style.css",
+  "public/categories.json",
+  ...["types", "validate", "state", "summary", "format", "storage", "categories", "testdata"].map((name) => `src/${name}.ts`),
+  ...["validate", "state", "summary", "format", "storage", "categories"].map((name) => `src/${name}.test.ts`),
+];
+
 export function chaptersOf(dir: string): string[] {
   if (!existsSync(dir)) return [];
   return readdirSync(dir).filter((name) => /^[A-Z]\d\d-/.test(name)).sort();
@@ -34,6 +45,8 @@ export function printList(): void {
 export function findChapterDir(arg: string): string | undefined {
   // 実践編で読むアプリの完成版
   if (arg.toLowerCase() === "app") return existsSync(practiceApp) ? practiceApp : undefined;
+  // React 編で読むアプリの完成版
+  if (arg.toLowerCase() === "rapp") return existsSync(reactApp) ? reactApp : undefined;
   const match = /^([A-Za-z])(\d{1,2})$/.exec(arg);
   const course = match ? courses.find((c) => c.prefix === match[1]?.toUpperCase()) : undefined;
   const chapter =

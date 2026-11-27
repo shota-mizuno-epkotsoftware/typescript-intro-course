@@ -38,13 +38,11 @@ node --version
 
 **この教材のコマンドは、すべて `TSLecture` フォルダで実行します。**
 
-1. ターミナルで教材をダウンロードする（`TSLecture` フォルダができます）
+1. ターミナルで教材をダウンロードする（`<このリポジトリのURL>` には、研修で案内された URL を入れます。`TSLecture` フォルダができます）
 
    ```sh
    git clone <このリポジトリのURL>
    ```
-
-   `<このリポジトリのURL>` には、研修で案内された URL を入れます。
 
 2. VS Code のメニュー「ファイル」→「フォルダーを開く」で `TSLecture` フォルダを開く。「このフォルダー内のファイルの作成者を信頼しますか?」と聞かれたら、「はい、作成者を信頼します」を選ぶ
 3. メニュー「ターミナル」→「新しいターミナル」を開き、パッケージを入れる（このターミナルは、最初から `TSLecture` フォルダにいます）
@@ -53,7 +51,9 @@ node --version
    npm install
    ```
 
-`npm install` は、`package.json` に書かれたパッケージを `node_modules/` フォルダに入れるコマンドです。`npm install` がエラーなく終わり、画面の左の一覧に `node_modules` が増えれば、準備は完了です。`npm warn` で始まる警告（`fsevents` など）は気にしなくて構いません。
+`npm install` は、`package.json` に書かれたパッケージを `node_modules/` フォルダに入れるコマンドです。次の図の ① と ② のようになれば、準備は完了です。
+
+![TSLecture フォルダを開いた VS Code の画面。左のファイルの一覧には、.vscode、basics、html、images、main、node_modules、practice、react、scripts のフォルダと、package.json や README.md などのファイルが並ぶ。node_modules は npm install で増えたフォルダ。下のターミナルには、npm install と打った後に、added 28 packages, and audited 29 packages in 917ms、found 0 vulnerabilities と表示され、その下に npm warn で始まる行が続く。](images/M00-vscode.svg "図0-1 npm install が終わった VS Code の画面")
 
 > **PHPでは**
 > `npm install` は `composer install` にあたります。`package.json` は `composer.json`、`node_modules/` は `vendor/` にあたります。
@@ -123,8 +123,9 @@ Hello, TypeScript!
 
 ### 決まり
 
-- 書き換えてよいのは、演習のファイル（`problem-*.ts`・`practice-*.ts`）、`main/exercises/try.ts`、自分で作ったファイルだけです。ほかを書き換えると、`git pull` で競合することがあります。
+- 本編で書き換えてよいのは、演習のファイル（`problem-*.ts`・`practice-*.ts`）、`main/exercises/try.ts`、自分で作ったファイルだけです。ほかを書き換えると、`git pull` で競合することがあります。
 - 本文のコード例（第10・11章の画面の例を除く）は、`main/exercises/try.ts` に貼って `node main/exercises/try.ts` で試せます。この 1 つのファイルを全章で使い回します（基礎編の `try.js` は章ごとでした）。前のコード例は消してから貼ります（同じ名前の変数を 2 回宣言すると、エラーになります）。
+- `try.ts` に貼ったコードの型エラーは、エディタの赤い波線で見ます。
 - 解答例は `main/solutions/` にあります。
 - 問題の番号は章ごとに 1 からです。ほかの章の問題は「第3章の問題 1」と呼びます。
 - 技術どうしの関係は [学ぶ技術の関係](../../overview.md)、講座で説明しないツールは [ツール一覧](../../tools.md) にあります。
@@ -167,7 +168,7 @@ console.log(price * 2);
 main/exercises/M00-setup/problem-01.ts(6,7): error TS2322: Type 'string' is not assignable to type 'number'.
 ```
 
-型エラーが出ます。`(6,7)` はエラーの場所です（読み方は 0.5）。ファイルの先頭に、本文で省いたコメントなどが 5 行あるので、`price` の行は 6 行目です。
+型エラーが出ます。上はエラーの行だけで、前後の `===` で始まる行は省いています。`(6,7)` はエラーの場所です（読み方は 0.5）。ファイルの先頭に、本文で省いたコメントなどが 5 行あるので、`price` の行は 6 行目です。
 
 **解説**
 
@@ -182,7 +183,7 @@ console.log(price * 2);
 
 文字列に `*` を使うと、自動的に数値に変換されます。そのため `"100" * 2` は `200` になりました。
 
-![同じ problem-01.ts を、node で実行すると型注釈を消して JavaScript として実行し 200 と表示する。npm run typecheck で型チェックすると、実行はせずに TS2322 の型エラーを報告する。](images/M00-two-paths.svg "図0-1 同じファイルの 2 つの経路")
+![同じ problem-01.ts を、node で実行すると型注釈を消して JavaScript として実行し 200 と表示する。npm run typecheck で型チェックすると、実行はせずに TS2322 の型エラーを報告する。](images/M00-two-paths.svg "図0-2 同じファイルの 2 つの経路")
 
 この性質は第2章の 2.5 でもう一度扱います。
 
@@ -195,7 +196,7 @@ console.log(price * 2);
 
 型エラーは、エディタでも見られます。VS Code で `problem-01.ts` を開くと、型エラーのある箇所に赤い波線が出ます。波線にマウスカーソルを合わせると、`npm run typecheck` と同じエラーメッセージが表示されます。
 
-![VS Code で problem-01.ts を開いた画面。6 行目の price の下に赤い波線が出ている。波線にマウスカーソルを合わせると、const price: number と、Type 'string' is not assignable to type 'number'. ts(2322) という表示が出る。](images/M00-squiggle.svg "図0-2 赤い波線と、エラーの表示")
+![VS Code で problem-01.ts を開いた画面。6 行目の price の下に赤い波線が出ている。波線にマウスカーソルを合わせると、const price: number と、Type 'string' is not assignable to type 'number'. ts(2322) という表示が出る。](images/M00-squiggle.svg "図0-3 赤い波線と、エラーの表示")
 
 エラーの表示は、次のように読みます。
 
@@ -225,7 +226,7 @@ console.log(price * 2);
 | 型だけを調べる（型チェック） | `npm run typecheck 章ID` |
 | 演習の最後とコミットの前に、両方を調べる | `npm run check 章ID` |
 
-`npm test` と `npm run typecheck` は、章ID の後ろに拡張子を除いたファイル名を足すと、`npm test` はそのファイルのテストだけを実行し、`npm run typecheck` はそのファイルの型エラーだけを表示します（`npm test M02 practice-01`）。`npm run check` は、いつも章全体を調べます。
+章ID の後ろに拡張子を除いたファイル名を足すと、`npm test` はそのファイルのテストだけを実行し、`npm run typecheck` はそのファイルの型エラーだけを表示します（`npm test M02 practice-01`）。`npm run check` は、いつも章全体を調べます。
 
 0.5 で `problem-01.ts` を直した後に `npm run check M00` を実行すると、次のように表示されます。見出しの `tsc` は型チェックをするプログラム、`node --test` はテストを動かす仕組みです。
 
@@ -268,7 +269,7 @@ export function double(n: number): number {
 - `throw new Error(...)`：エラー（例外）を投げます。まだ実装していないことを示すために置いています。
 
 > **PHPでは**
-> PHP の `function double($n) { return $n * 2; }` にあたります。`throw new Error(...)` は、PHP の `throw new Exception(...)` にあたります。
+> PHP の `function double($n)` にあたります。
 
 **進め方**（関数の書き方は第3章）
 

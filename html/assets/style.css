@@ -189,6 +189,21 @@ a { color: var(--accent); }
   border-top: 1px solid var(--border);
 }
 
+/* 詳細版の章の折りたたみ（本文の折りたたみの枠や字下げは使わない） */
+.sidebar .nav-fold { margin: 0; border: 0; background: none; }
+.sidebar .nav-fold > summary {
+  padding: 0.35rem 0.75rem;
+  border: 0;
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.sidebar .nav-fold > summary:hover { background: var(--border); }
+.sidebar .nav-fold > ul { margin: 0 0 0 0.75rem; }
+
 .sidebar a[aria-current="page"] {
   background: var(--accent-soft);
   color: var(--accent);
@@ -254,6 +269,12 @@ pre.shiki {
 
 pre.shiki code { font-size: 0.875rem; }
 
+/* 長い行は、横にスクロールさせずに枠の中で折り返す（エラー文や長い JSX の後ろが見えなくならないように）。
+   出力・コマンド・差分は、どの幅でも折り返し、2 行目以降を少し下げる。
+   行番号の付いたコードは、幅の狭い画面では折り返しが多くなりすぎるので、広い画面でだけ折り返す */
+pre.shiki:not(.numbered) code { white-space: pre-wrap; overflow-wrap: anywhere; }
+pre.shiki:not(.numbered) .line { display: inline-block; width: 100%; padding-left: 2ch; text-indent: -2ch; }
+
 .copy-button {
   position: absolute;
   top: 0.4rem;
@@ -281,7 +302,10 @@ table { border-collapse: collapse; font-size: 0.925rem; line-height: 1.6; }
 
 th, td { padding: 0.5rem 0.75rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
 
-th { background: var(--bg-soft); white-space: nowrap; }
+th { background: var(--bg-soft); }
+
+/* 見出しは枠に収まるように折り返す。見出しの中のコードは途中で切らない */
+th code { white-space: nowrap; }
 
 /* 表の中のコードは途中で折り返さない（空白の位置でだけ折り返す） */
 td code { overflow-wrap: normal; word-break: keep-all; }
@@ -503,11 +527,18 @@ li.task input { width: 1rem; height: 1rem; margin-right: 0.4rem; vertical-align:
 /* 狭い画面で、長いコードの行が枠を押し広げないようにする（コードの枠の中で横にスクロールさせる） */
 .viz-body > *, .viz-code { min-width: 0; }
 
+/* 広い画面では、状態の欄をコードの右に置き、「次へ」・コード・状態を一画面に収める */
+@media (min-width: 1100px) {
+  .viz-body { grid-template-columns: minmax(0, 3fr) minmax(13rem, 2fr); align-items: start; }
+  .viz-body .viz-side { grid-template-columns: 1fr; }
+}
+
 /* 状態の欄は、コードの下に横に並べる（狭い画面では縦に積む） */
 .viz-side { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 0 0.9rem; }
 
 
-.viz-code pre.shiki { position: relative; margin: 0; overflow-x: auto; }
+/* 長いコードは枠の高さを抑え、枠の中だけをスクロールする。「次へ」のボタンと状態の欄を、一画面に収めるため（今の行は viz.js の keepInView が見える位置に保つ） */
+.viz-code pre.shiki { position: relative; margin: 0; overflow-x: auto; max-height: min(24rem, 50vh); overflow-y: auto; }
 
 .viz-code .line { display: inline-block; width: 100%; padding: 0 0.4rem; margin: 0 -0.4rem; border-radius: 3px; }
 
@@ -747,12 +778,24 @@ li.step-ok { display: grid; grid-template-columns: auto 1fr; gap: 0.75rem; margi
 /* ---------- コードの行番号 ---------- */
 /* 番号は CSS で表示するので、コピーしたコードには入らない */
 
+/* 折り返した 2 行目以降は、番号の後ろ（コードの書き始め）にそろえる */
+@media (min-width: 701px) {
+  pre.shiki.numbered code { white-space: pre-wrap; overflow-wrap: anywhere; }
+  pre.shiki.numbered .line {
+    display: inline-block;
+    width: 100%;
+    padding-left: 2.75rem;
+    text-indent: -2.75rem;
+  }
+}
+
 pre.shiki.numbered .line::before {
   counter-increment: line;
   content: counter(line);
   display: inline-block;
   width: 1.75rem;
   margin-right: 1rem;
+  text-indent: 0;
   color: var(--text-muted) !important;
   opacity: 0.55;
   text-align: right;

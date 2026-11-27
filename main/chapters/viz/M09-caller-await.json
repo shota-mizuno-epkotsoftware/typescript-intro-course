@@ -1,0 +1,159 @@
+{
+  "file": "main/exercises/M09-async/problem-03.ts",
+  "label": "1行ずつ見る",
+  "code": "function wait(ms: number): Promise<void> {\n  return new Promise((resolve) => setTimeout(resolve, ms));\n}\n\nasync function step(name: string): Promise<void> {\n  console.log(`${name} 開始`);\n  await wait(50);\n  console.log(`${name} 完了`);\n}\n\nawait step(\"A\");\nstep(\"B\");\nconsole.log(\"終わり\");",
+  "panels": [
+    {
+      "id": "queue",
+      "label": "待っているもの"
+    },
+    {
+      "id": "console",
+      "label": "コンソールの表示"
+    }
+  ],
+  "steps": [
+    {
+      "lines": [
+        1,
+        9
+      ],
+      "phase": "関数を作る",
+      "note": "関数 wait と step を作ります。作るだけで、まだ呼ばれません。",
+      "queue": [],
+      "console": []
+    },
+    {
+      "lines": [
+        11
+      ],
+      "phase": "await step(\"A\")",
+      "note": "step(\"A\") を呼びます。",
+      "queue": [],
+      "console": []
+    },
+    {
+      "lines": [
+        6
+      ],
+      "phase": "await step(\"A\")",
+      "note": "await より前の行は、呼ばれてすぐに動きます。「A 開始」を表示します。",
+      "queue": [],
+      "console": [
+        "A 開始"
+      ]
+    },
+    {
+      "lines": [
+        7
+      ],
+      "phase": "await step(\"A\")",
+      "note": "A が 50 ミリ秒の待ちに入り、呼び出した側（14 行目）へ戻ります。",
+      "queue": [
+        "50 ミリ秒後：待ちが終わり、A の続き（11 行目から）"
+      ],
+      "console": [
+        "A 開始"
+      ]
+    },
+    {
+      "lines": [
+        11
+      ],
+      "phase": "await step(\"A\")",
+      "note": "14 行目には await があるので、呼び出した側も A が終わるまで待ちます。15 行目へは進みません。",
+      "queue": [
+        "50 ミリ秒後：待ちが終わり、A の続き（11 行目から）",
+        "A が終わった後：呼び出した側の続き（15 行目から）"
+      ],
+      "console": [
+        "A 開始"
+      ]
+    },
+    {
+      "lines": [
+        8
+      ],
+      "phase": "50 ミリ秒後",
+      "note": "待ちが終わり、A の続きが動いて「A 完了」を表示します。これで step(\"A\") は最後まで終わりました。",
+      "queue": [
+        "A が終わった後：呼び出した側の続き（15 行目から）"
+      ],
+      "console": [
+        "A 開始",
+        "A 完了"
+      ]
+    },
+    {
+      "lines": [
+        12
+      ],
+      "phase": "step(\"B\")（await なし）",
+      "note": "A が終わったので、呼び出した側が 15 行目へ進みます。step(\"B\") を呼びます。",
+      "queue": [],
+      "console": [
+        "A 開始",
+        "A 完了"
+      ]
+    },
+    {
+      "lines": [
+        6
+      ],
+      "phase": "step(\"B\")（await なし）",
+      "note": "「B 開始」を表示します。",
+      "queue": [],
+      "console": [
+        "A 開始",
+        "A 完了",
+        "B 開始"
+      ]
+    },
+    {
+      "lines": [
+        7
+      ],
+      "phase": "step(\"B\")（await なし）",
+      "note": "B が 50 ミリ秒の待ちに入り、呼び出した側（15 行目）へ戻ります。15 行目には await がないので、待たずに 16 行目へ進みます。",
+      "queue": [
+        "50 ミリ秒後：待ちが終わり、B の続き（11 行目から）"
+      ],
+      "console": [
+        "A 開始",
+        "A 完了",
+        "B 開始"
+      ]
+    },
+    {
+      "lines": [
+        13
+      ],
+      "phase": "step(\"B\")（await なし）",
+      "note": "「終わり」を表示します。B はまだ待っている途中です。",
+      "queue": [
+        "50 ミリ秒後：待ちが終わり、B の続き（11 行目から）"
+      ],
+      "console": [
+        "A 開始",
+        "A 完了",
+        "B 開始",
+        "終わり"
+      ]
+    },
+    {
+      "lines": [
+        8
+      ],
+      "phase": "さらに 50 ミリ秒後",
+      "note": "待ちが終わり、B の続きが動いて「B 完了」を表示します。",
+      "queue": [],
+      "console": [
+        "A 開始",
+        "A 完了",
+        "B 開始",
+        "終わり",
+        "B 完了"
+      ]
+    }
+  ]
+}

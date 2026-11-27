@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 242" width="620" height="242" role="img" aria-labelledby="t d">
+  <title id="t">演習 2 の画面と、id と変数</title>
+  <desc id="d">演習 2 のページには、上から「演習 2」の見出し、数の 0、「1 増やす」と「0 に戻す」のボタンが並んでいる。数の 0 の要素は id が count で、practice-02.js の変数 countText に入っている。「1 増やす」のボタンは id が plus で、変数 plusButton に入っている。「0 に戻す」のボタンは id が reset で、変数 resetButton に入っている。</desc>
+  <!-- ページの部分を切り出した図（実物の大きさ）。要素の位置と大きさは、practice-02.html をブラウザで開いて測った -->
+  <style>
+    .pg { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 16px; fill: #1f2328; }
+    .h1 { font-size: 20px; font-weight: 600; }
+    .frame { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+    .btn { fill: #efefef; stroke: #767676; stroke-width: 1; }
+    .input { fill: #ffffff; stroke: #767676; stroke-width: 1; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 1.5; }
+    .lead { fill: none; stroke: #ea580c; stroke-width: 1; }
+    .tag { fill: none; stroke: #ea580c; stroke-width: 1.2; }
+    .tag-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; font-weight: 700; fill: #c2410c; }
+    .var { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 12px; fill: #1f2937; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; fill: #1f2937; }
+    .note-head { font-weight: 700; }
+    .note-sub { fill: #4b5563; }
+    @media (prefers-color-scheme: dark) {
+      .mark, .lead, .tag { stroke: #fb923c; }
+      .tag-txt { fill: #fb923c; }
+      .var, .note { fill: #e5e7eb; }
+      .note-sub { fill: #9ca3af; }
+    }
+  </style>
+
+  <!-- ページ -->
+  <rect class="frame" x="10" y="10" width="360" height="172" rx="4"/>
+  <text class="pg h1" x="26" y="52">演習 2</text>
+  <text class="pg" x="26" y="97">0</text>
+  <rect class="btn" x="26.5" y="121.5" width="86" height="40" rx="3"/>
+  <text class="pg" x="69.5" y="147" text-anchor="middle">1 増やす</text>
+  <rect class="btn" x="119.5" y="121.5" width="86" height="40" rx="3"/>
+  <text class="pg" x="162.5" y="147" text-anchor="middle">0 に戻す</text>
+
+  <!-- id の付いた要素の囲み、線、札 -->
+  <rect class="mark" x="20" y="79" width="24" height="25" rx="3"/>
+  <rect class="mark" x="23" y="118" width="92" height="47" rx="3"/>
+  <rect class="mark" x="117" y="118" width="92" height="47" rx="3"/>
+  <path class="lead" d="M44,88 H400"/>
+  <path class="lead" d="M69,118 V112 H400"/>
+  <path class="lead" d="M209,141.5 H400"/>
+  <text class="note note-head" x="400" y="64">id</text>
+  <text class="note note-head" x="490" y="64">変数</text>
+  <rect class="tag" x="400" y="79" width="74" height="18" rx="4"/><text class="tag-txt" x="408" y="92">#count</text>
+  <text class="var" x="490" y="92">countText</text>
+  <rect class="tag" x="400" y="103" width="74" height="18" rx="4"/><text class="tag-txt" x="408" y="116">#plus</text>
+  <text class="var" x="490" y="116">plusButton</text>
+  <rect class="tag" x="400" y="132.5" width="74" height="18" rx="4"/><text class="tag-txt" x="408" y="145.5">#reset</text>
+  <text class="var" x="490" y="145.5">resetButton</text>
+
+  <!-- 下の説明 -->
+  <text class="note note-sub" x="10" y="208">オレンジの札は、practice-02.html でその要素に付けた id。</text>
+  <text class="note note-sub" x="10" y="230">右の名前は、practice-02.js でその要素を入れてある変数。</text>
+</svg>

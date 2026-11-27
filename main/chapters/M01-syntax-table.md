@@ -77,7 +77,7 @@ console.log(`合計: ${total}円`); // → 合計: 360円
 | --- | --- | --- | --- |
 | 文字列をつなぐ | `"合計: " . $total` | `"合計: " + total` | `+` は数値の足し算と同じ記号。数値と文字列を組み合わせたときの動きは第2章 |
 | 文字列に値を埋め込む | `"Hello, {$name}"` | `` `Hello, ${name}` `` | バッククォートで囲む（テンプレートリテラル。第2章）。`"` と `'` は埋め込みをしない |
-| 文字列の長さ | `mb_strlen($s)` | `s.length` | 全角も半角も 1 文字は 1（`strlen` のようなバイト数ではない） |
+| 文字列の長さ | `mb_strlen($s)` | `s.length` | 全角も半角も 1 文字は 1（`strlen` のようなバイト数ではない）。絵文字などは、1 文字でも 2 以上になる |
 | 大文字にする | `strtoupper($s)` | `s.toUpperCase()` | 文字列の操作は `値.メソッド()` の形で書く（メソッドは、値に付いている関数） |
 | 含まれるか | `str_contains($s, "a")` | `s.includes("a")` | |
 | 分割・連結 | `explode(",", $s)` / `implode(",", $a)` | `s.split(",")` / `a.join(",")` | |
@@ -91,7 +91,7 @@ console.log(`合計: ${total}円`); // → 合計: 360円
 | 等しい・等しくない | `===` / `!==` | `===` / `!==` | 同じ。**`==` は使わない**（型を変換するルールが PHP と違うため）。配列やオブジェクトどうしの比較は第4章 4.4 |
 | かつ・または・否定 | `&&` / `\|\|` / `!` | `&&` / `\|\|` / `!` | 書き方は同じ。`\|\|` の動きの違いは第6章 6.2 |
 | 条件分岐 | `if (...) { } elseif (...) { } else { }` | `if (...) { } else if (...) { } else { }` | `elseif` は `else if` と離して書く |
-| 三項演算子 | `$a ? $b : $c` | `a ? b : c` | 書き方は同じ。`"0"` などを条件にしたときの違いは第6章 6.2 |
+| 三項演算子 | `$a ? $b : $c` | `a ? b : c` | 書き方は同じ。条件にしたときの扱いは第6章の問題 1 |
 | null なら別の値 | `$a ?? "なし"` | `a ?? "なし"` | 同じ（第6章） |
 | 値で分岐 | `switch ($x) { case 1: ... break; }` | `switch (x) { case 1: ... break; }` | 書き方は同じ。PHP の `switch` は `==` で比べるが、TypeScript は `===` で比べる（型も一致が必要） |
 
@@ -101,7 +101,7 @@ console.log(`合計: ${total}円`); // → 合計: 360円
 | --- | --- | --- | --- |
 | 回数を決めて繰り返す | `for ($i = 0; $i < 3; $i++) { }` | `for (let i = 0; i < 3; i++) { }` | |
 | 配列の要素を順に | `foreach ($items as $item) { }` | `for (const item of items) { }` | `of` を使う。`for...in` は別物（キーを回る）なので配列には使わない |
-| 番号と要素を順に | `foreach ($items as $i => $item) { }` | `items.forEach((item, i) => { });` | 要素が先、番号が後。`=>` の書き方は第3章 |
+| 番号と要素を順に | `foreach ($items as $i => $item) { }` | `items.forEach((item, i) => { });` | 要素が先、番号が後。`forEach` の中では `break`・`continue` を使えない。`=>` の書き方は第3章 |
 | 条件の間繰り返す | `while ($n > 0) { }` | `while (n > 0) { }` | 同じ |
 | 抜ける・次へ | `break;` / `continue;` | `break;` / `continue;` | 同じ |
 
@@ -111,7 +111,7 @@ console.log(`合計: ${total}円`); // → 合計: 360円
 | --- | --- | --- | --- |
 | 関数を作る | `function add(int $a, int $b): int { return $a + $b; }` | `function add(a: number, b: number): number { return a + b; }` | 型は名前の後ろに `:` で書く（第2章） |
 | 引数の初期値 | `function greet($name = "ゲスト") { }` | `function greet(name = "ゲスト") { }` | 同じ |
-| 名前のない関数 | `fn($x) => $x * 2` | `(x) => x * 2` | アロー関数（第3章） |
+| 名前のない関数 | `fn($x) => $x * 2` | `(x: number) => x * 2` | アロー関数（第3章） |
 
 ## 1.6 配列
 
@@ -120,7 +120,7 @@ console.log(`合計: ${total}円`); // → 合計: 360円
 | 配列を作る | `$a = [1, 2, 3];` | `const a = [1, 2, 3];` | |
 | 要素を取り出す | `$a[0]` | `a[0]` | 範囲外は `undefined`（エラーにならない） |
 | 要素の数 | `count($a)` | `a.length` | |
-| 末尾に追加 | `$a[] = 4;` / `array_push($a, 4);` | `a.push(4);` | `const` が止めるのは再代入だけで、中身の変更は止めない。配列を代入したときの動きとあわせて第4章 |
+| 末尾に追加 | `$a[] = 4;` / `array_push($a, 4);` | `a.push(4);` | `const` の配列にも追加できる（止めるのは再代入だけ）。配列を代入したときの動きとあわせて第4章 |
 | 含まれるか | `in_array(2, $a, true)` | `a.includes(2)` | |
 | 変換・絞り込み | `array_map(...)` / `array_filter(...)` | `a.map(...)` / `a.filter(...)` | 第7章 |
 
@@ -133,7 +133,7 @@ PHP の連想配列は、TypeScript では主に**オブジェクト**で表し�
 | 作る | `$user = ["name" => "Alice", "age" => 20];` | `const user = { name: "Alice", age: 20 };` | キーは普通 `"` なしで書く。`user-id` のように `-` を含むキーは、引用符で囲む（`{ "user-id": 1 }`）。オブジェクトの型の書き方は第4章（詳しくは第5章） |
 | 値を取り出す | `$user["name"]` | `user.name` / `user["name"]` | 普段は `.` を使う |
 | 値を変える | `$user["age"] = 21;` | `user.age = 21;` | オブジェクトを代入したときの動きは第4章 |
-| キーがあるか | `array_key_exists("name", $user)` | `"name" in user` | `"toString"` のように元からある名前でも `true` になる。第6章 |
+| キーがあるか | `array_key_exists("name", $user)` | `"name" in user` | `"toString"` のように元からある名前でも `true` になる |
 | キーと値を順に | `foreach ($user as $k => $v) { }` | `for (const [k, v] of Object.entries(user)) { }` | `Object.entries` はキーと値の組の配列を返す。`[k, v]` の書き方は第4章 4.2 |
 | キーが自由な辞書 | `$count["食費"] = 1000;` | `Map`（第8章）か `Record`（第5章） | |
 
@@ -163,7 +163,7 @@ PHP の連想配列は、TypeScript では主に**オブジェクト**で表し�
 | やりたいこと | PHP | TypeScript | 注意 |
 | --- | --- | --- | --- |
 | 他のファイルで使えるようにする | （何もしなくてよい） | `export function add(...) { }` | `export` を付けたものだけ外から使える（第8章） |
-| 他のファイルのものを使う | `require "math.php";` / `use App\Math;` | `import { add } from "./math.ts";` | 第8章 |
+| 他のファイルのものを使う | `require "math.php";` | `import { add } from "./math.ts";` | 第8章 |
 
 ---
 

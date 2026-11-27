@@ -37,7 +37,7 @@ console.log(totalsByCategory(sampleEntries));
 
 `totalsBySource` のテストは、章末の改修でこの関数を書くまで「まだ実装していません」と表示され、失敗します。
 
-確かめ方で `npm test P05` を実行したら、書き換えた関数の `✖` の行と、その下の「失敗の内容」だけを見ます。
+確かめ方で `npm test P05` を実行したら、書き換えた関数の `✖` の行と、結果の一覧の後に出る「失敗の内容」だけを見ます。
 
 ## 5.2 テストと中身を読む
 
@@ -206,7 +206,7 @@ test("sortByDate は日付の新しい順に並べ、元の配列を変えない
 <summary>答えと解説</summary>
 
 1. 日付の新しい順に並ぶこと（21行目）と、渡した配列が変わらないこと（22行目）です。
-2. 失敗します。22 行目で、`sampleEntries` の順番が変わってしまったことが見つかります。
+2. 失敗します。22 行目の検査で、`sampleEntries` の順番が変わってしまったことが見つかります（表示の `test at` の行に出るのは、テストが始まる 19 行目です）。
 3. 日付の古い順になります。
 
 **確かめ方**：改修用フォルダの `src/summary.ts` で書き換えて、`npm test P05` を実行します。`sortByDate` の行を見ます。
@@ -280,7 +280,7 @@ export function totalsByCategory(entries: Entry[]): CategoryTotal[] {
 | `totals.set(キー, 値)` | そのキーに値を入れる。すでにあれば、置き換える |
 | `[...totals]` | `[キー, 値]` の組の配列にする。順番は、キーを入れた順 |
 | `([category, total]) => ...` | 引数で受け取った `[キー, 値]` の組を、分割代入で 2 つの変数に分ける |
-| `(...) => ({ category, total })` | オブジェクトをそのまま返すアロー関数。`{ }` を `( )` で囲む。囲まないと、関数の本体の `{ }` として読まれる |
+| `(...) => ({ category, total })` | オブジェクトを返すアロー関数。`( )` で囲まない `{ }` は、関数の本体として読まれる |
 
 `A ?? B` は、`A` が `null` か `undefined` なら `B` に、そうでなければ `A` になります（本編第6章）。
 
@@ -344,7 +344,7 @@ export function totalsByCategory(entries: Entry[]): CategoryTotal[] {
 
 小さい順に変えるのが目的なら、テストの名前と期待する値も一緒に直します。差分にテストの変更が入っていなければ、「意図せずに変わったのでは」と疑えます。
 
-**確かめ方**：改修用フォルダの `src/summary.ts` で書き換えて、`npm test P05` を実行します。`totalsByCategory` の行を見ます。
+**確かめ方**：改修用フォルダの `src/summary.ts` で書き換えて、`npm test P05` を実行します。`totalsByCategory` の行を見ます。続けて `npm run dev P05` で起動し、「分類ごとの支出」の並び順を見ます。
 
 </details>
 
@@ -388,7 +388,7 @@ export function totalsByCategory(entries: Entry[]): CategoryTotal[] {
    TypeError: Reduce of empty array with no initial value
    ```
 
-`balanceOf` は `totalOf(entries, "income")` を呼びます。収入が 1 件もないので、`filter` の結果が空の配列になり、`reduce` がエラーを投げます。収入の側でエラーが投げられた時点で処理が止まるので、支出の側の `totalOf` は呼ばれません。集計の関数では、空の配列を渡したときにどうなるかをテストします。テストの `balanceOf([])` の行がそれに当たります。
+`balanceOf` は `totalOf(entries, "income")` を呼びます。収入が 1 件もないので、`filter` の結果が空の配列になり、`reduce` がエラーを投げます。収入の側でエラーが投げられた時点で処理が止まるので、支出の側の `totalOf` は呼ばれません。収入が 1 件以上あっても、`sum` の最初の値が明細（`Entry`）になるので、合計は数値になりません。集計の関数では、空の配列を渡したときにどうなるかをテストします。テストの `balanceOf([])` の行がそれに当たります。
 
 **確かめ方**：改修用フォルダの `src/summary.ts` で書き換えると、`return` と `sum + entry.amount` に赤い波線が出ます。2 は、`try.ts` に次の内容を書いて実行します。`node` は型チェックをしないので、型エラーがあっても実行できます。
 

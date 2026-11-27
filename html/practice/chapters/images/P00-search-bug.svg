@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 790 386" width="790" height="386" role="img" aria-labelledby="t d">
+  <title id="t">検索しても、集計が変わらない</title>
+  <desc id="d">「集計」と「明細」の区画。検索の欄に「昼」と入れてある。明細の一覧は、メモが昼食の食費 800 円の 1 件だけに絞り込まれている。上の集計は、支出が 2,000 円、分類ごとの支出が「食費: 2,000円」で、2 件分のまま変わっていない。</desc>
+  <style>
+    .pg { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 12.8px; fill: #1f2328; }
+    .h1 { font-size: 20.5px; font-weight: 700; }
+    .h2 { font-size: 14px; font-weight: 700; }
+    .h3 { font-size: 12.2px; font-weight: 700; fill: #59636e; }
+    .lbl { font-size: 10.9px; fill: #59636e; }
+    .ctl { font-size: 10.9px; }
+    .small { font-size: 11.5px; }
+    .muted { fill: #59636e; }
+    .inc { fill: #1a7f37; }
+    .exp { fill: #b42318; }
+    .panel { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .ctrl { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .btn { fill: #f6f7f9; stroke: #d8dee4; stroke-width: 0.8; }
+    .rule { fill: none; stroke: #d8dee4; stroke-width: 0.8; }
+    .chev { fill: none; stroke: #1f2328; stroke-width: 1; }
+    .check { fill: #0b63ce; }
+    .tick { fill: none; stroke: #ffffff; stroke-width: 1.6; }
+    .hl { fill: #dbeafe; }
+    .con { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+    .con-bar { fill: #eef1f4; }
+    .con-err { fill: #fdecea; }
+    .con-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 10.5px; fill: #1f2328; }
+    .con-red { fill: #b42318; }
+    .con-ui { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 10.5px; fill: #5f6368; }
+    .con-on { fill: #0b57d0; font-weight: 700; }
+    .codebox { fill: #f6f8fa; stroke: #d8dee4; stroke-width: 0.8; }
+    .code { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; fill: #1f2328; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 1.5; }
+    .mark-b { fill: none; stroke: #2563eb; stroke-width: 1.5; }
+    .lead { fill: none; stroke: #ea580c; stroke-width: 1; }
+    .tag { fill: none; stroke: #ea580c; stroke-width: 1.2; }
+    .tag-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; font-weight: 700; fill: #c2410c; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 12px; fill: #1f2937; }
+    .cap { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; font-weight: 700; fill: #1f2937; }
+    .flow { fill: none; stroke: #6b7280; stroke-width: 1.4; }
+    .flow-head { fill: #6b7280; }
+    @media (prefers-color-scheme: dark) {
+      .mark, .lead, .tag { stroke: #fb923c; }
+      .mark-b { stroke: #60a5fa; }
+      .tag-txt { fill: #fb923c; }
+      .note, .cap { fill: #e5e7eb; }
+      .flow { stroke: #9ca3af; }
+      .flow-head { fill: #9ca3af; }
+    }
+  </style>
+  <rect class="panel" x="10" y="10" width="537" height="247" rx="6"/>
+  <text class="pg h2" x="26.5" y="40">集計</text>
+  <text class="pg lbl" x="26.5" y="69">月</text>
+  <rect class="ctrl" x="26.5" y="74" width="76" height="28" rx="4.8"/>
+  <text class="pg ctl" x="32.5" y="92">すべて</text>
+  <path class="chev" d="M87.5,86 L91.0,89.5 L94.5,86"/>
+  <text class="pg lbl" x="115.5" y="69">種別</text>
+  <rect class="ctrl" x="115.5" y="74" width="76" height="28" rx="4.8"/>
+  <text class="pg ctl" x="121.5" y="92">すべて</text>
+  <path class="chev" d="M176.5,86 L180.0,89.5 L183.5,86"/>
+  <text class="pg lbl" x="204.5" y="69">検索</text>
+  <rect class="ctrl" x="204.5" y="74" width="136" height="28" rx="4.8"/>
+  <text class="pg ctl" x="210.5" y="92">昼</text>
+  <text class="pg muted" x="26.5" y="131">収入</text>
+  <text class="pg" x="90.5" y="131">0円</text>
+  <text class="pg muted" x="26.5" y="156">支出</text>
+  <text class="pg" x="90.5" y="156">2,000円</text>
+  <text class="pg muted" x="26.5" y="181">収支</text>
+  <text class="pg exp" x="90.5" y="181">-2,000円</text>
+  <text class="pg h3" x="26.5" y="214">分類ごとの支出</text>
+  <text class="pg" x="26.5" y="237">食費: 2,000円</text>
+  <rect class="panel" x="10" y="273" width="537" height="100.6" rx="6"/>
+  <text class="pg h2" x="26.5" y="303">明細</text>
+  <text class="pg" x="26.5" y="340.0">2026-11-06</text>
+  <text class="pg" x="119.5" y="340.0">食費<tspan class="ctl muted"> 昼食</tspan></text>
+  <text class="pg exp" x="484.5" y="340.0" text-anchor="end">-800円</text>
+  <rect class="btn" x="494.5" y="320.0" width="36" height="31" rx="4.8"/>
+  <text class="pg" x="512.5" y="340.0" text-anchor="middle">削除</text>
+  <path class="rule" d="M26.5,357.6 H530.5"/>
+  <rect class="mark" x="200" y="58" width="146" height="48" rx="3"/>
+  <path class="lead" d="M346,82 H600"/>
+  <text class="note" x="606" y="86">「昼」で検索</text>
+  <rect class="mark" x="20" y="140" width="170" height="48" rx="3"/>
+  <rect class="mark" x="20" y="222" width="170" height="22" rx="3"/>
+  <path class="lead" d="M190,164 H600"/>
+  <text class="note" x="606" y="160">集計は 2 件分のまま</text>
+  <text class="note" x="606" y="177">（800 円 ＋ 1,200 円）</text>
+  <rect class="mark-b" x="20" y="319" width="517" height="36" rx="3"/>
+  <path class="lead" d="M537,337 H600"/>
+  <text class="note" x="606" y="341">一覧は 1 件だけ</text>
+</svg>

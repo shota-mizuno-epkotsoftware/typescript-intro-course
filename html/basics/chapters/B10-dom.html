@@ -11,10 +11,10 @@
       if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
     } catch (e) {}
   </script>
-  <link rel="stylesheet" href="../../assets/style.css?v=mwobwd6f">
-  <script src="../../assets/app.js?v=mwobwd6f" defer></script>
-  <script src="../../assets/viz.js?v=mwobwd6f" defer></script>
-  <script src="../../assets/app-map.js?v=mwobwd6f" defer></script>
+  <link rel="stylesheet" href="../../assets/style.css?v=mwydc4yf">
+  <script src="../../assets/app.js?v=mwydc4yf" defer></script>
+  <script src="../../assets/viz.js?v=mwydc4yf" defer></script>
+  <script src="../../assets/app-map.js?v=mwydc4yf" defer></script>
 </head>
 <body data-page-key="basics/chapters/B10-dom">
   <header class="topbar">
@@ -36,7 +36,7 @@
   </header>
   <div class="layout">
     <aside class="sidebar" id="sidebar">
-      <nav aria-label="章の一覧"><ul><li><a href="../../index.html">はじめに</a></li><li class="nav-group" role="separator"></li><li><a href="../../overview.html">学ぶ技術の関係</a></li><li class="nav-group">基礎編</li><li><a href="B00-setup.html">第0章 準備</a></li><li><a href="B01-values.html">第1章 値と計算</a></li><li><a href="B02-variables.html">第2章 変数</a></li><li><a href="B03-errors.html">第3章 エラーを読む</a></li><li><a href="B04-conditions.html">第4章 条件分岐</a></li><li><a href="B05-arrays-loops.html">第5章 配列と繰り返し</a></li><li><a href="B06-functions.html">第6章 関数</a></li><li><a href="B07-combining.html">第7章 関数を組み合わせる</a></li><li><a href="B08-objects.html">第8章 オブジェクト</a></li><li><a href="B09-array-methods.html">第9章 配列のメソッド</a></li><li><a href="B10-dom.html" aria-current="page">第10章 画面を動かす</a></li><li><a href="B11-final.html">第11章 修了課題</a></li><li class="nav-group">本編</li><li><a href="../../main/chapters/M00-setup.html">第0章 環境構築</a></li><li><a href="../../main/chapters/M01-syntax-table.html">第1章 基本文法の対応表</a></li><li><a href="../../main/chapters/M02-types.html">第2章 型の基本</a></li><li><a href="../../main/chapters/M03-functions.html">第3章 関数とコールバック</a></li><li><a href="../../main/chapters/M04-objects.html">第4章 オブジェクトと配列</a></li><li><a href="../../main/chapters/M05-data-types.html">第5章 データの型を書く</a></li><li><a href="../../main/chapters/M06-narrowing.html">第6章 null と型の絞り込み</a></li><li><a href="../../main/chapters/M07-array-methods.html">第7章 配列メソッド</a></li><li><a href="../../main/chapters/M08-modules.html">第8章 モジュールと型を読む</a></li><li><a href="../../main/chapters/M09-async.html">第9章 非同期</a></li><li><a href="../../main/chapters/M10-dom.html">第10章 ブラウザとDOM、イベント</a></li><li><a href="../../main/chapters/M11-next-steps.html">第11章 実践編への準備</a></li><li class="nav-group">実践編</li><li><a href="../../practice/chapters/P01-overview.html">第1章 全体像と、画面が表示されるまで</a></li><li><a href="../../practice/chapters/P02-types.html">第2章 データの型</a></li><li><a href="../../practice/chapters/P03-form.html">第3章 フォームの入力と検証</a></li><li><a href="../../practice/chapters/P04-events.html">第4章 イベントから再描画まで</a></li><li><a href="../../practice/chapters/P05-summary.html">第5章 集計とテスト</a></li><li><a href="../../practice/chapters/P06-external.html">第6章 外から来るデータ</a></li><li><a href="../../practice/chapters/P07-changes.html">第7章 変更を読む・総合</a></li><li class="nav-group" role="separator"></li><li><a href="../../troubleshooting.html">つまずき集</a></li><li><a href="../../tools.html">ツール一覧</a></li><li><a href="../../references.html">参考資料との対応</a></li></ul></nav>
+      <nav aria-label="章の一覧"><ul><li><a href="../../index.html">はじめに</a></li><li class="nav-group" role="separator"></li><li><a href="../../overview.html">学ぶ技術の関係</a></li><li class="nav-group">基礎編</li><li><a href="B00-setup.html">第0章 準備</a></li><li><a href="B01-values.html">第1章 値と計算</a></li><li><a href="B02-variables.html">第2章 変数</a></li><li><a href="B03-errors.html">第3章 エラーを読む</a></li><li><a href="B04-conditions.html">第4章 条件分岐</a></li><li><a href="B05-arrays-loops.html">第5章 配列と繰り返し</a></li><li><a href="B06-functions.html">第6章 関数</a></li><li><a href="B07-combining.html">第7章 関数を組み合わせる</a></li><li><a href="B08-objects.html">第8章 オブジェクト</a></li><li><a href="B09-array-methods.html">第9章 配列のメソッド</a></li><li><a href="B10-dom.html" aria-current="page">第10章 画面を動かす</a></li><li><a href="B11-final.html">第11章 まとめの演習</a></li><li class="nav-group">本編</li><li><a href="../../main/chapters/M00-setup.html">第0章 環境構築</a></li><li><a href="../../main/chapters/M01-syntax-table.html">第1章 基本文法の対応表</a></li><li><a href="../../main/chapters/M02-types.html">第2章 型の基本</a></li><li><a href="../../main/chapters/M03-functions.html">第3章 関数とコールバック</a></li><li><a href="../../main/chapters/M04-objects.html">第4章 オブジェクトと配列</a></li><li><a href="../../main/chapters/M05-data-types.html">第5章 データの型を書く</a></li><li><a href="../../main/chapters/M06-narrowing.html">第6章 null と型の絞り込み</a></li><li><a href="../../main/chapters/M07-array-methods.html">第7章 配列メソッド</a></li><li><a href="../../main/chapters/M08-modules.html">第8章 モジュールと型を読む</a></li><li><a href="../../main/chapters/M09-async.html">第9章 非同期</a></li><li><a href="../../main/chapters/M10-dom.html">第10章 ブラウザとDOM、イベント</a></li><li><a href="../../main/chapters/M11-next-steps.html">第11章 データの保存と通信</a></li><li class="nav-group">実践編</li><li><a href="../../practice/chapters/P00-digest.html">要点と改修（1 ページ）</a></li><li><details class="nav-fold"><summary>詳細版（7 章）</summary><ul><li><a href="../../practice/chapters/P01-overview.html">第1章 全体像と、画面が表示されるまで</a></li><li><a href="../../practice/chapters/P02-types.html">第2章 データの型</a></li><li><a href="../../practice/chapters/P03-form.html">第3章 フォームの入力と検証</a></li><li><a href="../../practice/chapters/P04-events.html">第4章 イベントから再描画まで</a></li><li><a href="../../practice/chapters/P05-summary.html">第5章 集計とテスト</a></li><li><a href="../../practice/chapters/P06-external.html">第6章 外から来るデータ</a></li><li><a href="../../practice/chapters/P07-changes.html">第7章 変更を読む・総合</a></li></ul></details></li><li class="nav-group">React 編</li><li><a href="../../react/chapters/R00-digest.html">要点と改修（1 ページ）</a></li><li><details class="nav-fold"><summary>詳細版（7 章）</summary><ul><li><a href="../../react/chapters/R01-overview.html">第1章 全体像と JSX の入口</a></li><li><a href="../../react/chapters/R02-components.html">第2章 コンポーネントと props</a></li><li><a href="../../react/chapters/R03-state.html">第3章 状態と再描画</a></li><li><a href="../../react/chapters/R04-form.html">第4章 イベントとフォーム</a></li><li><a href="../../react/chapters/R05-flow.html">第5章 データの流れと集計</a></li><li><a href="../../react/chapters/R06-effects.html">第6章 副作用</a></li><li><a href="../../react/chapters/R07-changes.html">第7章 変更を読む・総合</a></li></ul></details></li><li class="nav-group" role="separator"></li><li><a href="../../troubleshooting.html">つまずき集</a></li><li><a href="../../tools.html">ツール一覧</a></li><li><a href="../../references.html">参考資料との対応</a></li></ul></nav>
     </aside>
     <main class="content">
       <article>
@@ -93,15 +93,16 @@
 <ul>
 <li>ブラウザは Chrome か Edge を使います。ほかのブラウザで開いたときは、表示されたアドレスを Chrome か Edge に貼り付けます。</li>
 <li>JavaScript のファイルを書き換えて保存すると、画面は自動で読み込み直されます。</li>
+<li>保存した後は、コンソールのファイル名に <code>try.js?t=数字</code> のように <code>?t=数字</code> が付きます。読み飛ばして構いません。</li>
 <li>終わるときは、ターミナルで <code>Ctrl</code>+<code>C</code> を押します。動かしている間は、そのターミナルにほかのコマンドを打てません。</li>
 <li>動かしたまま別のコマンドを打つときは、VS Code の「ターミナル」→「新しいターミナル」で、2 つ目のターミナルを開きます（第0章の 0.2）。</li>
 </ul>
 <h3 id="コンソールを開く">コンソールを開く</h3>
 <p>ブラウザで実行した <code>console.log</code> の表示は、ターミナルではなく、ブラウザの<strong>コンソール</strong>に出ます。</p>
 <p>コンソールは、ブラウザで <code>F12</code> キー（macOS は <code>Cmd</code>+<code>Option</code>+<code>I</code>）を押し、開いた画面の「Console」（コンソール）を選ぶと表示されます。<code>try.js を読み込みました</code> と表示されていれば、<code>try.js</code> が実行されています。</p>
-<figure><svg class="fig1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 530" width="740" height="530" role="img" aria-labelledby="fig1-t fig1-d">
+<figure><svg class="fig1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 554" width="740" height="554" role="img" aria-labelledby="fig1-t fig1-d">
   <title id="fig1-t">ブラウザの画面とコンソール</title>
-  <desc id="fig1-d">ブラウザの窓の左にページがあり、「ここに表示します」の文章、「押す」のボタン、100 と入った入力欄が、上から順に並んでいる。右に開発者ツールが開いていて、Console のタブに、console.log の表示の「try.js を読み込みました」が出ている。その行の右端に、try.js:3 とファイル名と行番号が出ている。</desc>
+  <desc id="fig1-d">ブラウザの窓の左にページがあり、「ここに表示します」の文章、「押す」のボタン、100 と入った入力欄が、上から順に並んでいる。3 つの部品には、try.html で付けた id（message、button、amount）の札が添えてある。右に開発者ツールが開いていて、Console のタブに、console.log の表示の「try.js を読み込みました」が出ている。その行の右端に、try.js:3 とファイル名と行番号が出ている。</desc>
   <!-- 寸法：900×560 の窓を 0.8 倍。タブの列 40、ツールバー 45、開発者ツールは右に開き、ページと 55:45（Chrome の既定）。開発者ツールのタブ 26、Console のツールバー 26、メッセージの行 21 -->
   <style>
 .fig1 .ui { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 10.5px; fill: #1f1f1f; }
@@ -127,6 +128,10 @@
 .fig1 .yellow { fill: #febc2e; }
 .fig1 .green { fill: #28c840; }
 .fig1 .mark { fill: none; stroke: #ea580c; stroke-width: 2; }
+.fig1 .idmark { fill: none; stroke: #ea580c; stroke-width: 1.5; }
+.fig1 .lead { fill: none; stroke: #ea580c; stroke-width: 1; }
+.fig1 .tag { fill: none; stroke: #ea580c; stroke-width: 1.2; }
+.fig1 .tag-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; font-weight: 700; fill: #c2410c; }
 .fig1 .badge { fill: #ea580c; }
 .fig1 .badge-num { font-family: -apple-system, "Segoe UI", sans-serif; font-size: 11px; font-weight: 700; fill: #ffffff; }
 .fig1 .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; fill: #1f2937; }
@@ -136,7 +141,8 @@
 .fig1 .brace { fill: none; stroke: #94a3b8; stroke-width: 1.5; }
 
     @media (prefers-color-scheme: dark) {
-:root:not([data-theme="light"]) .fig1 .mark { stroke: #fb923c; }
+:root:not([data-theme="light"]) .fig1 .mark, :root:not([data-theme="light"]) .fig1 .idmark, :root:not([data-theme="light"]) .fig1 .lead, :root:not([data-theme="light"]) .fig1 .tag { stroke: #fb923c; }
+:root:not([data-theme="light"]) .fig1 .tag-txt { fill: #fb923c; }
 :root:not([data-theme="light"]) .fig1 .badge { fill: #f97316; }
 :root:not([data-theme="light"]) .fig1 .note { fill: #e5e7eb; }
 :root:not([data-theme="light"]) .fig1 .note-sub { fill: #9ca3af; }
@@ -144,7 +150,8 @@
 :root:not([data-theme="light"]) .fig1 .brace { stroke: #64748b; }
 
     }
-:root[data-theme="dark"] .fig1 .mark { stroke: #fb923c; }
+:root[data-theme="dark"] .fig1 .mark, :root[data-theme="dark"] .fig1 .idmark, :root[data-theme="dark"] .fig1 .lead, :root[data-theme="dark"] .fig1 .tag { stroke: #fb923c; }
+:root[data-theme="dark"] .fig1 .tag-txt { fill: #fb923c; }
 :root[data-theme="dark"] .fig1 .badge { fill: #f97316; }
 :root[data-theme="dark"] .fig1 .note { fill: #e5e7eb; }
 :root[data-theme="dark"] .fig1 .note-sub { fill: #9ca3af; }
@@ -180,6 +187,17 @@
   <rect class="input" x="23" y="205" width="150" height="25" rx="2"/>
   <text class="page" x="31" y="222">100</text>
 
+  <!-- id の付いた要素の囲みと、id の札 -->
+  <rect class="idmark" x="18" y="138" width="112" height="20" rx="3"/>
+  <rect class="idmark" x="19" y="162" width="54" height="33" rx="3"/>
+  <rect class="idmark" x="19" y="201" width="158" height="33" rx="3"/>
+  <path class="lead" d="M130,148 H250"/>
+  <path class="lead" d="M73,178.5 H250"/>
+  <path class="lead" d="M177,217.5 H250"/>
+  <rect class="tag" x="250" y="139" width="100" height="18" rx="4"/><text class="tag-txt" x="258" y="152">id=&quot;message&quot;</text>
+  <rect class="tag" x="250" y="169.5" width="100" height="18" rx="4"/><text class="tag-txt" x="258" y="182.5">id=&quot;button&quot;</text>
+  <rect class="tag" x="250" y="208.5" width="100" height="18" rx="4"/><text class="tag-txt" x="258" y="221.5">id=&quot;amount&quot;</text>
+
   <!-- 開発者ツール（右に開く。幅 324） -->
   <path class="split" d="M406,78 V457.5"/>
   <rect class="dev" x="406.5" y="78.5" width="323" height="21"/>
@@ -211,6 +229,7 @@
   <text class="note note-head" x="568" y="490" text-anchor="middle">開発者ツール（F12 で開く）</text>
 
   <text class="note note-sub" x="10" y="520">console.log の表示は、開発者ツールの Console に出る。<tspan class="note-acc">①</tspan> は、ファイル名と行番号。</text>
+  <text class="note note-sub" x="10" y="544">オレンジの札は、try.html でその要素に付けた id。</text>
 </svg><figcaption>図10-1 ブラウザの画面とコンソール</figcaption></figure>
 <p>この章のコード例は、<code>basics/exercises/B10-dom/try.js</code> に打ち、「試すためのページ」で動きを見ます（前のコード例は消してから打ちます）。</p>
 <ul>
@@ -323,7 +342,7 @@
 <li><code>addEventListener</code> は、関数を登録するだけです。渡した関数の中は、その場では実行されません。登録が済むと、次の行に進みます。</li>
 <li>渡した関数は、クリックされるたびに 1 回ずつ実行されます。呼ぶのはブラウザです。関数を引数で渡す形は、第9章の <code>map</code> や <code>filter</code> と同じです。</li>
 <li>引数のないアロー関数は、<code>=&gt;</code> の左に <code>( )</code> だけを書きます。</li>
-<li>関数を先に <code>const show = () =&gt; { ... };</code> と変数に入れたときは、<code>addEventListener(&quot;click&quot;, show)</code> と名前だけを渡します。<code>show()</code> と書くと、その場で呼んだ結果を渡します（第9章の 9.1）。</li>
+<li>変数に入れた関数は、<code>addEventListener(&quot;click&quot;, show)</code> と名前だけを渡します。<code>show()</code> と書くと、その場で呼んだ結果を渡します（第9章の 9.1）。</li>
 </ul>
 <section class="question"><h2 id="問題-1いつ実行されるか"><span class="question-kind">問題</span> <span class="question-number">1</span><span class="question-title">いつ実行されるか</span></h2>
 <p><code>basics/exercises/B10-dom/problem-01.js</code></p>
@@ -437,16 +456,15 @@
   <text class="txt" x="550" y="58" text-anchor="middle">11 行目</text>
   <text class="txt sub" x="550" y="78" text-anchor="middle">コンソールに C</text>
 
-  <path class="line2" d="M600,88 L600,146" marker-end="url(#fig3-a2)"/>
-  <text class="txt sub" x="590" y="114" text-anchor="end">その後、ボタンを</text>
-  <text class="txt sub" x="590" y="132" text-anchor="end">押すたびに</text>
+  <line class="rule" x1="20" y1="112" x2="640" y2="112"/>
+  <text class="txt sub" x="20" y="138">その後、ボタンを押したとき（押すたびに 1 回）</text>
 
-  <path class="reg" d="M330,88 L330,176 L376,176" marker-end="url(#fig3-a3)"/>
-  <text class="txt sub" x="340" y="166">登録</text>
+  <path class="reg" d="M330,88 L330,176 L304,176" marker-end="url(#fig3-a3)"/>
+  <text class="txt sub" x="340" y="180">登録</text>
 
-  <rect class="obj" x="380" y="150" width="260" height="52" rx="6"/>
-  <text class="txt" x="510" y="172" text-anchor="middle">7〜9 行目：登録した関数の中</text>
-  <text class="txt sub" x="510" y="192" text-anchor="middle">コンソールに B、画面の文字が変わる</text>
+  <rect class="obj" x="20" y="150" width="280" height="52" rx="6"/>
+  <text class="txt" x="160" y="172" text-anchor="middle">7〜9 行目：登録した関数の中</text>
+  <text class="txt sub" x="160" y="192" text-anchor="middle">コンソールに B、画面の文字が変わる</text>
 
   <text class="txt sub" x="20" y="230">登録した関数の中は、ボタンが押されるまで実行されない。</text>
 </svg><figcaption>図10-3 読み込んだときに実行される行と、クリックで実行される行</figcaption><script type="application/json" class="viz-data">{"file":"basics/exercises/B10-dom/problem-01.js","label":"1行ずつ見る","code":"const message = document.querySelector(\"#message\");\nconst button = document.querySelector(\"#button\");\nlet count = 0;\n\nconsole.log(\"A\");\nbutton.addEventListener(\"click\", () => {\n  count = count + 1;\n  console.log(\"B\");\n  message.textContent = `${count} 回押されました`;\n});\nconsole.log(\"C\");","panels":[{"id":"console","label":"コンソールの表示"},{"id":"screen","label":"画面の文字と count"}],"steps":[{"lines":[1,3],"phase":"ページを開く","note":"ページを開くと、上の行から順に実行されます。要素を 2 つ取り、count を 0 にします。","console":[],"screen":["まだ押されていません","count：0"]},{"lines":[5],"phase":"ページを開く","note":"コンソールに A を表示します。","console":["A"],"screen":["まだ押されていません","count：0"]},{"lines":[6],"phase":"ページを開く（登録）","note":"addEventListener は、「クリックされたら、この関数を実行する」と登録します。関数の中は、ここでは実行されません。","console":["A"],"screen":["まだ押されていません","count：0"]},{"lines":[11],"phase":"ページを開く","note":"登録が済むと、次の行に進みます。コンソールに C を表示します。ここまでが、ページを開いた直後です。","console":["A","C"],"screen":["まだ押されていません","count：0"]},{"lines":[7,9],"phase":"1 回目のクリック","note":"ボタンを押すと、登録した関数の中が実行されます。count が 1 になり、コンソールに B が出て、画面の文字が変わります。","console":["A","C","B"],"screen":["1 回押されました","count：1"]},{"lines":[7,9],"phase":"2 回目のクリック","note":"もう一度押すと、関数の中がもう 1 回実行されます。count は関数の外の変数なので、前の値が残っています。","console":["A","C","B","B"],"screen":["2 回押されました","count：2"]}],"codeHtml":"\u003cpre class=\"shiki numbered shiki-themes github-light github-dark\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\">\u003ccode style=\"counter-reset: line 0\">\u003cspan class=\"line\">\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">const\u003c/span>\u003cspan style=\"color:#005CC5;--shiki-dark:#79B8FF\"> message\u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\"> =\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> document.\u003c/span>\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\">querySelector\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">(\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">\"#message\"\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">);\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">const\u003c/span>\u003cspan style=\"color:#005CC5;--shiki-dark:#79B8FF\"> button\u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\"> =\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> document.\u003c/span>\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\">querySelector\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">(\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">\"#button\"\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">);\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">let\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> count \u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">=\u003c/span>\u003cspan style=\"color:#005CC5;--shiki-dark:#79B8FF\"> 0\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">;\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">console.\u003c/span>\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\">log\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">(\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">\"A\"\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">);\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">button.\u003c/span>\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\">addEventListener\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">(\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">\"click\"\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">, () \u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">=>\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">  count \u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">=\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\"> count \u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">+\u003c/span>\u003cspan style=\"color:#005CC5;--shiki-dark:#79B8FF\"> 1\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">;\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">  console.\u003c/span>\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\">log\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">(\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">\"B\"\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">);\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">  message.textContent \u003c/span>\u003cspan style=\"color:#D73A49;--shiki-dark:#F97583\">=\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\"> `${\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">count\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">} 回押されました`\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">;\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">});\u003c/span>\u003c/span>\n\u003cspan class=\"line\">\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">console.\u003c/span>\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\">log\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">(\u003c/span>\u003cspan style=\"color:#032F62;--shiki-dark:#9ECBFF\">\"C\"\u003c/span>\u003cspan style=\"color:#24292E;--shiki-dark:#E1E4E8\">);\u003c/span>\u003c/span>\u003c/code>\u003c/pre>"}</script></figure>
@@ -487,7 +505,7 @@
 <span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#6F42C1;--shiki-dark:#B392F0">Number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">));         </span><span class="result-comment" style="color:#6A737D;--shiki-dark:#6A737D">// → 0</span></span></code></pre>
 <ul>
 <li>数値に変えられない文字列は、<code>NaN</code> になります（第6章の 6.2）。</li>
-<li>何も打たれていない入力欄の値は、空の文字列 <code>&quot;&quot;</code> です。<code>Number(&quot;&quot;)</code> は <code>0</code> です。空かどうかは、数値に変える前に <code>値 === &quot;&quot;</code> で調べます。</li>
+<li>何も打たれていない入力欄の値は、空の文字列 <code>&quot;&quot;</code> です。<code>Number(&quot;&quot;)</code> は <code>0</code> です。</li>
 </ul>
 <p><code>NaN</code> かどうかは、<code>Number.isNaN(値)</code> で調べます。<code>値 === NaN</code> では調べられません。<code>NaN</code> は、<code>NaN</code> 自身と比べても <code>false</code> になる決まりです。</p>
 <pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> value</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> Number</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"abc"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
@@ -503,15 +521,98 @@
 <pre class="shiki numbered shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code style="counter-reset: line 0"><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> message</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#mesage"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
 <span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">log</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(message);</span></span>
 <span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">message.textContent </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "こんにちは"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span></code></pre>
-<p>1 行目は、<code>id</code> のつづりが違います。コンソールには <code>null</code> と表示され、3 行目は次のエラーになります。</p>
+<p>1 行目は、<code>id</code> のつづりが違います。コンソールには <code>null</code> と表示され、3 行目は次のエラーになります。ブラウザのエラーも、コンソールに出ます。</p>
 <pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span>Uncaught TypeError: Cannot set properties of null (setting 'textContent')</span></span></code></pre>
-<p><code>message.addEventListener(...)</code> のように取り出す行では、<code>Cannot read properties of null (reading 'addEventListener')</code> と出ます。どちらも、<code>.</code> の左が <code>null</code> だという意味です。</p>
-<p><code>of null</code> と書かれたエラーが出たら、その要素を <code>querySelector</code> で取っている行の <code>&quot;</code> の中と、HTML の <code>id</code> を見比べます。<code>#</code> を書き忘れると、タグの名前で探します。その名前のタグがなければ、同じエラーになります。</p>
-<p>ブラウザのエラーもコンソールに出ます。ファイル名と行番号は、図10-1 の <code>try.js:3</code> と同じく、その行の右端に出ます。</p>
-<ul>
-<li>先頭の <code>Uncaught</code> は、読み飛ばして構いません。</li>
-<li>保存して読み込み直した後は、<code>try.js?t=1794757813954:3</code> のように、間に <code>?t=数字</code> が入ります。</li>
-</ul>
+<figure><svg class="fig4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 262" width="760" height="262" role="img" aria-labelledby="fig4-t fig4-d">
+  <title id="fig4-t">コンソールに出たエラーの読む所</title>
+  <desc id="fig4-d">開発者ツールの Console に、2 行が出ている。1 行目は console.log の表示の null。2 行目は赤いエラーの行で、Uncaught TypeError: Cannot set properties of null (setting 'textContent') と書かれ、その下に at で始まる行が続く。読む所は 3 つある。1 つ目は行の右端の try.js?t=1795730940221:3 で、ファイル名と行番号（try.js の 3 行目）を表す。間の ?t=数字 は読み飛ばす。2 つ目は TypeError から後ろで、エラーの種類と説明を表す。先頭の Uncaught は読み飛ばす。3 つ目は説明の中の of null で、. の左が null だという意味。at で始まる行は読まない。</desc>
+  <!-- 開発者ツールの Console の部分を切り出した図（実物の大きさ）。タブの行 26、ツールバー 26、メッセージの行 20 -->
+  <style>
+.fig4 .dt { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 12px; fill: #1f1f1f; }
+.fig4 .gray { fill: #5f6368; }
+.fig4 .mono { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; fill: #1f1f1f; }
+.fig4 .null { fill: #80868b; }
+.fig4 .link { fill: #474747; text-decoration: underline; }
+.fig4 .err { fill: #b3261e; }
+.fig4 .frame { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+.fig4 .dev { fill: #f8f9fa; }
+.fig4 .errbg { fill: #fcebeb; }
+.fig4 .erredge { fill: none; stroke: #f6c8c4; stroke-width: 1; }
+.fig4 .erricon { fill: #dc362e; }
+.fig4 .errx { fill: none; stroke: #ffffff; stroke-width: 1.4; }
+.fig4 .edge { fill: none; stroke: #dadce0; stroke-width: 1; }
+.fig4 .icon { fill: none; stroke: #5f6368; stroke-width: 1.3; }
+.fig4 .filter { fill: #ffffff; stroke: #dadce0; stroke-width: 1; }
+.fig4 .blue { fill: #1a73e8; }
+.fig4 .mark { fill: none; stroke: #ea580c; stroke-width: 2; }
+.fig4 .badge { fill: #ea580c; }
+.fig4 .badge-num { font-family: -apple-system, "Segoe UI", sans-serif; font-size: 11px; font-weight: 700; fill: #ffffff; }
+.fig4 .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; fill: #1f2937; }
+.fig4 .note-head { font-weight: 700; }
+.fig4 .note-sub { fill: #4b5563; }
+
+    @media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) .fig4 .mark { stroke: #fb923c; }
+:root:not([data-theme="light"]) .fig4 .badge { fill: #f97316; }
+:root:not([data-theme="light"]) .fig4 .note { fill: #e5e7eb; }
+:root:not([data-theme="light"]) .fig4 .note-sub { fill: #9ca3af; }
+
+    }
+:root[data-theme="dark"] .fig4 .mark { stroke: #fb923c; }
+:root[data-theme="dark"] .fig4 .badge { fill: #f97316; }
+:root[data-theme="dark"] .fig4 .note { fill: #e5e7eb; }
+:root[data-theme="dark"] .fig4 .note-sub { fill: #9ca3af; }
+
+    </style>
+
+  <!-- 開発者ツールの枠、タブの行、ツールバー -->
+  <rect class="frame" x="10" y="10" width="740" height="140" rx="4"/>
+  <path class="dev" d="M14,10.5 H746 A3.5,3.5 0 0 1 749.5,14 V36 H10.5 V14 A3.5,3.5 0 0 1 14,10.5 Z"/>
+  <path class="edge" d="M10.5,36.5 H749.5"/>
+  <text class="dt gray" x="22" y="28">Elements</text>
+  <text class="dt" x="91" y="28">Console</text>
+  <rect class="blue" x="87" y="34" width="53" height="2.5"/>
+  <text class="dt gray" x="154" y="28">Sources</text>
+  <text class="dt gray" x="213" y="28">Network</text>
+  <text class="dt gray" x="274" y="28">≫</text>
+  <circle class="icon" cx="24" cy="49.5" r="5.5"/><path class="icon" d="M20.2,53.3 L27.8,45.7"/>
+  <text class="dt" x="40" y="54">top ▾</text>
+  <rect class="filter" x="90" y="41" width="150" height="17" rx="2"/>
+  <text class="dt gray" x="97" y="54">Filter</text>
+  <path class="edge" d="M10.5,62.5 H749.5"/>
+
+  <!-- console.log の表示の行 -->
+  <text class="mono null" x="34" y="76.5">null</text>
+  <text class="mono link" x="742" y="76.5" text-anchor="end">try.js?t=1795730940221:2</text>
+
+  <!-- エラーの行 -->
+  <rect class="errbg" x="10.5" y="82.5" width="739" height="38"/>
+  <path class="erredge" d="M10.5,82.5 H749.5 M10.5,120.5 H749.5"/>
+  <circle class="erricon" cx="22" cy="95.5" r="5.5"/><path class="errx" d="M19.8,93.3 L24.2,97.7 M24.2,93.3 L19.8,97.7"/>
+  <text class="mono err" x="34" y="99.5">Uncaught TypeError: Cannot set properties of null (setting 'textContent')</text>
+  <text class="mono link" x="742" y="99.5" text-anchor="end">try.js?t=1795730940221:3</text>
+  <text class="mono err" x="60.5" y="114.5">at <tspan class="link">try.js?t=1795730940221:3:21</tspan></text>
+  <text class="dt blue" x="20" y="139">›</text>
+
+  <!-- 印 -->
+  <rect class="mark" x="579" y="87" width="167" height="17" rx="3"/>
+  <circle class="badge" cx="567" cy="95.5" r="8"/><text class="badge-num" x="567" y="99.5" text-anchor="middle">1</text>
+  <rect class="mark" x="90" y="87" width="431" height="17" rx="3"/>
+  <circle class="badge" cx="533" cy="95.5" r="8"/><text class="badge-num" x="533" y="99.5" text-anchor="middle">2</text>
+  <path class="mark" d="M313,107 V110.5 H357 V107"/>
+  <circle class="badge" cx="370" cy="113" r="8"/><text class="badge-num" x="370" y="117" text-anchor="middle">3</text>
+
+  <!-- 下の説明 -->
+  <circle class="badge" cx="19" cy="173" r="9"/><text class="badge-num" x="19" y="177" text-anchor="middle">1</text>
+  <text class="note" x="36" y="178"><tspan class="note-head">ファイル名と行番号（try.js の 3 行目）</tspan><tspan class="note-sub" dx="10">間の「?t=数字」は読み飛ばす</tspan></text>
+  <circle class="badge" cx="19" cy="198" r="9"/><text class="badge-num" x="19" y="202" text-anchor="middle">2</text>
+  <text class="note" x="36" y="203"><tspan class="note-head">エラーの種類と説明</tspan><tspan class="note-sub" dx="10">先頭の Uncaught は読み飛ばす</tspan></text>
+  <circle class="badge" cx="19" cy="223" r="9"/><text class="badge-num" x="19" y="227" text-anchor="middle">3</text>
+  <text class="note" x="36" y="228"><tspan class="note-head">of null</tspan><tspan class="note-sub" dx="10">「. の左が null」という意味</tspan></text>
+  <text class="note note-sub" x="10" y="252">at で始まる行は読まない。</text>
+</svg><figcaption>図10-4 コンソールに出たエラーの読む所</figcaption></figure>
+<p><code>message.addEventListener(...)</code> のように取り出す行では、<code>Cannot read properties of null (reading 'addEventListener')</code> と出ます。これも <code>of null</code> のエラーです。</p>
+<p><code>of null</code> と書かれたエラーが出たら、その要素を <code>querySelector</code> で取っている行の <code>&quot;</code> の中と、HTML の <code>id</code> を見比べます。<code>querySelector(&quot;message&quot;)</code> のように <code>#</code> を書き忘れると、<code>&lt;message&gt;</code> というタグを探します。その名前のタグがなければ、同じエラーになります。</p>
 <hr>
 <p>演習 1 と演習 2 には、<code>npm test</code> での答え合わせがありません。画面を操作して、それぞれの「画面で確かめること」がすべて当てはまれば完了です。</p>
 <p>解答例の画面は、<code>npm run dev B10 answer</code> で開けます。自分の画面と見比べるときに使います。</p>
@@ -603,6 +704,68 @@
 </section>
 <section class="exercise"><h2 id="演習-2カウンターを作る">演習 2：カウンターを作る</h2>
 <p>ボタンで数を増やしたり、0 に戻したりする画面を作ります。<code>basics/exercises/B10-dom/practice-02.js</code> には、要素を取る行と、数を入れる変数 <code>count</code> の宣言が書いてあります。その下を書きます。</p>
+<figure><svg class="fig5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 242" width="620" height="242" role="img" aria-labelledby="fig5-t fig5-d">
+  <title id="fig5-t">演習 2 の画面と、id と変数</title>
+  <desc id="fig5-d">演習 2 のページには、上から「演習 2」の見出し、数の 0、「1 増やす」と「0 に戻す」のボタンが並んでいる。数の 0 の要素は id が count で、practice-02.js の変数 countText に入っている。「1 増やす」のボタンは id が plus で、変数 plusButton に入っている。「0 に戻す」のボタンは id が reset で、変数 resetButton に入っている。</desc>
+  <!-- ページの部分を切り出した図（実物の大きさ）。要素の位置と大きさは、practice-02.html をブラウザで開いて測った -->
+  <style>
+.fig5 .pg { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 16px; fill: #1f2328; }
+.fig5 .h1 { font-size: 20px; font-weight: 600; }
+.fig5 .frame { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+.fig5 .btn { fill: #efefef; stroke: #767676; stroke-width: 1; }
+.fig5 .input { fill: #ffffff; stroke: #767676; stroke-width: 1; }
+.fig5 .mark { fill: none; stroke: #ea580c; stroke-width: 1.5; }
+.fig5 .lead { fill: none; stroke: #ea580c; stroke-width: 1; }
+.fig5 .tag { fill: none; stroke: #ea580c; stroke-width: 1.2; }
+.fig5 .tag-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; font-weight: 700; fill: #c2410c; }
+.fig5 .var { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 12px; fill: #1f2937; }
+.fig5 .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; fill: #1f2937; }
+.fig5 .note-head { font-weight: 700; }
+.fig5 .note-sub { fill: #4b5563; }
+
+    @media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) .fig5 .mark, :root:not([data-theme="light"]) .fig5 .lead, :root:not([data-theme="light"]) .fig5 .tag { stroke: #fb923c; }
+:root:not([data-theme="light"]) .fig5 .tag-txt { fill: #fb923c; }
+:root:not([data-theme="light"]) .fig5 .var, :root:not([data-theme="light"]) .fig5 .note { fill: #e5e7eb; }
+:root:not([data-theme="light"]) .fig5 .note-sub { fill: #9ca3af; }
+
+    }
+:root[data-theme="dark"] .fig5 .mark, :root[data-theme="dark"] .fig5 .lead, :root[data-theme="dark"] .fig5 .tag { stroke: #fb923c; }
+:root[data-theme="dark"] .fig5 .tag-txt { fill: #fb923c; }
+:root[data-theme="dark"] .fig5 .var, :root[data-theme="dark"] .fig5 .note { fill: #e5e7eb; }
+:root[data-theme="dark"] .fig5 .note-sub { fill: #9ca3af; }
+
+    </style>
+
+  <!-- ページ -->
+  <rect class="frame" x="10" y="10" width="360" height="172" rx="4"/>
+  <text class="pg h1" x="26" y="52">演習 2</text>
+  <text class="pg" x="26" y="97">0</text>
+  <rect class="btn" x="26.5" y="121.5" width="86" height="40" rx="3"/>
+  <text class="pg" x="69.5" y="147" text-anchor="middle">1 増やす</text>
+  <rect class="btn" x="119.5" y="121.5" width="86" height="40" rx="3"/>
+  <text class="pg" x="162.5" y="147" text-anchor="middle">0 に戻す</text>
+
+  <!-- id の付いた要素の囲み、線、札 -->
+  <rect class="mark" x="20" y="79" width="24" height="25" rx="3"/>
+  <rect class="mark" x="23" y="118" width="92" height="47" rx="3"/>
+  <rect class="mark" x="117" y="118" width="92" height="47" rx="3"/>
+  <path class="lead" d="M44,88 H400"/>
+  <path class="lead" d="M69,118 V112 H400"/>
+  <path class="lead" d="M209,141.5 H400"/>
+  <text class="note note-head" x="400" y="64">id</text>
+  <text class="note note-head" x="490" y="64">変数</text>
+  <rect class="tag" x="400" y="79" width="74" height="18" rx="4"/><text class="tag-txt" x="408" y="92">#count</text>
+  <text class="var" x="490" y="92">countText</text>
+  <rect class="tag" x="400" y="103" width="74" height="18" rx="4"/><text class="tag-txt" x="408" y="116">#plus</text>
+  <text class="var" x="490" y="116">plusButton</text>
+  <rect class="tag" x="400" y="132.5" width="74" height="18" rx="4"/><text class="tag-txt" x="408" y="145.5">#reset</text>
+  <text class="var" x="490" y="145.5">resetButton</text>
+
+  <!-- 下の説明 -->
+  <text class="note note-sub" x="10" y="208">オレンジの札は、practice-02.html でその要素に付けた id。</text>
+  <text class="note note-sub" x="10" y="230">右の名前は、practice-02.js でその要素を入れてある変数。</text>
+</svg><figcaption>図10-5 演習 2 の画面と、id と変数</figcaption></figure>
 <p><strong>画面で確かめること</strong></p>
 <ul>
 <li class="task"><input type="checkbox"> 「1 増やす」を押すたびに、数が <code>1</code>、<code>2</code>、<code>3</code> と増える</li>
@@ -614,7 +777,7 @@
 <li class="step" data-no="1">
 <p class="step-do"><code>basics/exercises/B10-dom/practice-02.js</code> に、「1 増やす」が押されたときの処理を書く</p>
 <ul class="step-notes">
-<li class="step-note">ファイルの上の、3 つの要素と <code>count</code> の宣言を読んでから書きます</li>
+<li class="step-note">ファイルの上の、3 つの要素と <code>count</code> の宣言を読んでから書きます（どの変数が画面のどの部品かは、図10-5）</li>
 <li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>「演習 2」のページで「1 増やす」を押すたびに、数が 1 ずつ増える</span></li>
 </ul>
 </li>
@@ -647,6 +810,10 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>コンソールに <code>of null</code> のエラーが出る</td>
+<td><code>querySelector</code> の <code>&quot;</code> の中が、図10-5 の id と違います（10.7）</td>
+</tr>
 <tr>
 <td>何回押しても <code>1</code> のまま</td>
 <td><code>count</code> を入れ直していません。<code>countText.textContent = count + 1;</code> では、<code>count</code> の値は変わりません</td>
@@ -742,6 +909,67 @@
 </tr>
 </tbody>
 </table></div>
+<figure><svg class="fig6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 238" width="620" height="238" role="img" aria-labelledby="fig6-t fig6-d">
+  <title id="fig6-t">演習 3 の画面と、id と変数</title>
+  <desc id="fig6-d">演習 3 のページには、上から「演習 3」の見出し、入力欄と「足す」のボタン、「合計: 0円」の文章が並んでいる。入力欄は id が amount で、practice-03-page.js の変数 amount に入っている。「足す」のボタンは id が add で、変数 button に入っている。「合計: 0円」の要素は id が total で、変数 totalText に入っている。</desc>
+  <!-- ページの部分を切り出した図（実物の大きさ）。要素の位置と大きさは、practice-03.html をブラウザで開いて測った -->
+  <style>
+.fig6 .pg { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 16px; fill: #1f2328; }
+.fig6 .h1 { font-size: 20px; font-weight: 600; }
+.fig6 .frame { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+.fig6 .btn { fill: #efefef; stroke: #767676; stroke-width: 1; }
+.fig6 .input { fill: #ffffff; stroke: #767676; stroke-width: 1; }
+.fig6 .mark { fill: none; stroke: #ea580c; stroke-width: 1.5; }
+.fig6 .lead { fill: none; stroke: #ea580c; stroke-width: 1; }
+.fig6 .tag { fill: none; stroke: #ea580c; stroke-width: 1.2; }
+.fig6 .tag-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; font-weight: 700; fill: #c2410c; }
+.fig6 .var { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 12px; fill: #1f2937; }
+.fig6 .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; fill: #1f2937; }
+.fig6 .note-head { font-weight: 700; }
+.fig6 .note-sub { fill: #4b5563; }
+
+    @media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) .fig6 .mark, :root:not([data-theme="light"]) .fig6 .lead, :root:not([data-theme="light"]) .fig6 .tag { stroke: #fb923c; }
+:root:not([data-theme="light"]) .fig6 .tag-txt { fill: #fb923c; }
+:root:not([data-theme="light"]) .fig6 .var, :root:not([data-theme="light"]) .fig6 .note { fill: #e5e7eb; }
+:root:not([data-theme="light"]) .fig6 .note-sub { fill: #9ca3af; }
+
+    }
+:root[data-theme="dark"] .fig6 .mark, :root[data-theme="dark"] .fig6 .lead, :root[data-theme="dark"] .fig6 .tag { stroke: #fb923c; }
+:root[data-theme="dark"] .fig6 .tag-txt { fill: #fb923c; }
+:root[data-theme="dark"] .fig6 .var, :root[data-theme="dark"] .fig6 .note { fill: #e5e7eb; }
+:root[data-theme="dark"] .fig6 .note-sub { fill: #9ca3af; }
+
+    </style>
+
+  <!-- ページ -->
+  <rect class="frame" x="10" y="10" width="360" height="168" rx="4"/>
+  <text class="pg h1" x="26" y="52">演習 3</text>
+  <rect class="input" x="26.5" y="75.5" width="207" height="40" rx="2"/>
+  <rect class="btn" x="240.5" y="75.5" width="54" height="40" rx="3"/>
+  <text class="pg" x="267.5" y="101" text-anchor="middle">足す</text>
+  <text class="pg" x="26" y="151">合計: 0円</text>
+
+  <!-- id の付いた要素の囲み、線、札 -->
+  <rect class="mark" x="23" y="72" width="213" height="47" rx="3"/>
+  <rect class="mark" x="238" y="72" width="59" height="47" rx="3"/>
+  <rect class="mark" x="20" y="133" width="84" height="25" rx="3"/>
+  <path class="lead" d="M130,72 V64 H400"/>
+  <path class="lead" d="M297,95.5 H400"/>
+  <path class="lead" d="M104,145.5 H400"/>
+  <text class="note note-head" x="400" y="42">id</text>
+  <text class="note note-head" x="490" y="42">変数</text>
+  <rect class="tag" x="400" y="55" width="74" height="18" rx="4"/><text class="tag-txt" x="408" y="68">#amount</text>
+  <text class="var" x="490" y="68">amount</text>
+  <rect class="tag" x="400" y="86.5" width="74" height="18" rx="4"/><text class="tag-txt" x="408" y="99.5">#add</text>
+  <text class="var" x="490" y="99.5">button</text>
+  <rect class="tag" x="400" y="136.5" width="74" height="18" rx="4"/><text class="tag-txt" x="408" y="149.5">#total</text>
+  <text class="var" x="490" y="149.5">totalText</text>
+
+  <!-- 下の説明 -->
+  <text class="note note-sub" x="10" y="204">オレンジの札は、practice-03.html でその要素に付けた id。</text>
+  <text class="note note-sub" x="10" y="226">右の名前は、practice-03-page.js でその要素を入れてある変数。</text>
+</svg><figcaption>図10-6 演習 3 の画面と、id と変数</figcaption></figure>
 <p><strong>画面で確かめること</strong></p>
 <ul>
 <li class="task"><input type="checkbox"> <code>1200</code> と打って「足す」を押すと、<code>合計: 1200円</code> と表示される</li>
@@ -751,26 +979,20 @@
 <p><strong>進め方</strong></p>
 <ol class="steps">
 <li class="step" data-no="1">
-<p class="step-do"><code>basics/exercises/B10-dom/practice-03.js</code> の <code>addAmount</code> を書く</p>
+<p class="step-do"><code>basics/exercises/B10-dom/practice-03.js</code> の <code>addAmount</code> を書き、答え合わせをする</p>
 <ul class="step-notes">
 <li class="step-note">文字列を数値に変える <code>Number(text)</code> と、<code>NaN</code> かどうかを調べる <code>Number.isNaN(値)</code> を使います（10.6）</li>
-<li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span><code>addAmount</code> の中に、<code>Number(text)</code> と <code>Number.isNaN(</code> がある</span></li>
-</ul>
-</li>
-<li class="step" data-no="2">
-<p class="step-do">答え合わせをする</p>
-<ul class="step-notes">
-<li class="step-note">画面を動かしたまま、2 つ目のターミナルで打ちます（10.1）</li>
+<li class="step-note">答え合わせは、画面を動かしたまま、2 つ目のターミナルで打ちます（10.1）</li>
 </ul>
 <pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> test</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> B10</span></span></code></pre>
 <ul class="step-notes">
 <li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span><code>演習 3  合格</code> と表示される</span></li>
 </ul>
 </li>
-<li class="step" data-no="3">
+<li class="step" data-no="2">
 <p class="step-do"><code>basics/exercises/B10-dom/practice-03-page.js</code> に、「足す」が押されたときの処理を書く</p>
 <ul class="step-notes">
-<li class="step-note"><code>addAmount</code> を呼んで <code>total</code> を入れ直し、画面に表示します</li>
+<li class="step-note"><code>addAmount</code> を呼んで <code>total</code> を入れ直し、画面に表示します（どの変数が画面のどの部品かは、図10-6）</li>
 <li class="step-note">先頭の <code>import</code> で始まる行は、別のファイルに書いた関数を使うための行です。この行があるので、<code>addAmount</code> を呼べます</li>
 <li class="step-note">入力欄の値（<code>value</code>）は、押されたときに関数の中で取り出します</li>
 <li class="step-ok"><span class="step-ok-label">こうなれば OK</span><span>「演習 3」のページで、上の「画面で確かめること」がすべて当てはまる</span></li>
@@ -809,12 +1031,16 @@
 <td><code>NaN</code> かどうかを調べていないか、<code>=== NaN</code> で比べています。<code>Number.isNaN</code> に渡すのは、数値に変えた後の値です</td>
 </tr>
 <tr>
+<td>コンソールに <code>of null</code> のエラーが出る</td>
+<td><code>querySelector</code> の <code>&quot;</code> の中が、図10-6 の id と違います（10.7）</td>
+</tr>
+<tr>
 <td>画面が <code>合計: 01200円</code>、次に <code>合計: 01200500円</code></td>
 <td>画面のコードで <code>addAmount</code> を呼ばずに、<code>total + amount.value</code> と書いています</td>
 </tr>
 <tr>
 <td>押しても画面が <code>合計: 0円</code> のまま</td>
-<td>表示する行がないか、<code>addAmount</code> に <code>amount.value</code> ではなく <code>amount</code> を渡しています。<code>amount.value</code> を関数の外で取り出している場合も、同じ表示です</td>
+<td>コンソールにエラーが出ていれば、先にそれを直します。出ていなければ、表示する行がないか、<code>addAmount</code> に <code>amount.value</code> ではなく <code>amount</code> を渡しています。<code>amount.value</code> を関数の外で取り出している場合も、同じ表示です</td>
 </tr>
 <tr>
 <td>全角の数字を打つと、合計が変わらない</td>
@@ -866,7 +1092,7 @@
 </ul>
 
       </article>
-      <nav class="prev-next"><a class="prev" href="B09-array-methods.html"><small>前へ</small>基礎編 第9章 配列のメソッド</a><a class="next" href="B11-final.html"><small>次へ</small>基礎編 第11章 修了課題</a></nav>
+      <nav class="prev-next"><a class="prev" href="B09-array-methods.html"><small>前へ</small>基礎編 第9章 配列のメソッド</a><a class="next" href="B11-final.html"><small>次へ</small>基礎編 第11章 まとめの演習</a></nav>
     </main>
   </div>
 </body>

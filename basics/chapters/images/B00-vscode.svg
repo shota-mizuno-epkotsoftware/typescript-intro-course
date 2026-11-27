@@ -64,10 +64,11 @@
   <rect class="sel" x="49" y="136.4" width="206.8" height="17.6"/>
   <text class="js" x="89" y="148">JS</text><text class="ui" x="102" y="148.8">hello.js</text>
   <text class="js" x="89" y="165.6">JS</text><text class="ui" x="102" y="166.4">practice-01.js</text>
-  <text class="js" x="89" y="183.2">JS</text><text class="ui" x="102" y="184">problem-01.js</text>
-  <text class="ui" x="64" y="201.6">› main</text>
-  <text class="ui" x="64" y="219.2">› practice</text>
-  <text class="ui" x="72" y="236.8">README.md</text>
+  <text class="js" x="89" y="183.2">JS</text><text class="ui" x="102" y="184">practice-01.test.js</text>
+  <text class="js" x="89" y="200.8">JS</text><text class="ui" x="102" y="201.6">problem-01.js</text>
+  <text class="ui" x="64" y="219.2">› main</text>
+  <text class="ui" x="64" y="236.8">› practice</text>
+  <text class="ui" x="72" y="254.4">README.md</text>
 
   <!-- ② エディタ（タブ 28、パス表示 17.6、行の高さ 14.4） -->
   <rect class="bar" x="256.4" y="38" width="473.6" height="28"/>

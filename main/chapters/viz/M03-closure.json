@@ -51,7 +51,7 @@
         11
       ],
       "phase": "counterA を呼ぶ",
-      "note": "counterA を呼ぶと、4 行目で counterA の count が 1 増えます。",
+      "note": "counterA を呼ぶと、7 行目で counterA の count が 1 増えます。",
       "memory": [
         "counterA の count：1",
         "counterB の count：0"

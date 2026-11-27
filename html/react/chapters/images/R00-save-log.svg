@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 890 124" width="890" height="124" role="img" aria-labelledby="t d">
+  <title id="t">操作ごとの、Console の「保存した」の行数</title>
+  <desc id="d">開発者ツールの Console を 3 つ並べた図。ページを開いたときは「保存した」が 2 行。明細を 1 件追加したときは 1 行。「集計」の種別を変えたときは、何も出ない。</desc>
+  <style>
+    .pg { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif; font-size: 12.8px; fill: #1f2328; }
+    .h1 { font-size: 20.5px; font-weight: 700; }
+    .h2 { font-size: 14px; font-weight: 700; }
+    .h3 { font-size: 12.2px; font-weight: 700; fill: #59636e; }
+    .lbl { font-size: 10.9px; fill: #59636e; }
+    .ctl { font-size: 10.9px; }
+    .small { font-size: 11.5px; }
+    .muted { fill: #59636e; }
+    .inc { fill: #1a7f37; }
+    .exp { fill: #b42318; }
+    .panel { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .ctrl { fill: #ffffff; stroke: #d8dee4; stroke-width: 0.8; }
+    .btn { fill: #f6f7f9; stroke: #d8dee4; stroke-width: 0.8; }
+    .rule { fill: none; stroke: #d8dee4; stroke-width: 0.8; }
+    .chev { fill: none; stroke: #1f2328; stroke-width: 1; }
+    .check { fill: #0b63ce; }
+    .tick { fill: none; stroke: #ffffff; stroke-width: 1.6; }
+    .hl { fill: #dbeafe; }
+    .con { fill: #ffffff; stroke: #c4c7c5; stroke-width: 1; }
+    .con-bar { fill: #eef1f4; }
+    .con-err { fill: #fdecea; }
+    .con-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 10.5px; fill: #1f2328; }
+    .con-red { fill: #b42318; }
+    .con-ui { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 10.5px; fill: #5f6368; }
+    .con-on { fill: #0b57d0; font-weight: 700; }
+    .codebox { fill: #f6f8fa; stroke: #d8dee4; stroke-width: 0.8; }
+    .code { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; fill: #1f2328; }
+    .mark { fill: none; stroke: #ea580c; stroke-width: 1.5; }
+    .mark-b { fill: none; stroke: #2563eb; stroke-width: 1.5; }
+    .lead { fill: none; stroke: #ea580c; stroke-width: 1; }
+    .tag { fill: none; stroke: #ea580c; stroke-width: 1.2; }
+    .tag-txt { font-family: Menlo, Consolas, "Courier New", monospace; font-size: 11px; font-weight: 700; fill: #c2410c; }
+    .note { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 12px; fill: #1f2937; }
+    .cap { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 13px; font-weight: 700; fill: #1f2937; }
+    .flow { fill: none; stroke: #6b7280; stroke-width: 1.4; }
+    .flow-head { fill: #6b7280; }
+    @media (prefers-color-scheme: dark) {
+      .mark, .lead, .tag { stroke: #fb923c; }
+      .mark-b { stroke: #60a5fa; }
+      .tag-txt { fill: #fb923c; }
+      .note, .cap { fill: #e5e7eb; }
+      .flow { stroke: #9ca3af; }
+      .flow-head { fill: #9ca3af; }
+    }
+  </style>
+  <text class="cap" x="10" y="22">1. ページを開いた</text>
+  <rect class="con" x="10" y="34" width="280" height="72" rx="5"/>
+  <path class="con-bar" d="M15,34.5 H285 A4.5,4.5 0 0 1 289.5,39 V58 H10.5 V39 A4.5,4.5 0 0 1 15,34.5 Z"/>
+  <text class="con-ui" x="22" y="50">Elements</text>
+  <text class="con-ui con-on" x="80" y="50">Console</text>
+  <text class="con-ui" x="134" y="50">Network</text>
+  <text class="con-txt" x="22" y="74">保存した</text>
+  <text class="con-txt" x="22" y="94">保存した</text>
+  <text class="cap" x="306" y="22">2. 明細を 1 件追加した</text>
+  <rect class="con" x="306" y="34" width="280" height="52" rx="5"/>
+  <path class="con-bar" d="M311,34.5 H581 A4.5,4.5 0 0 1 585.5,39 V58 H306.5 V39 A4.5,4.5 0 0 1 311,34.5 Z"/>
+  <text class="con-ui" x="318" y="50">Elements</text>
+  <text class="con-ui con-on" x="376" y="50">Console</text>
+  <text class="con-ui" x="430" y="50">Network</text>
+  <text class="con-txt" x="318" y="74">保存した</text>
+  <text class="cap" x="602" y="22">3. 「集計」の種別を変えた</text>
+  <rect class="con" x="602" y="34" width="280" height="52" rx="5"/>
+  <path class="con-bar" d="M607,34.5 H877 A4.5,4.5 0 0 1 881.5,39 V58 H602.5 V39 A4.5,4.5 0 0 1 607,34.5 Z"/>
+  <text class="con-ui" x="614" y="50">Elements</text>
+  <text class="con-ui con-on" x="672" y="50">Console</text>
+  <text class="con-ui" x="726" y="50">Network</text>
+  <text class="con-txt" x="614" y="74"></text>
+  <text class="con-ui" x="614" y="74">（何も出ない）</text>
+</svg>
